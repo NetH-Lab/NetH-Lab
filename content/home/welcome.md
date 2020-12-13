@@ -6,7 +6,8 @@
 widget: hero  # See https://wowchemy.com/docs/page-builder/
 headless: true  # This file represents a page section.
 weight: 10  # Order that this section will appear.
-title: "Welcome to NetH-Lab"
+title: "Welcome to 
+NetH-Lab"
 subtitle: ""
 hero_media: welcome.jpg
 design:
@@ -18,3 +19,4 @@ advanced:
 ---
 
 NetH-Lab专注于网络科学研究以及对计算机领域的知识的探索，我们希望在这个网站下记录我们的学习过程，维护我们所学的知识与想法。
+
