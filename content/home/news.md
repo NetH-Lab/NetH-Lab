@@ -1,5 +1,4 @@
 ---
-# Documentation: https://wowchemy.com/docs/page-builder/
 widget: pages
 headless: true
 weight: 20
@@ -17,7 +16,7 @@ content:
     tag: ""
   offset: 0
   order: desc
-  page_type: event
+  page_type: talk
 design:
   view: 3
   columns: "1"
