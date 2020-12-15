@@ -34,11 +34,11 @@ VMWare是一款虚拟机软件，可以使用户在Windows系统下运行其他�
 
 在硬盘中创立一个文件夹，集中存放所有的虚拟机
 
-![img](/content/post/20-12-15-Ubuntu-desktop-install/01.jpg)
+![](https://github.com/NetH-Lab/NetH-Lab/tree/main/content/resources/20-12-15-Ubuntu-desktop-install/01.jpg)
 
 创建ISO文件以存放所有的镜像，随后按版本创建虚拟机本体存放如下：
 
-![img](./content/post/20-12-15-Ubuntu-desktop-install/02.jpg)
+![](https://github.com/NetH-Lab/NetH-Lab/tree/main/content/resources/20-12-15-Ubuntu-desktop-install/02.jpg)
 
 #### 3.2 使用vmware安装ubuntu桌面版
 
