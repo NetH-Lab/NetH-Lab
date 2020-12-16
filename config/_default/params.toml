@@ -56,7 +56,7 @@ description = "A website used to record learning experiences."
 
 # Enable source code highlighting? true/false
 # Documentation: https://sourcethemes.com/academic/docs/writing-markdown-latex/#highlighting-options
-highlight = false
+highlight = true
 # highlight_languages = ["r"]  # Add support for highlighting additional languages
 # highlight_style = "github"  # For supported styles, see https://cdnjs.com/libraries/highlight.js/
 
@@ -156,6 +156,9 @@ copyright_license = {enable = false, allow_derivatives = false, share_alike = tr
 #   E.g. To load `/assets/js/custom.js`, set `plugins_js = ["custom"]`.
 plugins_js  = []
 
+# Abstract length (characters) in the Compact and Portfolio Card list views. Also, see `summaryLength` in `config.toml`.
+abstract_length = 135
+
 # Avatars.
 # An avatar is an image that appears next to a user's name.
 # An avatar can be uploaded as an image named `avatar` to each user's profile or fetched from Gravatar.com.
@@ -165,12 +168,6 @@ plugins_js  = []
 
   # Choose a shape for avatar images. Options: circle, square.
   shape = "circle"
-
-# Configuration of resources pages.
-[resources]
-  # Date format (refer to https://wowchemy.com/docs/customization/#date-format )
-  #   Examples: "Mon, Jan 2, 2006" or "2006-01-02"
-  date_format = "January 2006"
 
 # Configuration of publication pages.
 [publications]
