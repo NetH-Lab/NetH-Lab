@@ -1,6 +1,6 @@
 ---
 title: All Resources
 layout: post
-view: 1
+view: 4
 
 ---
