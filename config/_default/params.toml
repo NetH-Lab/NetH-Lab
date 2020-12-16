@@ -170,7 +170,7 @@ abstract_length = 135
   shape = "circle"
 
 # Configuration of publication pages.
-[publications]
+[publication]
   # Date format (refer to https://wowchemy.com/docs/customization/#date-format )
   #   Examples: "Mon, Jan 2, 2006" or "2006-01-02"
   date_format = "January 2006"
