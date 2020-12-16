@@ -24,7 +24,7 @@
   weight = 40
 
 [[main]]
-  name = "test"
+  name = "Pubilcations"
   url = "test"
   weight = 50
 
