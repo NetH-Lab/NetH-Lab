@@ -1,7 +1,7 @@
 ---
 widget: pages
 headless: true
-weight: 20
+weight: 15
 
 title: Latest News
 subtitle:
@@ -19,5 +19,5 @@ content:
   page_type: talk
 design:
   view: 3
-  columns: "1"
+  columns: "2"
 ---
