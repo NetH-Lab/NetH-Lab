@@ -34,11 +34,11 @@ VMWare是一款虚拟机软件，可以使用户在Windows系统下运行其他�
 
 在硬盘中创立一个文件夹，集中存放所有的虚拟机
 
-![](https://github.com/NetH-Lab/NetH-Lab/tree/main/content/resources/20-12-15-Ubuntu-desktop-install/01.jpg)
+![](./01.jpg)
 
 创建ISO文件以存放所有的镜像，随后按版本创建虚拟机本体存放如下：
 
-![](https://github.com/NetH-Lab/NetH-Lab/tree/main/content/resources/20-12-15-Ubuntu-desktop-install/02.jpg)
+![](./02.jpg)
 
 #### 3.2 使用vmware安装ubuntu桌面版
 
@@ -48,35 +48,35 @@ ubuntu分为桌面版和server版，其中最大的区别是桌面版具有可�
 
 ##### 3.2.2 安装步骤
 
-![img](file:///C:/Users/minel/AppData/Local/Temp/msohtmlclip1/01/clip_image006.jpg)
+![img](./03.jpg)
 
 注1：选择典型，博主并不懂自定义安装模式。
 
-![img](file:///C:/Users/minel/AppData/Local/Temp/msohtmlclip1/01/clip_image008.jpg)
+![img](./04.jpg)
 
 注2：选择欲安装的镜像文件
 
-![img](file:///C:/Users/minel/AppData/Local/Temp/msohtmlclip1/01/clip_image010.jpg)
+![img](./05.jpg)
 
 注3：该界面较为重要，此安装系统会帮助我们注册一个Linux用户名，类似于Windows下的用户名，故我们需要仔细记录下该界面中的用户名&密码
 
-![img](file:///C:/Users/minel/AppData/Local/Temp/msohtmlclip1/01/clip_image012.jpg)
+![img](./06.jpg)
 
 注4：选择刚刚文件夹中创建好的存放虚拟机的位置
 
-![img](file:///C:/Users/minel/AppData/Local/Temp/msohtmlclip1/01/clip_image014.jpg)
+![img](./07.jpg)
 
 注5：博主选择使用单个文件，拆分多个文件并不清楚其作用（未移植过虚拟机）
 
-![img](file:///C:/Users/minel/AppData/Local/Temp/msohtmlclip1/01/clip_image016.jpg)
+![img](./08.jpg)
 
 注6：完成创建
 
-![img](file:///C:/Users/minel/AppData/Local/Temp/msohtmlclip1/01/clip_image018.jpg)
+![img](./09.jpg)
 
 注7：安装完成
 
-![img](file:///C:/Users/minel/AppData/Local/Temp/msohtmlclip1/01/clip_image020.jpg)
+![img](./10.jpg)
 
  
 
@@ -100,15 +100,15 @@ ubuntu分为桌面版和server版，其中最大的区别是桌面版具有可�
 
 首先打开Terminal，此时我们的命令行在整个系统的根目录下，即所有的命令操作都是作用于该目录中
 
-![img](file:///C:/Users/minel/AppData/Local/Temp/msohtmlclip1/01/clip_image022.jpg)
+![img](./11.jpg)
 
 使用cd命令移动到目标路径
 
-![img](file:///C:/Users/minel/AppData/Local/Temp/msohtmlclip1/01/clip_image024.jpg)
+![img](./12.jpg)
 
 打开sources.list，注意打开要使用管理员模式
 
-![img](file:///C:/Users/minel/AppData/Local/Temp/msohtmlclip1/01/clip_image026.jpg)
+![img](./13.jpg)
 
 更改源，vi指令自行百度
 
@@ -120,7 +120,7 @@ ubuntu分为桌面版和server版，其中最大的区别是桌面版具有可�
 
 直接安装build-essential，打包安装编译环境
 
-![img](file:///C:/Users/minel/AppData/Local/Temp/msohtmlclip1/01/clip_image028.jpg)
+![img](./14.jpg)
 
 可以先装一个vim作为简单好用的编辑器
 
