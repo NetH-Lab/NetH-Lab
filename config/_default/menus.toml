@@ -9,7 +9,7 @@
 #  weight = 10
 
 [[main]]
-  name = "Resources"
+  name = "Projects & Publicaitons"
   url = "project"
   weight = 20
 
@@ -24,7 +24,7 @@
   weight = 40
 
 [[main]]
-  name = "Pubilcations"
+  name = "Resources"
   url = "publication"
   weight = 50
 

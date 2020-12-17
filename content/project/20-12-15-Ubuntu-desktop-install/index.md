@@ -1,6 +1,6 @@
 ---
 title: Ubuntu桌面版安装
-type: post
+type: project
 summary: 关于Ubuntu安装的学习历程的总结。
 authors:
 - Minel Huang
