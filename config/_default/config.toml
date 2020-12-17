@@ -41,7 +41,7 @@ ignoreFiles = ["\\.ipynb$", ".ipynb_checkpoints$", "\\.Rmd$", "\\.Rmarkdown$", "
   authors = "/author/:slug/"
   tags = "/tag/:slug/"
   categories = "/category/:slug/"
-  publication_types = "/publication-type/:slug/"
+  test_types = "/test-type/:slug/"
   resource_types = "/resource-type/:slug/"
 
 [outputs]
@@ -77,7 +77,7 @@ ignoreFiles = ["\\.ipynb$", ".ipynb_checkpoints$", "\\.Rmd$", "\\.Rmarkdown$", "
   tag = "tags"
   category = "categories"
   author = "authors"
-  publication_type = "publication_types"
+  test_type = "test_types"
   resource_type = "resource_types"
 
 # Related content.

@@ -74,7 +74,7 @@ diagram = false
 privacy_pack = false
 
 # Show related content at the bottom of pages?
-show_related = {post = true, project = true, publication = true, talk = true}
+show_related = {post = true, project = true, test = true, talk = true}
 
 ############################
 ## Contact details
@@ -169,7 +169,7 @@ abstract_length = 135
   # Choose a shape for avatar images. Options: circle, square.
   shape = "circle"
 
-# Configuration of publication pages.
+# Configuration of test pages.
 [resource]
   # Date format (refer to https://wowchemy.com/docs/customization/#date-format )
   #   Examples: "Mon, Jan 2, 2006" or "2006-01-02"
@@ -178,7 +178,7 @@ abstract_length = 135
   # Citation style ("apa" or "mla")
   citation_style = "apa"
 
-[publication]
+[test]
   # Date format (refer to https://wowchemy.com/docs/customization/#date-format )
   #   Examples: "Mon, Jan 2, 2006" or "2006-01-02"
   date_format = "January 2006"
@@ -208,7 +208,7 @@ abstract_length = 135
   engine = 0
 
   # Which page types are commentable?
-  commentable = {page = true, post = true, docs = true, project = true, publication = true, talk = true}
+  commentable = {page = true, post = true, docs = true, project = true, test = true, talk = true}
 
   # Configuration of Disqus.
   [comments.disqus]
