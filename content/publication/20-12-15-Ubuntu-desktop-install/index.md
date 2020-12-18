@@ -6,8 +6,9 @@ authors:
 - Minel Huang
 - Zobin Huang
 date: “2020-12-15T00:00:00Z”
+publishDate: "2020-12-15T00:00:00Z"
 
-publication_types: ["3"]
+publication_types: ["Ubuntu", "教程"]
 
 tags: ["Ubuntu", "教程"]
 featured: false
