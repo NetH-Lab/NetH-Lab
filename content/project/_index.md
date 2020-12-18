@@ -1,7 +1,7 @@
 ---
 title: All Resources
 layout: project
-view: 2
+view: 3
 header:
   caption: ""
   image: ""

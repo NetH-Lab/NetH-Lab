@@ -1,5 +1,6 @@
 ---
 title: Internal Project
+type: project
 summary: An example of using the in-built project page.
 tags:
 - Deep Learning
