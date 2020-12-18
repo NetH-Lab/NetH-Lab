@@ -10,7 +10,7 @@ headless: true
 weight: 25
 
 title: Recent Projects
-subtitle: ''
+subtitle:
 
 content:
   # Page type to display. E.g. project.
