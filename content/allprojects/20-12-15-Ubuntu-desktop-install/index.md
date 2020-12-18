@@ -7,6 +7,8 @@ authors:
 - Zobin Huang
 date: 2020-12-15
 
+publication_types:["2"]
+
 tags: ["Ubuntu", "教程"]
 featured: false
 ---
