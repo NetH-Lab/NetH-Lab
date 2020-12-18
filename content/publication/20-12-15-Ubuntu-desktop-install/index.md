@@ -9,9 +9,7 @@ date: “2020-12-15T00:00:00Z”
 
 publication_types: ["3"]
 
-#tags: ["Ubuntu", "教程"]
-tags:
-- Source Themes
+tags: ["Ubuntu", "教程"]
 featured: false
 ---
 
