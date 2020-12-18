@@ -1,6 +1,6 @@
 ---
 title: Ubuntu桌面版安装
-# type: project
+type: project
 summary: 关于Ubuntu安装的学习历程的总结。
 authors:
 - Minel Huang
@@ -8,7 +8,7 @@ authors:
 date: “2020-12-15T00:00:00Z”
 publishDate: "2020-12-15T00:00:00Z"
 
-publication_types: ["Ubuntu", "教程"]
+publication_types: ["0"]
 
 tags: ["Ubuntu", "教程"]
 featured: false
