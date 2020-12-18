@@ -5,11 +5,13 @@ summary: 关于Ubuntu安装的学习历程的总结。
 authors:
 - Minel Huang
 - Zobin Huang
-date: 2020-12-15
+date: “2020-12-15T00:00:00Z”
 
-publication_types:["2"]
+publication_types: ["3"]
 
-tags: ["Ubuntu", "教程"]
+#tags: ["Ubuntu", "教程"]
+tags:
+- Source Themes
 featured: false
 ---
 
