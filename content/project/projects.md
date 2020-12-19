@@ -27,10 +27,12 @@ content:
   filter_button:
   - name: All
     tag: '*'
-  - name: Deep Learning
-    tag: Deep Learning
-  - name: Other
-    tag: Demo
+  - name: 基础知识
+    tag: 基础知识
+  - name: 工程项目
+    tag: 工程项目
+  - name: 科研项目
+    tag: 科研项目
 
 design:
   # Choose how many columns the section has. Valid values: '1' or '2'.

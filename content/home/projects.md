@@ -33,8 +33,6 @@ content:
     tag: 工程项目
   - name: 科研项目
     tag: 科研项目
-  - name: Other
-    tag: Demo
 
 design:
   # Choose how many columns the section has. Valid values: '1' or '2'.
