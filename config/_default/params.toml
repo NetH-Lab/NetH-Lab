@@ -84,7 +84,7 @@ show_related = {post = true, project = true, publication = true, talk = true}
 ############################
 
 # Enter contact details (optional). To hide a field, clear it to "".
-email = "neth-lab.doubleh@outlook.com"
+email = "NetH-Lab.doubleH@outlook.com"
 phone = ""
 
 # Address
