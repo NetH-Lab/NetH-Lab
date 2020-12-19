@@ -27,8 +27,12 @@ content:
   filter_button:
   - name: All
     tag: '*'
-  - name: Deep Learning
-    tag: Deep Learning
+  - name: 基础知识
+    tag: 基础知识
+  - name: 工程项目
+    tag: 工程项目
+  - name: 科研项目
+    tag: 科研项目
   - name: Other
     tag: Demo
 

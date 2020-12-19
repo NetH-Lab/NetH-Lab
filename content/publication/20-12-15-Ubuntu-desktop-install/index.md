@@ -10,7 +10,7 @@ publishDate: "2020-12-15T00:00:00Z"
 
 publication_types: ["0"]
 
-tags: ["Ubuntu", "教程"]
+tags: ["Ubuntu", "基础知识"]
 featured: false
 ---
 

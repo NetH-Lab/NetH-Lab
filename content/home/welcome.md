@@ -11,8 +11,7 @@ icon: sparkles
 design:
   # Choose how many columns the section has. Valid values: 1 or 2.
   columns: '1'
-
 ---
 
-
+NetH-Lab专注于对网络科学和计算机科学领域的探索，我们希望在这个网站下记录我们的学习过程，并对知识进行整理和维护。
 
