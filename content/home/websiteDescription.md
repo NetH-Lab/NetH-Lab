@@ -6,7 +6,7 @@
 widget: hero  # See https://wowchemy.com/docs/page-builder/
 headless: true  # This file represents a page section.
 #title: ""
-subtitle: "您在网站中能得到什么"
+title: "您在网站中能得到什么"
 weight: 15  # Order that this section will appear.
 hero_media: welcome.jpg
 design:
