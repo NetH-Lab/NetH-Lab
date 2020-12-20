@@ -15,8 +15,8 @@ location: KB109, UESTC
 #  postcode: '94305'
 #  country: United States
 
-#summary: An example event.
-#abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis posuere tellusac #convallis placerat. Proin tincidunt magna sed ex sollicitudin condimentum. Sed ac faucibus #dolor, scelerisque sollicitudin nisi. Cras purus urna, suscipit quis sapien eu, pulvinar #tempor diam."
+summary: 记录NetH-Lab的出生时期，并在这里描述对它的一些期望。
+abstract: "这里描述了我对学习的看法，以及维护者、分享者应当遵从的一些基本准则。"
 
 # Talk start and end times.
 #   End time can optionally be hidden by prefixing the line with `#`.
@@ -30,7 +30,7 @@ publishDate: "2020-12-12T00:00:00Z"
 authors: 
 - Minel Huang
 - Zobin Huang
-tags: []
+tags: ['入站必读']
 
 # Is this a featured talk? (true/false)
 featured: false
