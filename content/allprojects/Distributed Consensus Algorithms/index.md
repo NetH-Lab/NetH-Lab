@@ -1,7 +1,7 @@
 ---
 title: Research on Distributed Consensus Algorithms
 summary: 分布式一致性算法研究总结
-
+type: project
 tags: 
 - 科研项目
 - Distributed Games
