@@ -15,7 +15,7 @@ role: Bachelor of UESTC
 education:
   courses:
   - course: BSc in Network Engineering
-    University of Electronic Science and Technology of China
+    institution: University of Electronic Science and Technology of China
     year: 2021
 
 # Organizations/Affiliations
