@@ -4,6 +4,7 @@ summary: National key projects. Advisor - Professor Shizhong Xu
 type: project
 
 tags: 
+- 工程项目
 - Wireless Sensor Networks
 - GD32
 - STM32

@@ -1,9 +1,9 @@
 ---
-title: Research on Distributed Games
-summary: Using distributed consensus algorithm to reduce the pressure on game servers.
-type: project
+title: Research on Distributed Consensus Algorithms
+summary: 分布式一致性算法研究总结
 
 tags: 
+- 科研项目
 - Distributed Games
 - Distributed Consensus Algorithm
 - Distributed Systems
@@ -69,4 +69,4 @@ url_pdf: ""
 
 ## **现有共识算法的研究**
 
-Raft算法：
+Raft算法：[Link](https://neth-lab.netlify.app/publication/20-11-15-summary-of-raft/)

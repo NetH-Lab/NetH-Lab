@@ -4,6 +4,7 @@ summary: Using distributed consensus algorithm to reduce the pressure on game se
 type: project
 
 tags: 
+- 工程项目
 - Distributed Games
 - Distributed Consensus Algorithm
 - Distributed Systems
