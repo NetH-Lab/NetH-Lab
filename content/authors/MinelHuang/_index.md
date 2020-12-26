@@ -15,7 +15,7 @@ role: Bachelor of UESTC
 education:
   courses:
   - course: BSc in Network Engineering
-    institution: Information and Communication Engineering Department
+    University of Electronic Science and Technology of China
     year: 2021
 
 # Organizations/Affiliations
@@ -66,3 +66,5 @@ user_groups:
 - Researchers
 - Administration
 ---
+
+个人网站：https://huangxyminel.netlify.app/
