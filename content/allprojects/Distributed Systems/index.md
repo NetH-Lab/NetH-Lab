@@ -74,7 +74,7 @@ RDMA
 
 1. 分布式系统基础学习与经典论文研读。
 
-   MIT 6.824 Distributed Systems学习笔记：
+   MIT 6.824 Distributed Systems学习笔记：[Link](https://neth-lab.netlify.app/publication/2021-1-1-mit-distributed-systems/)
 
    Raft论文精读：[Link](https://neth-lab.netlify.app/publication/20-11-15-summary-of-raft/)
 

@@ -18,7 +18,7 @@ featured: false
 
 ## 01 Introduction
 
-参考资料：https://www.youtube.com/watch?v=cQP8WApzIQQ&t
+参考资料：[MIT lecture](https://www.youtube.com/watch?v=cQP8WApzIQQ&t)
 
 分布式系统：a set of cooperating computers communicated with each other over networked to get some coherent task done.
 
