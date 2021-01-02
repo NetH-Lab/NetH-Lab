@@ -56,6 +56,35 @@ Raft是一种leader-based算法，假设集群中存在一个leader，那么repl
 
 term的更新：每个节点都会维护本地的current，在通信过程中将捎带传输term。如果节点的term小于其他的，那么更新term至较大的值；如果candidate或leader发现它的term is out of date，它会立刻转变成follower state；如果节点收到一个stale term，则拒绝此次request
 
+![](./02.jpg)
+
+一个term包含一个election和一个normal operation，在一个term中节点可能发生如下的状态变化：
+
+![](./03.jpg)
+
+在本论文中，节点之间使用remote procedure calls (RPCs) 进行通信，RPCs分为RequestVote RPCs，由candidates发起用于投票，与AppendEntries，由leader发起用于复制log entries和提供heartbeat。
+
 ### Leader election
 
-Raft使用heartbeat机制，heartbeat由leader发出，当节点在一定时间内没有接受到heartbeat，则开启leader election。
+Raft使用heartbeat机制，heartbeat由leader发出。注意，heartbeat由RPCs承载，故当节点在一定时间内没有接受到heartbeat，也即在一定时间内没有收到有效的RPCs，则开启leader election。
+
+election开始后，follower将自增其自身的term，并转换为candidate state。之后它votes for itself并issues RequestVote RPCs。之后可能会发生三种情况：
+
+1. win the election: 节点得票数大于半数
+2. another server establishes itself as leader
+3. no winner
+
+为了保证一次选举中只有一个leader，每个节点只能投1票。由于election是由节点自身发起的，故有可能出现多个节点先后发起election，其余节点的投票较为均匀，导致没有任何一个candidate的得票数大于半数，出现no winner，故引入randomized election timeouts。在election开始前，candidate将随机生成一个timeout，并只等待timeout这么长的时间
+
+### Log replication
+
+当leader收到client的request后，将把指令作为log中的新的entry，并发布AppendEntries RPCs。节点收到次RPC后，若复制成功则返回response，leader收到半数以上的response后将认为safely replicated，并开始运行此指令，返回给client result。若节点没有返回response，leader将继续向其发送RPC。
+
+正常情况下log replication是不可能出错的，但假如leader在复制log时崩溃，使得followers没有完全复制log，则会导致follower之间的log时不一致的。在这时，新的leader将强迫其他的followers复制自己的log，保证系统依然保持一致性。那么，如何决定从哪里开始复制log呢？leader需要知道follower从哪一条entry开始，它们的logs不一致了。找到后，从该处复制log即可。
+
+具体做法：AppendEntries RPCs中包含nextIndex字段，在选举leader后，leader首先和followers比对nextIndex，若不一致，则递减nextIndex，直至所有的followers和leader相同。而后移除冲突的entries
+
+### Term的意义
+
+term实际上是用来标识“谁才是老大”。我们首先要注意的是，term自增只出现于leader election阶段，所有节点开机时term都为0。所以，当term越大时，说明发出RPC的leader或candidate已经经历了很多次选举。正常的情况下，所有节点应该处于一个term，那么假若一个节点收到的RPC中的term，比其自身维护的term大说明什么呢？说明这两个节点有一段时间不处于同一个cluster中（可能是由于拥塞问题、时延问题、网络分割问题等）。那么假如我们规定term越大，其等级越高，节点无条件服从高term的RPC，系统将很快趋于稳定，达到容错的目的。
+
