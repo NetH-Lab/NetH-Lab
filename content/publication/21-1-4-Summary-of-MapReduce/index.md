@@ -45,3 +45,7 @@ Reduce：输入为intermediate key I和a set of intermediate values，之后merg
 显然，使用MapReduce的程序员在编写上述程序时，不需要考虑分布式系统，也即分布式系统成为了abstraction layer
 
 ## 03 Implementation
+
+![](./3-1.jpg)
+
+如上图，用户需要编写Map和Reduce函数，将程序交付给Master节点。Master拥有全部的信息，它会将输入文件分解成16-64MB的小文件，交付给不同的worker处理。worker可能运行Map任务或者Reduce任务，由Master进行分配。在Map worker处理完后，会将结果写在自身的存储磁盘中，而后Reduce worker通过RPC访问，从而进行Reduce函数处理。全部操作结束后，master会wakes up user program。
