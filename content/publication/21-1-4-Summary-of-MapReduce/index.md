@@ -1,7 +1,6 @@
 ---
 title: Summary of MapReduce
-
-summary: MapReduce: Simplified Data Processing on Large Clusters精读
+summary: MapReduce - Simplified Data Processing on Large Clusters精读
 authors:
 - Minel Huang
 date: “2021-01-04T00:00:00Z”
