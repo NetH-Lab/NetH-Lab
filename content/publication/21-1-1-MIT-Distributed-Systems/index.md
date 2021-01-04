@@ -18,7 +18,7 @@ featured: false
 
 ## 01 Introduction
 
-参考资料：[MIT lecture](https://www.youtube.com/watch?v=cQP8WApzIQQ&t)
+参考资料：[MIT lecture 01](https://www.youtube.com/watch?v=cQP8WApzIQQ&t); [Paper: MapReduce]()
 
 分布式系统：a set of cooperating computers communicated with each other over networked to get some coherent task done.
 
@@ -42,7 +42,7 @@ paper中描述的东西：
 
 ![](./1-1.jpg)
 
-我们打算使用3台机器分别处理1，2，3号文件，那么首先文件会进入Map函数，将**一个文件中的数据处理成(k, v)组合**，(a, 1)代表词汇a出现了1次；而后，将所有的k=a的(k, v)输入进Reduce函数，b和c同理，在Reduce函数里做**多个(k, v)的运算，使之输出1个(k,v)**。最终，我们实现了统计词汇的功能。
+我们打算使用3台机器分别处理1，2，3号文件，那么首先文件会进入Map函数，将**一个文件中的数据（一个k-v pair）处理成一组k-v pairs**，(a, 1)代表词汇a出现了1次，（b, 1）代表词汇b出现了1次；而后，将所有的k=a的(k, v)输入进Reduce函数，b和c同理，在Reduce函数里做**多个(k, v)的运算，使之输出1个(k,v)**。最终，我们实现了统计词汇的功能。
 
 在MapReduce中，Map负责将一个文件分解为多个(k, v)组合，Reduce负责将多个(k, v)合并成1个v，我们发现在编写Map函数或Reduce函数时，不会意识到这些函数是运行在分布式系统中的，也即，MapReduce实现了abstraction的目标。
 
@@ -50,5 +50,17 @@ paper中描述的东西：
 
 下面我们要着重思考的是，MapReduce framework如何处理上一小节所提出的问题，比如Fault-tolerance等。
 
+课程到此已经结束，若对MapReduce有兴趣请参考[Summary of MapReduce]()
 
+## 02 RPC and Threads
+
+参考资料：[MIT lecture 02](https://www.youtube.com/watch?v=gA4YXUJX7t8)
+
+Go语言：good support for threads and locking and synchronization, 它的优势是type safe and memory safe，所以go program很难出现由于内存而导致的bug
+
+Threads：main tool to manage concurrency in programs 
+
+为什么使用线程：1. I/O concurrency：指在多个activities中，每个activity都可以有它自己的point来标明自己运行在哪里，故可以保证不会出错。那么一台机子上就可以通过线程管理，来运行多个activities。  2. parallelism：一个CPU可以同时运行多个threads，从而加速。  3. Convenience：运行一些周期性函数
+
+thread challenges：share memory导致be easy to get bug，两个线程同时对一个内存进行操作而产生的问题，成为RACE。解决办法可以使用locks。第二个问题是coordination，即两个线程需要进行协作，比如为交互一些信息而带来的等待，解决的办法有channels, condition variables, wait group。最后一个问题是Deadlock
 
