@@ -64,3 +64,13 @@ Threads：main tool to manage concurrency in programs
 
 thread challenges：share memory导致be easy to get bug，两个线程同时对一个内存进行操作而产生的问题，成为RACE。解决办法可以使用locks。第二个问题是coordination，即两个线程需要进行协作，比如为交互一些信息而带来的等待，解决的办法有channels, condition variables, wait group。最后一个问题是Deadlock
 
+## 03 GFS
+
+参考资料：[MIT lecture 03](https://www.youtube.com/watch?v=EpIgvowZr00)
+
+目标：big storage systems
+
+为什么hard：
+
+
+
