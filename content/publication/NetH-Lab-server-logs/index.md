@@ -14,6 +14,8 @@ tags:
 featured: false
 ---
 
-ubuntu服务器安装：[Link](https://neth-lab.netlify.app/publication/20-12-28-ubuntu-server-install/)
+更新时间：2021-01-02
+
+前置资料：ubuntu服务器安装：[Link](https://neth-lab.netlify.app/publication/20-12-28-ubuntu-server-install/)
 
 2021-1-2 安装docker.io以运行.sh脚本。安装JAVA 8，pdsh，pip，以支持Hadoop

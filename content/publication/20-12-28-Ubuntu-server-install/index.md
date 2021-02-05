@@ -13,6 +13,8 @@ tags: ["Ubuntu"]
 featured: false
 ---
 
+更新时间：2020-12-18
+
 参考资料：
 
 1. 官方文档：https://ubuntu.com/tutorials/install-ubuntu-server#1-overview

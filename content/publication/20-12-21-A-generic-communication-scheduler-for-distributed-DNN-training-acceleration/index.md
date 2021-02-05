@@ -1,12 +1,12 @@
 ---
-title: A generic communication scheduler for distributed DNN training acceleration
+title: Summary of A generic communication scheduler for distributed DNN training acceleration
 
 summary: 论文学习笔记与总结
 authors:
 - Minel Huang
 
-date: “2020-11-15T00:00:00Z”
-publishDate: "2020-11-15T00:00:00Z"
+date: “2020-12-21T00:00:00Z”
+publishDate: "2020-12-21T00:00:00Z"
 
 publication_types: ["0"]
 
@@ -16,7 +16,9 @@ tags:
 featured: false
 ---
 
-论文：A generic communication scheduler for distributed DNN training acceleration
+更新时间：2020-12-21
+
+参考资料：论文 - A generic communication scheduler for distributed DNN training acceleration
 
 ## **问题**
 

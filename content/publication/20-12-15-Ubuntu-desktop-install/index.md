@@ -10,11 +10,11 @@ publishDate: "2020-12-15T00:00:00Z"
 
 publication_types: ["0"]
 
-tags: ["Ubuntu", "基础知识"]
+tags: ["Ubuntu"]
 featured: false
 ---
 
-
+更新时间：2020-12-15
 
 ## 使用VMWare安装Ubuntu
 

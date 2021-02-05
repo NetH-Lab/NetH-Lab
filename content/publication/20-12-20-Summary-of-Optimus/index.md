@@ -1,12 +1,12 @@
 ---
-title: Optimus an efficient dynamic resource scheduler for deep learning clusters
+title: Summary of Optimus an efficient dynamic resource scheduler for deep learning clusters
 
 summary: Optimus学习笔记与总结
 authors:
 - Minel Huang
 
-date: “2020-11-15T00:00:00Z”
-publishDate: "2020-11-15T00:00:00Z"
+date: “2020-12-20T00:00:00Z”
+publishDate: "2020-12-20T00:00:00Z"
 
 publication_types: ["0"]
 
@@ -16,7 +16,9 @@ tags:
 featured: false
 ---
 
-论文：Optimus an efficient dynamic resource scheduler for deep learning clusters
+更新时间：2020-12-20
+
+参考资料：论文：Optimus an efficient dynamic resource scheduler for deep learning clusters
 
 ## **DML模型训练流程**
 

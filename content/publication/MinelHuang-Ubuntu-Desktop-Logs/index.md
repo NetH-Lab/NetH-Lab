@@ -14,7 +14,9 @@ tags:
 featured: false
 ---
 
-ubuntu桌面版安装：[Link](https://neth-lab.netlify.app/publication/20-12-15-ubuntu-desktop-install/)
+更新时间：2021-02-05
+
+前置资料：ubuntu桌面版安装：[Link](https://neth-lab.netlify.app/publication/20-12-15-ubuntu-desktop-install/)
 
 2021-1-25 重新安装ubuntu_desktop_20.04.1, 安装build-essential, vim, VMware Tools, net-tools
 
