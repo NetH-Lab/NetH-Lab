@@ -54,4 +54,15 @@ Reduce：输入为intermediate key I和a set of intermediate values，之后merg
 master节点维护以下几种数据结构：
 
 - map / reduce task state: *idle*, *in-progress*, or *completed* 
-- worker标识
+- worker标识（仅标识non-idle tasks）
+
+map task结束后，中间值要传递给reduce task，这一过程是需要通过master节点调度的。故master节点会存储每个map task所运行的位置和产生的R intermediate file的大小。在map task结束后，worker会将这些值update至master节点，而后信息将被传递给运行 in-progress reduce tasks的workers。
+
+### 3.2 Fault Tolerance
+
+#### 3.2.1 Handing Worker Failures
+
+如何判定worker出现故障？答：master节点周期性ping各个worker节点，若没有收到答复，则代表该worker故障。
+
+针对idle worker节点，故障后仅代表不可用即可；对于in-progress节点，很明显其运行结果是不可信的，故在master节点中将其全部标记为idle，等待重分配任务；对于completed节点，map task的运行结果是保存在worker本地磁盘中，结果不可信，故此map task需要重新运行，reduce task的运行结果已经保存至GFS（Global File System）中，结果是可信的，故不需要重新运行。
+
