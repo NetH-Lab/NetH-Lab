@@ -15,7 +15,7 @@ tags:
 featured: false
 ---
 
-更新时间：2021/02/05
+更新时间：2021/02/22
 
 参考资料：论文 - Apache Hadoop YARN: Yet Another Resource Negotiator
 
@@ -57,3 +57,18 @@ Requirement9：Flexible Resource Model。MapReduce中包含Map阶段和Reduce阶
 Requirement10：向后兼容。
 
 ## 3 Architecture
+
+### 3.1 Overview
+
+Hadoop YARN架构由两种节点组成：RM（Resource manager）和NM（Node manager）。RM负责为相互竞争的应用提供资源，具有认证和仲裁功能，根据不用application的需求，RM为其安排优先级和硬件资源。当RM为某个应用分配资源后，它会向该应用发布一个lease（称为container），container是资源的逻辑表达（e.g. <2GB RAM, 1 CPU>），并与某个特定的节点绑定。与RM互动的实体为NM，通信方式为heartbeat，NM负责监视节点资源状态，报错以及管理container生命周期。
+
+RM包含两个组件：scheduler和application manager，其中scheduler单纯的为各个引用分配资源（container），application manager负责接受Jobs的请求，以及监控application master。
+
+一个完整的流程：所有的Jobs被提交给RM，而后进入admission control阶段，这一阶段将完成安全认证工作。接着RM将为Jobs分配资源，一旦scheduler有足够多的资源，Jobs的状态将转变为running。详细来说，RM中的scheduler将为每个应用分配container（实际还是与NM通信），而后container中开始运行此应用。
+
+ApplicationMaster（简称AM）负责管理该应用的所有lifecycle，包括动态增加或减少资源消耗，流管理（e.g. 在maps函数输出后运行reducers），处理错误，本地优化等，运行在container中。
+
+通常，AM需要利用多个节点上的资源（cpus, RAM, disks等）完成一份job。AM向RM发布resource requests，这包括对container的地理位置偏好和性质需求，RM根据requests和资源管理策略，尽可能安排负荷requests的资源至各个应用。当一个resource被分配给一个AM时，RM会生成一个lease，并提交给AM。当AM接受到container，应用开始运行。
+
+### 3.2 Resource Manager (RM)
+
