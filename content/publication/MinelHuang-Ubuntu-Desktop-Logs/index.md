@@ -14,7 +14,7 @@ tags:
 featured: false
 ---
 
-更新时间：2021-02-05
+更新时间：2021-02-23
 
 前置资料：ubuntu桌面版安装：[Link](https://neth-lab.netlify.app/publication/20-12-15-ubuntu-desktop-install/)
 
@@ -26,5 +26,7 @@ featured: false
 2. 安装ssh和pdsh、
 3. 安装Hadoop 3.2.1
 
-202
+2021-02-23
+
+1. 修改主机名至ubuntu01（用于hadoop集群），配置静态ip
 
