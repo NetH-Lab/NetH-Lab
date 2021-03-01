@@ -136,7 +136,7 @@ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
 
 如果报错：HDFS_NAMENODE_USER defined，解决方法如下：
 
-打开***`$HADOOP_HOME/etc/hadoop/hadoop-env.sh`***，添加如下代码：
+打开***`$HADOOP_HOME/etc/hadoop/hadoop-env.sh`***，添加如下代码，这里我们设置hadoop的运行账户为root：
 
 ```
 export HDFS_NAMENODE_USER=root
@@ -161,3 +161,10 @@ PDSH_RCMD_TYPE=ssh PDSH_SSH_ARGS_APPEND="${HADOOP_SSH_OPTS}" pdsh \
 这是因为启动的账户我们设置为root，但是ssh免密登录并没有设置为root账户，故通过su root进入root账户后，重新配置ssh免密登录即可。
 
 同理，若想在非root账户上运行hadoop，请修改hadoo-env.sh中的账户
+
+在对应账户输入jps，若namenode, datanode, secondary namenode均存在于java进程中，代表hadoop启动成功
+
+若使用hdfs启动成功，YARN也应该可以启动成功，以上为笔者配置hadoop时遇到的一些问题以及解决办法。
+
+
+
