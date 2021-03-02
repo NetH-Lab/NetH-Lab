@@ -88,3 +88,37 @@ $$
 |V_{FED} - V_{SUM}|<δ
 $$
 则我们称之为，联邦学习算法有δ的精度损耗。
+
+#### 1.1.2 Privacy
+
+此章节review一些不同的FL隐私保护技术，并比较
+
+**Secure MultipartyComputation (SMC)**：在SMC中，每个用户（party）仅知道自己的输入和输出，对其余的信息一无所知，属零知识技术。但此技术需要**复杂**的计算，并且该算法并不能**高效**的实现。该算法允许将部分知识公开，也可以降低安全性以提高运行效率。相关前沿研究（应用于FL）请参阅论文2.2节。
+
+**Differential Privacy**：或称为k - anonymity，其手法为在data内加入噪声，或使用generalization方法来令敏感信息模糊化。然而，该方式仍需要让信息传递到其他地方，并多数算法中精度和隐私性是不可兼得的。相关前沿研究（应用于FL）请参阅论文2.2节。
+
+**Homomorphic Encryption**：该方式通过加密交换中的参数以保护数据，与differential privacy protection的区别是，数据和model本身不被传送，也不能被第三方使用部分数据猜测出来，这意味着原始数据是不易泄露的。相关前沿研究（应用于FL）请参阅论文2.2节。
+
+##### 1.1.2.1 间接信息泄露
+
+早期的FL学习过程中，中间结果（如stochastic gradient descent. SGD）是暴露给其他用户的，但这一暴露行为并没有得到安全批准，重要的是，gradients的泄露会暴露部分重要数据信息，例如image pixels（图像像素）。攻击者可以利用这一漏洞，在他人数据中插入后门（back door），甚至可以在全局模型中插入后门。
+
+因此，研究人员开始考虑使用区块链（blockchain）作为FL平台，相关前沿研究（应用于FL）请参阅论文2.2.1节。
+
+### 1.2 FL分类（Categorization）- 基于数据的分布式特性
+
+数据由矩阵表示，row代表样本，column代表特征。有些dataset使用三维矩阵，X为feature space，Y为label space，I为ID space。此论文中，FL被分为横向FL、纵向FL和联邦迁移学习（基于feature和sample ID分布特征）。
+
+#### 1.2.1 Horizontal Federated Learning（横向联邦学习）
+
+又称为sample-based FL，指datasets中feature space相同，samples不同。例如，两个银行拥有不同的客户群体（samples），二者客户的交集很小，但银行业务（feature）却是相似的。
+
+横向联邦学习可以表示为，
+$$
+X_i=X_j, Y_i=Y_j,I_i≠I_j
+$$
+在横向联邦学习系统中，通常假设参与者是诚实的，安全性是针对那些honest-but-curious的服务器，即只有服务器会危害用户数据的隐私性。此类型FL算法请见论文2.3.1节。
+
+![](./02.jpg)
+
+#### 1.2.2
