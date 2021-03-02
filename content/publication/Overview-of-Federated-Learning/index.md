@@ -14,7 +14,7 @@ tags:
 featured: false
 ---
 
-更新时间：2021/03/01
+更新时间：2021/03/02
 
 参考资料：github论文库[Awesome-Federated-Learning](https://github.com/chaoyanghe/Awesome-Federated-Learning)
 
@@ -67,7 +67,12 @@ FL学习是一种迭代学习，一次迭代可以被分解为一组client-serve
 
 **符合法律**
 
-## 1 FL综述
+## 1 FL综述-笔记
 
-参考资料：论文 Federated Machine Learning: Concept and Applications
+参考资料：论文 Federated Machine Learning: Concept and Applications（Qiang Yang等. 2019）
 
+### 1.1 Overview
+
+#### 1.1.1 Definition of FL
+
+设有N个数据拥有者\\({F_1, ... , F_N}\\)
