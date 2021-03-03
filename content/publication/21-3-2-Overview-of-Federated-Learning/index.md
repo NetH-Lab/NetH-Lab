@@ -69,7 +69,10 @@ FL学习是一种迭代学习，一次迭代可以被分解为一组client-serve
 
 ## 1 FL综述-笔记
 
-参考资料：论文 Federated Machine Learning: Concept and Applications（Qiang Yang等. 2019）
+参考资料：
+
+- 论文 Federated Machine Learning: Concept and Applications（Qiang Yang等. 2019）
+- 知乎 [详解联邦学习Federated Learning. 沐清予](https://zhuanlan.zhihu.com/p/79284686)
 
 ### 1.1 Overview
 
@@ -105,11 +108,11 @@ $$
 
 因此，研究人员开始考虑使用区块链（blockchain）作为FL平台，相关前沿研究（应用于FL）请参阅论文2.2.1节。
 
-### 1.2 FL分类（Categorization）- 基于数据的分布式特性
+#### 1.1.3 FL分类（Categorization）- 基于数据的分布式特性
 
 数据由矩阵表示，row代表样本，column代表特征。有些dataset使用三维矩阵，X为feature space，Y为label space，I为ID space。此论文中，FL被分为横向FL、纵向FL和联邦迁移学习（基于feature和sample ID分布特征）。
 
-#### 1.2.1 Horizontal Federated Learning（横向联邦学习）
+##### 1.1.3.1 Horizontal Federated Learning（横向联邦学习）
 
 又称为sample-based FL，指datasets中feature space相同，samples不同。例如，两个银行拥有不同的客户群体（samples），二者客户的交集很小，但银行业务（feature）却是相似的。
 
@@ -121,4 +124,89 @@ $$
 
 ![](./02.jpg)
 
-#### 1.2.2
+##### 1.1.3.2 Vertical Federated Learning（纵向联邦学习）
+
+指的是，ML算法保护纵向数据，包括合作统计分析（cooperative statistical analysis）、关联规则挖掘（association rule mining）、安全线性回归（secure linear regression）、分类（classification）、梯度下降（gradient descent）。
+
+纵向联邦学习中的datasets使用相同的sample ID space，但feature space不同，比如两个在同一城市的公司，但业务不同，一个为银行，另一个为商业公司。他们的用户都是一个区域内的居民，且大幅重合，但银行记录的是用户的收入、消费行为和信用，而商务公司维护的是用户的借贷和购买历史，故feature space是不同的。
+
+在这样的情况下，进行的联邦学习旨在聚合不同的features并计算training loss和gradients，并对用户的数据进行保护，最终使两家公司都受益，并且各公司的数据是没有泄露的。
+
+纵向联邦学习可以表示为，
+$$
+X_i≠X_j, Y_i≠Y_j,I_i=I_j
+$$
+纵向联邦学习系统通常假定参与者是honest but curious。安全性定义是，对手只能从其损坏的客户端学习数据，而不能从其他客户端学习超出输入和输出所显示内容的数据。为在两个parties间实施安全计算，有时需要引进一个半诚实第三方party（semi-honest third party, STP），意思是STP不会与其中任一party密谋，使用SMC来保证协议的隐私保证。训练结束后，各个party仅能获取到与它自己自己feature相关的model parameters，因此，在inference期间，双方还需要合作以生成output。
+
+![](./03.jpg)
+
+##### 1.1.3.3 FederatedTransfer Learning（FTL，联邦迁移学习）
+
+当datesets的sample ID space和feature space都不相同时，使用联邦迁移学习。假设有两个组织，一为中国的银行，另一为美国的e-commerce公司，这两家公司的用户基本不同，特征数据也不同，但在这种情况下，可使用迁移学习，以提供方案。
+
+纵向联邦学习可以表示为，
+$$
+X_i≠X_j, Y_i≠Y_j,I_i≠I_j
+$$
+![](04.jpg)
+
+#### 1.1.4 FL系统架构
+
+##### 1.1.4.1 横向联邦学习
+
+![](05.jpg)
+
+上图为典型横向联邦学习系统架构，在一个parameter或cloud server的帮助下，k个参与者合作完成一次训练，这里假设参与者是诚实的，server是honest but curious，故数据从participants到server这一过程中不存在泄露。系统中的training process如下：
+
+- **Step 1**：participants在本地计算training gradients，将部分gradients掩盖，并将masked results发送至server
+- **Step 2**：server开始聚合，这一过程中server不会知晓参与者的任何信息
+- **Step 3**：server返回聚合结果
+- **Step 4**：participants update各自模型
+
+迭代上述过程直至loss function收敛。
+
+##### 1.1.4.2 纵向联邦学习
+
+![](./06.jpg)
+
+上图为系统框图。假设A B需要联合训练一个模型，B拥有模型所需的label data，但因为安全需求，A和B不能直接交换数据。为使训练过程是可以保持数据机密性的，引入第三方C，C完全可信，此时系统包含两个part。
+
+part 1：加密实体对其（Encrypted entity alignment），由于两个公司的用户不一致，system需要将ID对齐，这一过程需要加密，即A和B不会在这一过程中获取到任何有用的信息，比如哪些用户是重叠的。
+
+part 2：加密模型训练（Encrypted model training），训练过程如下：
+
+- Step 1：C生成密钥对，发送公钥至A和B
+- Step 2：A和B加密并交换中间结果，以进行梯度和损耗计算
+- Step 3：A和B加密梯度，并各自加入一个additional mask，B还需计算加密损耗，A和B将加密数据发送至C
+- Step 4：C解密，并将已解密的gradients和loss发送给A和B，A B解掩码，并各自更新model parameters
+
+在此，论文中使用线性回归和同构加密方式作为例子来阐述训练过程，在线性回归模型中，我们需要安全的计算出loss和gradients。假设learning rate为η，regularization parameter λ，dataset定义为：
+$$
+\{x_i^A\}_i∈D_A, \{x_i^B,y_i\}_i∈D_B
+$$
+其中x为feature，y为label
+
+模型参数定义为：
+$$
+Θ_A, Θ_B
+$$
+training objective（目标函数）为：
+
+![](./07.jpg)
+
+![](./08.jpg)
+
+梯度可表示为：
+
+![](./09.jpg)
+
+table 1和2包含更详细的过程。如下：
+
+![](./10.jpg)
+
+![](./11.jpg)
+
+##### 1.1.4.3 联邦迁移学习
+
+类比1.1.4.2，A和B仅有一小部分重合的datasets，那么A和B交换的是一些有用的intermediate results
+
