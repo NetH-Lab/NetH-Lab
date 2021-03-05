@@ -41,6 +41,20 @@ url_pdf: ""
 
 # 1 初识联邦学习
 
+## 1.1 Overview
+
 通过wiki、blog、文献综述手段了解联邦学习（FL），学习结果已总结成blog：
 
 [Overview of Federated Learning](https://neth-lab.netlify.app/publication/21-3-2-overview-of-federated-learning/)
+
+## 1.2 Typical Algorithms of Federated Learning
+
+通过学习相关算法，进一步了解FL，学习成果见下面blog
+
+[Typical Algorithms of Federated Learning](https://neth-lab.netlify.app/publication/typical-federated-learning-algorithms/)
+
+# 2 FATE系统学习
+
+## 2.1 Architecture
+
+了解FATE的组成部分
