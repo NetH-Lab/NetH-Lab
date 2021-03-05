@@ -1,16 +1,17 @@
 ---
-title: Typical Federated Learning Algorithm
+title: Structure of FATE
 
-summary: 记录典型FL算法学习过程以及代码实现
+summary: FATE系统解读
 authors:
 - Minel Huang
-date: “2021-03-03T00:00:00Z”
-publishDate: "2021-03-03T00:00:00Z"
+date: “2021-03-04T00:00:00Z”
+publishDate: "2021-03-04T00:00:00Z"
 
 publication_types: ["0"]
 
 tags: 
 - Federated Learning
+- FATE
 featured: false
 ---
 
@@ -18,7 +19,7 @@ featured: false
 
 参考资料：
 
-- [FATE Github](https://github.com/FederatedAI/FATE/blob/master/python/federatedml/README_zh.rst)
+- [FATE documents](https://fate.readthedocs.io/en/latest/index.html)
 
 # 1 Federated Logistic Regression
 
