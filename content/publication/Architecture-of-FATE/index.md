@@ -4,6 +4,7 @@ title: Architecture of FATE
 summary: FATE系统解读
 authors:
 - Minel Huang
+- Zobin Huang
 date: “2021-03-04T00:00:00Z”
 publishDate: "2021-03-04T00:00:00Z"
 
@@ -217,3 +218,167 @@ flow job submit -c ./examples/dsl/v1/hetero_logistic_regression/test_hetero_lr_t
 
 ### 2.3.3 fate server解读
 
+fate_flow_server.py为fate-flow的启动函数，其中初始化Runtime，PrivilegeAuth，ServiceUtils，ResourceManager，Detector，DAGScheduler，ThreadPoolExecutor等模块
+
+在程序开始，可以看到
+
+```python
+manager = Flask(__name__)
+```
+
+显然，fate-server是基于Flask建立http服务器的，该文件所有程序如下：
+
+```python
+'''
+Initialize the manager
+'''
+
+manager = Flask(__name__)
+
+
+@manager.errorhandler(500)
+def internal_server_error(e):
+    stat_logger.exception(e)
+    return get_json_result(retcode=100, retmsg=str(e))
+
+
+if __name__ == '__main__':
+    manager.url_map.strict_slashes = False
+    app = DispatcherMiddleware(
+        manager,
+        {
+            '/{}/data'.format(API_VERSION): data_access_app_manager,
+            '/{}/model'.format(API_VERSION): model_app_manager,
+            '/{}/job'.format(API_VERSION): job_app_manager,
+            '/{}/table'.format(API_VERSION): table_app_manager,
+            '/{}/tracking'.format(API_VERSION): tracking_app_manager,
+            '/{}/pipeline'.format(API_VERSION): pipeline_app_manager,
+            '/{}/permission'.format(API_VERSION): permission_app_manager,
+            '/{}/version'.format(API_VERSION): version_app_manager,
+            '/{}/party'.format(API_VERSION): party_app_manager,
+            '/{}/initiator'.format(API_VERSION): initiator_app_manager,
+            '/{}/tracker'.format(API_VERSION): tracker_app_manager,
+            '/{}/forward'.format(API_VERSION): proxy_app_manager
+        }
+    )
+    # init
+    # signal.signal(signal.SIGTERM, job_utils.cleaning)
+    signal.signal(signal.SIGCHLD, job_utils.wait_child_process)
+    # init db
+    init_flow_db()
+    init_arch_db()
+    # init runtime config
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--standalone_node', default=False, help="if standalone node mode or not ", action='store_true')
+    args = parser.parse_args()
+    RuntimeConfig.init_env()
+    RuntimeConfig.set_process_role(ProcessRole.DRIVER)
+    PrivilegeAuth.init()
+    ServiceUtils.register()
+    ResourceManager.initialize()
+    Detector(interval=5 * 1000).start()
+    DAGScheduler(interval=2 * 1000).start()
+    thread_pool_executor = ThreadPoolExecutor(max_workers=GRPC_SERVER_MAX_WORKERS)
+    stat_logger.info(f"start grpc server thread pool by {thread_pool_executor._max_workers} max workers")
+    server = grpc.server(thread_pool=thread_pool_executor,
+                         options=[(cygrpc.ChannelArgKey.max_send_message_length, -1),
+                                  (cygrpc.ChannelArgKey.max_receive_message_length, -1)])
+
+    proxy_pb2_grpc.add_DataTransferServiceServicer_to_server(UnaryService(), server)
+    server.add_insecure_port("{}:{}".format(IP, GRPC_PORT))
+    server.start()
+    stat_logger.info("FATE Flow grpc server start successfully")
+    # start http server
+    try:
+        stat_logger.info("FATE Flow http server start...")
+        run_simple(hostname=IP, port=HTTP_PORT, application=app, threaded=True)
+    except OSError as e:
+        traceback.print_exc()
+        os.kill(os.getpid(), signal.SIGKILL)
+    except Exception as e:
+        traceback.print_exc()
+        os.kill(os.getpid(), signal.SIGKILL)
+
+    try:
+        while True:
+            time.sleep(_ONE_DAY_IN_SECONDS)
+    except KeyboardInterrupt:
+        server.stop(0)
+        sys.exit(0)
+```
+
+在这里说下笔者的理解：
+
+在FATE中，实际上有两个主体系统，分别是分布式系统eggroll，负责将节点集群起来（类似于Hadoop，Spark）；另一个是Flask，负责管理http server。FATE实际上是开设了一个https server，运行在eggroll上，这样集群中的机器通过特定的端口访问时，eggroll会将这些包扔向https server，集群的问题解决了。而后FATE需要将自己的系统编写成一个个apps，而后交付给Flask进行管理。
+
+由下向上叙述一遍FATE系统：
+
+首先机器通过spark/hadoop行程集群，而后通过eggroll捕捉特定的端口中的包，fate创建者利用eggroll，将fate所需的包扔向一个https server，之后在https server上跑自己的apps，所有的apps通过Flask管理。
+
+由上向下叙述一遍FATE系统：
+
+一个client，他想在集群上跑一个联邦学习，训练一个模型。那么通过fate client，向fate server（一个https server）提交submit job请求。https server中有一个专门处理request（http请求，由fate client发出）的app，收到这个job请求后，运行另一个app，叫做job_app，将client发送的job请求插入到一个queue里。该server上的另一个app，叫做tracking_app，检测这个queue，然后调用每个job需要的executor，开始运行job，还有一些app负责scheduler任务，调整这个queue。最终executor完成任务后，再将结果返回给client。总结后如下图：
+
+![](./14.png)
+
+那么在工作集群中，FATE又是怎么运行的呢？
+
+![](./15.jpg)
+
+现在有两家公司，A（左边）和B（右边），每家公司都有一个工作集群，每个集群有n台计算机。
+
+那么每台计算机需要安装一个fate-cluster，再指定一台计算机作为fate-server，由于eggroll支持分布式的FL，所以当fate-server开始时运行一个FL训练时，所有的机器会同时工作，进行并行加速。
+
+假设A和B要共同完成一项FL工作，则A和B的fate-server通过rollsite（http访问）完成通信以及数据交互。
+
+# 3 FATE Server内部架构
+
+说完了fate系统的大体架构，我们只剩下最后一个模糊的地方，即通过flask创建的fate-server中，各个apps是如何联系起来的，本章节用于解决该问题。
+
+fate-server基于flask框架制作，flask通过监视http请求中的url，根据url将该request分类，通过.route传送至不同函数中，例如：
+
+```python
+@manager.route('/submit', methods=['POST'])
+def submit_job():
+```
+
+即将url中带有/submit的request传送至submit_job()这个函数中
+
+故其入口在于flask中的app，在fate源码中存放在./python/fate_flow/apps
+
+## 3.1 job_app.py
+
+在使用flow job submit上传一个FL任务，追溯fate_flow_client.py，可以发现最后通过requests.post访问url+submit，携带的数据为我们使flow job submit上传的json数据
+
+故需要寻找fate-server在接受到一个/submit的post请求时，处理该请求的函数
+
+根据flask框架我们可以判断，在apps中应包含一个.route('/submit')，最终在job_app.py发现该函数，源码为：
+
+```python
+@manager.route('/submit', methods=['POST'])
+def submit_job():
+    work_mode = JobRuntimeConfigAdapter(request.json.get('job_runtime_conf', {})).get_job_work_mode()
+    detect_utils.check_config({'work_mode': work_mode}, required_arguments=[('work_mode', (WorkMode.CLUSTER, WorkMode.STANDALONE))])
+    submit_result = DAGScheduler.submit(request.json)
+    return get_json_result(retcode=0, retmsg='success',
+                           job_id=submit_result.get("job_id"),
+                           data=submit_result)
+
+```
+
+可以看到，json数据最终被submit到DAGScheduler中
+
+## 3.2 ./python/scheduler/dag_scheduler.py
+
+由第二节的分析，DAG是负责调整job的处理顺序函数
+
+dag_scheduler.submit，输入为json文件，通过Job类将json文件中的job信息承载下来
+
+之后使用FederatedScheduler.create_job(job=job)函数创建FLscheduler，若创建成功，则将结果返回至job_app.py
+
+## 3.3 ./python/operation/task_executor.py
+
+该函数为执行器
+
+某一函数将job信息（初始为）
