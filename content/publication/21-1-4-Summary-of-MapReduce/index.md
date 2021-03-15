@@ -1,6 +1,6 @@
 ---
 title: Summary of MapReduce
-summary: MapReduce - Simplified Data Processing on Large Clusters精读
+summary: [分布式计算]MapReduce - Simplified Data Processing on Large Clusters精读
 authors:
 - Minel Huang
 date: “2021-01-04T00:00:00Z”
@@ -9,13 +9,15 @@ publishDate: "2021-01-04T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
+- Study Notes
 - Distributed Systems
 featured: false
 ---
 
 更新时间：2020/01/04
 
-参考资料：[Paper: MapReduce](https://web.a.ebscohost.com/ehost/pdfviewer/pdfviewer?vid=1&sid=9013be7a-0da3-4746-a036-a83a903ca665%40sdc-v-sessmgr01)
+参考资料：
+1. [Paper: MapReduce](https://web.a.ebscohost.com/ehost/pdfviewer/pdfviewer?vid=1&sid=9013be7a-0da3-4746-a036-a83a903ca665%40sdc-v-sessmgr01)
 
 ## 01 Introduction
 

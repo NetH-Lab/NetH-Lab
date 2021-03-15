@@ -1,7 +1,7 @@
 ---
 title: Summary of Raft Algorithm
 
-summary: Raft算法学习笔记与总结
+summary: [分布式一致性算法][论文选读]Raft算法学习笔记与总结
 authors:
 - Minel Huang
 
@@ -11,8 +11,10 @@ publishDate: "2020-11-15T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
-- Raft
+- Study Notes
+- Distributed Systems
 - Distributed Consensus Algorithms
+- Raft Algorithm
 featured: false
 ---
 
@@ -22,9 +24,9 @@ featured: false
 
 1. 《分布式一致性算法开发实践》. 赵辰. 北京大学出版社
 2.  Ongaro D, Ousterhout J. In search of an understandable consensus algorithm[C]//2014 {USENIX} Annual Technical Conference ({USENIX}{ATC} 14). 2014: 305-319.
-3.  https://www.cnblogs.com/davidwang456/articles/9001331.html
-4.  https://www.cnblogs.com/xybaby/p/10124083.html
-5. http://thesecretlivesofdata.com/raft/
+3.  [深入剖析区块链的共识算法 Raft & PBFT](https://www.cnblogs.com/davidwang456/articles/9001331.html)
+4.  [一文搞懂Raft算法](https://www.cnblogs.com/xybaby/p/10124083.html)
+5.  [Videos of Raft](http://thesecretlivesofdata.com/raft/)
 
 ## **学习笔记**
 

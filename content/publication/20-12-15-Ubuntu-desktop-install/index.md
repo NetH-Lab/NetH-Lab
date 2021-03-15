@@ -1,7 +1,7 @@
 ---
 title: Ubuntu桌面版安装
 
-summary: 关于Ubuntu安装的学习历程的总结。
+summary: [Linux工具安装]Ubuntu桌面版安装步骤
 authors:
 - Minel Huang
 - Zobin Huang
@@ -10,7 +10,9 @@ publishDate: "2020-12-15T00:00:00Z"
 
 publication_types: ["0"]
 
-tags: ["Ubuntu"]
+tags: 
+- Tools
+- Ubuntu
 featured: false
 ---
 
