@@ -1,7 +1,7 @@
 ---
 title: Ubuntu服务器版安装
 
-summary: [Linux工具安装]关于Ubuntu安装的学习历程的总结。
+summary: '[Linux工具安装]关于Ubuntu安装的学习历程的总结'
 authors:
 - Minel Huang
 date: “2020-12-28T00:00:00Z”
