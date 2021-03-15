@@ -10,6 +10,7 @@ publishDate: "2021-01-01T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
+- Study Notes
 - Distributed Systems
 featured: false
 ---

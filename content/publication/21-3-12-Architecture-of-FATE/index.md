@@ -1,7 +1,7 @@
 ---
 title: Architecture of FATE
 
-summary: FATE系统解读
+summary: '[联邦学习系统][FATE]FATE系统解读'
 authors:
 - Minel Huang
 - Zobin Huang
@@ -11,12 +11,14 @@ publishDate: "2021-03-04T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
+- Tools
+- Study Notes
 - Federated Learning
 - FATE
 featured: false
 ---
 
-更新时间：2021-03-05
+更新时间：2021-03-12
 
 参考资料：
 
@@ -381,4 +383,4 @@ dag_scheduler.submit，输入为json文件，通过Job类将json文件中的job�
 
 该函数为执行器
 
-某一函数将job信息（初始为）
+job信息应已经存储于数据库中，该函数提取数据库中的job信息，将job中的function list提取出来，转变为BaseModel类。随后BaseModel按function list依次执行federatedML中的算法函数。

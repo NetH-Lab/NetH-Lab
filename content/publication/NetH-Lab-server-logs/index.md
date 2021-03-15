@@ -1,7 +1,7 @@
 ---
 title: NetH-Lab服务器管理日志
 
-summary: 记录服务器内容修改内容
+summary: '[日志]记录服务器内容修改内容'
 authors:
 - Minel Huang
 date: “2021-01-02T00:00:00Z”
@@ -10,7 +10,7 @@ publishDate: "2021-01-02T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
-- 入站必读
+- Logs
 featured: false
 ---
 

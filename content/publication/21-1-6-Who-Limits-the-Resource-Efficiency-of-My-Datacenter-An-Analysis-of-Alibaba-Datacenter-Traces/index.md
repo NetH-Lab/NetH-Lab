@@ -1,6 +1,6 @@
 ---
 title: Summary of Who Limits the Resource Efficiency of My Datacenter-An Analysis of Alibaba Datacenter Traces
-summary: '论文选读 & 了解现阶段数据中心的瓶颈为何处，以开展后续研究'
+summary: '[数据中心][论文选读]了解现阶段数据中心的瓶颈为何处，以开展后续研究'
 authors:
 - Minel Huang
 date: “2021-01-06T00:00:00Z”
@@ -9,6 +9,7 @@ publishDate: "2021-01-06T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
+- Study Notes
 - Distributed Systems
 - Datacenters
 - Resource Efficiency

@@ -1,7 +1,7 @@
 ---
 title: MinelHuang的Ubuntu桌面版维护日志
 
-summary: 记录对Ubuntu系统的修改
+summary: '[日志]记录对Ubuntu系统的修改'
 authors:
 - Minel Huang
 date: “2021-01-25T00:00:00Z”
@@ -10,6 +10,7 @@ publishDate: "2021-01-25T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
+- Logs
 - Ubuntu
 featured: false
 ---

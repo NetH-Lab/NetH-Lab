@@ -1,6 +1,6 @@
 ---
 title: Paper of Federated Learning - Practical Secure Aggregation for Privacy-Preserving Machine Learning
-summary: 联邦学习论文选读
+summary: '[联邦学习][论文选读]联邦学习论文选读'
 authors:
 - Minel Huang
 date: “2021-03-05T00:00:00Z”
@@ -9,8 +9,9 @@ publishDate: "2021-03-05T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
-- Federated Learning
+- Study Notes
 - Machine Learning
+- Federated Learning
 featured: false
 ---
 

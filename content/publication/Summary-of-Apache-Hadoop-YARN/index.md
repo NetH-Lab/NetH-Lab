@@ -1,6 +1,6 @@
 ---
 title: Summary of Apache Hadoop YARN
-summary: Apache Hadoop YARN 论文精读
+summary: [Hadoop][论文选读]Apache Hadoop YARN 论文精读
 authors:
 - Minel Huang
 date: “2021-02-05T00:00:00Z”
@@ -9,9 +9,9 @@ publishDate: "2021-02-05T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
+- Study Notes
 - Distributed Systems
-- Datacenters
-- Resource efficiency
+- Hadoop
 featured: false
 ---
 

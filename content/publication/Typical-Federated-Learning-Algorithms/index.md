@@ -1,7 +1,7 @@
 ---
 title: Typical Federated Learning Algorithm
 
-summary: 记录典型FL算法学习过程以及代码实现
+summary: '[联邦学习]记录典型FL算法学习过程以及代码实现'
 authors:
 - Minel Huang
 date: “2021-03-03T00:00:00Z”
@@ -10,6 +10,8 @@ publishDate: "2021-03-03T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
+- Study Notes
+- Machine Learning
 - Federated Learning
 featured: false
 ---
