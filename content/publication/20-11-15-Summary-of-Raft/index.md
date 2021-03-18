@@ -1,7 +1,7 @@
 ---
 title: Summary of Raft Algorithm
 
-summary: '[分布式一致性算法][论文选读]Raft算法学习笔记与总结'
+summary: '[分布式一致性算法][标志性论文选读]Raft算法学习笔记与总结'
 authors:
 - Minel Huang
 

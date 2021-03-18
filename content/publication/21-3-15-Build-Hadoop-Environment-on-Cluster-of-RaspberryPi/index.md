@@ -10,7 +10,10 @@ publishDate: "2021-03-15T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
-- Logs
+- Tools
+- Hadoop
+- Raspberry Pi
+- Galaxy
 featured: false
 ---
 
@@ -250,6 +253,8 @@ sbin/start-yarn.sh
 
 ### 2.2.1 xml文件配置
 
+修改core-site.xml，全部改为raspberrypi01
+
 修改mapreduce-site.xml如下：
 
 ```xml
@@ -322,4 +327,30 @@ clustercmd rm -rf ./hadoop-3.2.2/hadoop_tmp/hdfs/datanode/*
 clustercmd rm -rf ./hadoop-3.2.2/hadoop_tmp/hdfs/namenode/*
 ```
 
+我们还需要告知raspberrypi01，谁是master节点，谁是worker节点，在***$HADOOP_HOME/etc/hadoop/\***上创建master文件，写入raspberrypi01，创建workers文件，写入raspberrypi02，raspberrypi03
+
+使用cat命令输入结果如下即是正确的：
+
+![](./2.3.jpg)
+
+检查/etc/hosts，查看主机名和ip映射关系是否一致
+
 为保证所有配置均已生效，将cluster所有节点reboot
+
+重启后，在raspberrypi01上初始化hdfs如下
+
+```bash
+hdfs namenode -format -force
+```
+
+最后开启dfs和yarn
+
+```bash
+start-dfs.sh && start-yarn.sh
+```
+
+打开网址http://192.168.137.101:9870/是否正常开启了所有datanodes
+
+![](./2.4.jpg)
+
+结束。

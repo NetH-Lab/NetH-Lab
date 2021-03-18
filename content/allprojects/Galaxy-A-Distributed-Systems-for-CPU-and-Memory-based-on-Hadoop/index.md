@@ -105,6 +105,8 @@ url_pdf: ""
 
 ### 2.1.1 底层Hadoop系统搭建
 
+1. [树莓派Hadoop集群搭建](https://neth-lab.netlify.app/publication/21-3-15-build-hadoop-environment-on-cluster-of-raspberrypi/)
+
 ## 2.2 资源调度研究
 
 ### 2.2.1 针对机器学习任务的资源调度
