@@ -21,6 +21,12 @@ featured: false
 参考资料：
 
 - [FATE Github](https://github.com/FederatedAI/FATE/blob/master/python/federatedml/README_zh.rst)
+# 0 Overview of Machine Learning
+## 0.1 什么是机器学习
+参考资料：
+1. [博客: 从机器学习谈起](https://www.cnblogs.com/subconscious/p/4107357.html)
+2. [Wiki: Machine Learning](https://en.wikipedia.org/wiki/Machine_learning)
+
 
 # 1 Federated Logistic Regression
 
