@@ -69,6 +69,17 @@ RM包含两个组件：scheduler和application manager，其中scheduler单纯�
 ApplicationMaster（简称AM）负责管理该应用的所有lifecycle，包括动态增加或减少资源消耗，流管理（e.g. 在maps函数输出后运行reducers），处理错误，本地优化等，运行在container中。
 
 通常，AM需要利用多个节点上的资源（cpus, RAM, disks等）完成一份job。AM向RM发布resource requests，这包括对container的地理位置偏好和性质需求，RM根据requests和资源管理策略，尽可能安排负荷requests的资源至各个应用。当一个resource被分配给一个AM时，RM会生成一个lease，并提交给AM。当AM接受到container，应用开始运行。
+![](./3.1.jpg)
+现在我们重新理一遍Hadoop YARN的框架。在YARN中，有两类节点：master和workers，其中master另一个身份为resource manager，用于处理用户的job提交请求和为不同的jobs提供资源；workers另一个身份为node manager，用于和resource manager建立对等实体，建立通信。
 
+用户编写的job实际上是一个app，包括具体要执行的任务，以及一个Application Manager。AM是这个job的管理者，它可以看作一个job的主程序，用于处理job内部的执行过程，管理job运行在哪个资源上，处理job运行中发生的错误等等。RM为不同的job分配资源，用container表示，AM利用自己被分配的container，可能是一个也可能是多个，containers可能都在一个worker节点上也可能在多个workers上。当然，Hadoop YARN提供了一些AM和job模板，比如MapReduce job，也更推荐用户使用这些模板；而用户也完全可以自己编写AM，这样Hadoop YARN便可以支持所有的分布式业务。
+
+这就将一个cluster在逻辑上分成了不同的cluster，逻辑上的cluster由container组成，由AM管理。显然，不同的app在逻辑上分开了，每个app在其containers分布式的运行，各个app之间互不干扰。RM动态的调整各个逻辑cluster的规模，以提高整体的效率。
 ### 3.2 Resource Manager (RM)
+从上文可以看到，RM节点要完成两类任务，一是处理用户的job请求，并为各个AM分配containers，二是与NM交互，维护NM状态。显然这是分为向外的（对用户）以及向内的（对AM），所以RM的接口如下：
 
+- public interfaces：
+    - 用户提交任务接口
+    - 与AM交互的接口
+- internal interface：
+    - 监控NM状态，包括NM上的资源使用情况等
