@@ -65,4 +65,20 @@ INFO distributedshell.Client: Application completed successfully
 ## 3.1 访问container logs
 方法：使用CLI和UI访问
 首先我们需要知道app ID，在命令行输出中查找：
-![](./3.1.jpg)
+![](./3.1.jpg)  
+在YARN中，可以使用CLI或者UI获知logs，其中，使用CLI需在yarn-site.xml中配置yarn.log-aggregation-enable，而后通过：
+yarn logs -applicationId application_1400286711208_0001
+访问Logs
+
+UI方式，直接在浏览器中输入http://192.168.137.101:8088/cluster，进入UI界面
+![](./3.2.jpg)
+
+# 4 在YARN上运行MapReduce
+## 4.1 剖析YARN MapReduce
+![](./4.1.jpg)
+- step 1: clients将input分离开并写入HDFS
+- step 2: RM create AM for MapReduce job
+- step 3, 4: RM为AM分配container，并通知NM创建AM container。注意，AM也是一个container，所以是需要被创建的。
+- step 5: MapReduce AM(MRAM)从HDFS上获取input文件
+- step 6: MRAM向RM请求map containers，并要求containers的位置靠近input files存储空间
+- step 7, 8: RM向MARM分配containers，map和reduce分别开始工作
