@@ -18,7 +18,7 @@ tags:
 featured: false
 ---
 
-更新时间：2021-03-12
+更新时间：2021-03-22
 
 参考资料：
 
@@ -384,3 +384,47 @@ dag_scheduler.submit，输入为json文件，通过Job类将json文件中的job�
 该函数为执行器
 
 job信息应已经存储于数据库中，该函数提取数据库中的job信息，将job中的function list提取出来，转变为BaseModel类。随后BaseModel按function list依次执行federatedML中的算法函数。
+在FATE中，所有的底层模型都包含.run函数，执行器通过调用该函数实现模型功能。
+
+## 3.4 hetero_lr代码解读
+以hetero_lr_cv为例子
+### 3.4.1 hetero_lr算法流程
+参考资料：[https://zhuanlan.zhihu.com/p/94105330](https://zhuanlan.zhihu.com/p/94105330)
+guest和host的数据持有情况：
+![](./17.jpg)
+heteroLR训练过程：
+![](./16.jpg)
+其中，B为guest方，A为Host方
+步骤解读：
+0. 目的：guest想计算关于客户的一个模型，持有label数据，但自身并没有客户的x1, x2, x3数据，故向host请求联邦学习
+1. guest请求数据
+2. host为了保证自身数据不被泄露，将x1, x2, x3加密为\[[X1]], \[[X2]], \[[X3]]，并采用Paillier半同态加密，使得guest可以依靠密态计算得到模型
+3. guest计算\[[beta]]，返还给host；计算\[[guest方梯度]]，传送给Arbiter
+4. host根据\[[beta]]计算\[[host方梯度]]，并传送给Arbiter
+5. Arbiter拼接解密，将解密后的梯度发方给guest和host
+
+这样，guest和host都在没有泄密数据的情况下，拿到了模型的梯度
+
+### 3.4.2 FATE中的hetero_lr运行流程
+对应上一节所讲，第一步为guest请求数据，host发送加密数据，查询guest executer日志：
+![](./18.jpg)
+再进一步查看reader日志：
+![](./19.jpg)
+可以发现此过程为，将guest方的数据从eggroll上拷贝进内存中
+下一步为data.io，该步骤的目的是，将guest数据转换为密态形式
+
+# 4 FATE Cluster搭建与Architecture解读
+## 4.1 组件
+1. FATE: 算法库以及FATE Server
+2. eggroll: 集群系统，使集群可以运行分布式FL运算
+整个系统框架如下：
+![](./15.jpg)
+可以看到整个FTAE Cluster实际上包含了两个集群，Host和Guest。每个集群使用eggroll作为底层。
+## 4.2 部署Cluster
+参考资料：
+1. [FATE官方文档](https://fate.readthedocs.io/en/latest/_build_temp/cluster-deploy/README.html)
+
+前几部基本是部署Cluster的必须步骤，包含配置静态ip，关闭防火墙，配置用户组，配置hostname和ip映射关系，配置无密码ssh等。但注意，这是guest和host之间的无密码ssh与ip映射，说明在官方文档中，认为guest和host同属于一个集群，实际上笔者认为应该是两个集群
+
+host party id: 10000
+guest party id: 9999
