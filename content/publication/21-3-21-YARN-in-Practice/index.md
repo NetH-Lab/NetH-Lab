@@ -16,7 +16,7 @@ tags:
 featured: false
 ---
 
-更新时间：2021/03/21
+更新时间：2021/03/23
 
 参考资料：
 1. [书籍：Hadoop in Practice](https://livebook.manning.com/book/hadoop-in-practice-second-edition)
@@ -82,3 +82,39 @@ UI方式，直接在浏览器中输入http://192.168.137.101:8088/cluster，进�
 - step 5: MapReduce AM(MRAM)从HDFS上获取input文件
 - step 6: MRAM向RM请求map containers，并要求containers的位置靠近input files存储空间
 - step 7, 8: RM向MARM分配containers，map和reduce分别开始工作
+## 4.2 API Backword Compatibility
+本章节主要描述向后兼容问题。
+- Code compatibility: 指任何MapReduce code都可以在YARN上运行。这意味着我们不需要修改以前编写好的code
+- Binary compatibility: 指MapReduce bytecode不需要更改就可以在YARN上运行，这意味着不需要对Hadoop 1的代码重编译。
+## 4.3 编写YARN Application
+### 4.3.1 Fundamentals of building a YARN application
+![](./4.2.jpg)
+YARN application包含5个组件：
+- YARN client: 负责launching YARN application。向RM发送creatApplication和submitApplication请求
+- ResourceManager: 负责接受container allocation requests，异步通知clients什么时候有资源空闲
+- ApplicationMaster: 应用的main coordinator，发起container request请求，并launch到node上
+- NodeManager: launch或kill containers
+- Container: application-specific process，可以实Linux进程，也可以是map or reduce tasks
+
+YARN application中的interactions
+
+Resource allocation:
+当AM向RM请求新的container时，实际上是请求一个Resource object，这一过程AM向RM发送一个ResourceRequest，如下图：
+![](./4.3.jpg)
+resourceName代表对container的地理位置要求，即指明host和rack的具体名称。RM使用Container Object作为回复。当AM接受到该object，它可以与NM通信，以launch container
+
+Launching a Container
+与NM通信使用下图格式;
+![](./4.4.jpg)
+NM根据localResources，将数据从HDFS下载到本地，而后开始launch container
+
+### 4.3.2 编写一个收集cluster statistics的YARN application
+下图显示了我们需要编写哪些程序：
+![](./4.5.jpg)
+Step 1: YARN client
+YARN client有两个功能，1是告知RM AM的系统资源需求，2是监控app的状态
+建立YARNClient class
+子类1: Create application
+```java
+
+```

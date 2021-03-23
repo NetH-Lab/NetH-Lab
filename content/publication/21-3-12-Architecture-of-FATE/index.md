@@ -410,8 +410,135 @@ heteroLR训练过程：
 ![](./18.jpg)
 再进一步查看reader日志：
 ![](./19.jpg)
-可以发现此过程为，将guest方的数据从eggroll上拷贝进内存中
-下一步为data.io，该步骤的目的是，将guest数据转换为密态形式
+可以发现此过程为，将guest方的数据从eggroll上拷贝进内存中，最终传递进来的为eggroll_table标识符，这样所有的程序只需要根据该标识符获取到data_table。
+下一步运行的程序为DataIO，该步骤的目的是，将guest数据转换为密态形式。
+根据源码我们发现，DataIO父类为ModelBase，同样是根据传递进来的函数字典运行对应函数，故再去日志中追溯dataio过程中所运行的函数。运行函数如下：
+- ModelBase.extract_data: 获取eggroll data_table
+- ModelBase.set_flowid
+- DataIO.fit
+
+![](./20.jpg)
+可以看到，该函数实际上做了两步。第一步是拷贝data_inst所指向的data_table，第二步是对该data_table进行数据转换，最终返回data_instance
+递归到fit函数：
+![](./21.jpg)
+可以看到这一步是在提取数据中的tags，添加headers并将缺失值补全
+再递归到gen_data_instance，是在生成补全值得mapValue。
+这样，最终读取到得数据完全被补全，这是对后一步得正式LR运算友好的。
+
+到这一步，依然只是guest方对自身的数据处理，host方同guest方一样，将数据拷贝到内存中并进行预处理。接下来我们继续看下一个模块，intersection
+![](./22.jpg)
+第一步依旧是观察ModelBase中的函数执行步骤
+- ModelBase.extract_data: 获取eggroll data_table
+- ModelBase.set_flowid
+- IntersectModelBase.fit
+
+我们直接看IntersectModelBase.fit中的.run函数：
+```python
+def run(self, data_instances):
+    LOGGER.info("Start rsa intersection")
+
+    public_keys = self.transfer_variable.rsa_pubkey.get(-1)
+    # LOGGER.info("Get RSA public_key:{} from Host".format(public_keys))
+    self.e = [int(public_key["e"]) for public_key in public_keys]
+    self.n = [int(public_key["n"]) for public_key in public_keys]
+
+    cache_version_match_info = self.get_cache_version_match_info()
+
+    # table (r^e % n * hash(sid), sid, r)
+    guest_id_process_list = [ data_instances.map(
+            lambda k, v: self.guest_id_process(k, random_bit=self.random_bit, rsa_e=self.e[i], rsa_n=self.n[i])) for i in range(len(self.e)) ]
+
+    # table(r^e % n *hash(sid), 1)
+    for i, guest_id in enumerate(guest_id_process_list):
+        mask_guest_id = guest_id.mapValues(lambda v: 1)
+        self.transfer_variable.intersect_guest_ids.remote(mask_guest_id,
+                                                            role=consts.HOST,
+                                                            idx=i)
+        LOGGER.info("Remote guest_id to Host {}".format(i))
+
+    host_ids_process_list = self.get_host_id_process(cache_version_match_info)
+    LOGGER.info("Get host_ids_process")
+
+    # Recv process guest ids
+    # table(r^e % n *hash(sid), guest_id_process)
+    recv_guest_ids_process = self.transfer_variable.intersect_guest_ids_process.get(idx=-1)
+    LOGGER.info("Get guest_ids_process from Host")
+
+    # table(r^e % n *hash(sid), sid, hash(guest_ids_process/r))
+    guest_ids_process_final = [v.join(recv_guest_ids_process[i], lambda g, r: (g[0], RsaIntersectionGuest.hash(gmpy2.divm(int(r), int(g[1]), self.n[i]))))
+                                for i, v in enumerate(guest_id_process_list)]
+
+    # table(hash(guest_ids_process/r), sid))
+    sid_guest_ids_process_final = [
+        g.map(lambda k, v: (v[1], v[0]))
+        for i, g in enumerate(guest_ids_process_final)]
+
+    # intersect table(hash(guest_ids_process/r), sid)
+    encrypt_intersect_ids = [v.join(host_ids_process_list[i], lambda sid, h: sid) for i, v in
+                                enumerate(sid_guest_ids_process_final)]
+
+    if len(self.host_party_id_list) > 1:
+        raw_intersect_ids = [e.map(lambda k, v: (v, 1)) for e in encrypt_intersect_ids]
+        intersect_ids = self.get_common_intersection(raw_intersect_ids)
+
+        # send intersect id
+        if self.sync_intersect_ids:
+            for i, host_party_id in enumerate(self.host_party_id_list):
+                remote_intersect_id = self.map_raw_id_to_encrypt_id(intersect_ids, encrypt_intersect_ids[i])
+                self.transfer_variable.intersect_ids.remote(remote_intersect_id,
+                                                            role=consts.HOST,
+                                                            idx=i)
+                LOGGER.info("Remote intersect ids to Host {}!".format(host_party_id))
+        else:
+            LOGGER.info("Not send intersect ids to Host!")
+    else:
+        intersect_ids = encrypt_intersect_ids[0]
+        if self.sync_intersect_ids:
+            remote_intersect_id = intersect_ids.mapValues(lambda v: 1)
+            self.transfer_variable.intersect_ids.remote(remote_intersect_id,
+                                                        role=consts.HOST,
+                                                        idx=0)
+
+        intersect_ids = intersect_ids.map(lambda k, v: (v, 1))
+
+    LOGGER.info("Finish intersect_ids computing")
+
+    if not self.only_output_key:
+        intersect_ids = self._get_value_from_data(intersect_ids, data_instances)
+
+    return intersect_ids
+```
+这里是rsa加密过程，这里我们看到guest方和host方使用.remote函数和.get函数进行数据交换，交换了数据中的用户id编号，这样可以获得重叠数据，为后一步的训练做准备。当然，互换id的过程是使用rsa加密的，双方为不泄露数据，而后的intersect过程是密态运算，结束后返回intersect ID号。
+我们知道，数据实际上都是存在eggroll里的，那么对数据求完交际后，有没有对eggroll中的数据做处理呢？
+在函数get_common_intersection，有一条.join函数，在这里，data_instances被修改，意味着eggroll上的data_table已经被修改。
+
+这样，guest方和host方的所有数据准备已经完成， 双方目前仅进行了一次密态交互，即交换用户id，后面可以正式进行HeteroLR过程了。
+
+![](./23.jpg)
+同样，先在ModelBase中查看function list，如下：
+- BaseLinearModel.cross_validation
+直接转到.run函数定义
+```python
+def run(model, data_instances, host_do_evaluate=False):
+    if not model.need_run:
+        return data_instances
+    kflod_obj = KFold()
+    cv_param = _get_cv_param(model)
+    kflod_obj.run(cv_param, data_instances, model, host_do_evaluate)
+    LOGGER.info("Finish KFold run")
+    return data_instances
+```
+了解到cross validation是一种针对数据集较小的算法，进行多次训练，每次训练的测试集是整个数据集中的一小部分，循环进行以防止过拟合，我们直接看kflod_obj.run函数
+在其中：
+```python
+model.fit(train_data, test_data)
+...
+train_pred_res = model.predict(train_data)
+```
+显然，model为heteroLR，这里运行了.fit的函数和.predict函数，要注意的是，这里的输入train data依旧是guest方intersect后的数据，并且数据格式为密态。guest已经完全获取了host方的密态数据，所以可以直接开始训练。
+在model.fit中，通过密态的梯度下降算法计算loss并update本地模型
+在model.predict中，获取host的probability，最终生成predict_probability，并更新数据的mapValues
+
 
 # 4 FATE Cluster搭建与Architecture解读
 ## 4.1 组件
