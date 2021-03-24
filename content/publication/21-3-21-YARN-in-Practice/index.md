@@ -113,8 +113,180 @@ NM根据localResources，将数据从HDFS下载到本地，而后开始launch co
 ![](./4.5.jpg)
 Step 1: YARN client
 YARN client有两个功能，1是告知RM AM的系统资源需求，2是监控app的状态
-建立YARNClient class
-子类1: Create application
+建立Client.class
+Step 1.1: Create application
 ```java
+YarnConfiguration conf = new YarnConfiguration();
+YarnClient yarnClient = YarnClient.createYarnClient();
+yarnClient.init(conf);
+yarnClient.start();
+YarnClientApplication app = yarnClient.createApplication();
+```
+其中YarnConfiguration conf指为conf变量分配YarnConfiguration类大小的内存
+new YarnConfiguration()代表新建一个YarnConfiguration实例，并赋值给conf
+YarnConfiguration是YARN提供的一个配置模板
+所以这段代码的含义便是，我们使用一个YARN的配置模板创建了YarnClient类，而后创建了YarnClientApplication类
 
+Step 1.2: Submitting a YARN application
+在launch app之前，需要配置一下几样条目：
+- app name
+- launch AM的命令以及classpath和environment settings
+- JARs, configuration files, and other files that app needs
+- resource requirements(memory and CPU)
+- scheduler queue and priority
+- security tokens
+
+上一节我们有谈到，AM需要分别和RM、NM交互，与NM交互所用的格式为Conatiner Launch Context，来指明JARS，环境，文件等等，我们先讲这一部分的配置方法。
+```java
+//初始化Container Launch Context类
+ContainerLaunchContext container =
+Records.newRecord(ContainerLaunchContext.class);
+//配置stdout和stderr
+String amLaunchCmd =
+String.format(
+"$JAVA_HOME/bin/java -Xmx256M %s 1>%s/stdout 2>%s/stderr",
+ApplicationMaster.class.getName(),
+ApplicationConstants.LOG_DIR_EXPANSION_VAR,
+ApplicationConstants.LOG_DIR_EXPANSION_VAR);
+
+container.setCommands(Lists.newArrayList(amLaunchCmd));
+//寻找包含Client.class的JAR路径
+String jar = ClassUtil.findContainingJar(Client.class);
+FileSystem fs = FileSystem.get(conf);
+Path src = new Path(jar);
+Path dest = new Path(fs.getHomeDirectory(), src.getName());
+//copy到HDFS
+fs.copyFromLocalFile(src, dest);
+
+FileStatus jarStat = FileSystem.get(conf).getFileStatus(dest);
+//为JAR创建LocalResource
+LocalResource appMasterJar = Records.newRecord(LocalResource.class);
+appMasterJar.setResource(ConverterUtils.getYarnUrlFromPath(dest));
+appMasterJar.setSize(jarStat.getLen());
+appMasterJar.setTimestamp(jarStat.getModificationTime());
+appMasterJar.setType(LocalResourceType.FILE);
+appMasterJar.setVisibility(LocalResourceVisibility.APPLICATION);
+//将JAR作为container的local resource
+container.setLocalResources(
+ImmutableMap.of("AppMaster.jar", appMasterJar));
+//将YARN JARs添加值AM的classpath
+Map<String, String> appMasterEnv = Maps.newHashMap();
+for (String c : conf.getStrings(
+YarnConfiguration.YARN_APPLICATION_CLASSPATH,
+YarnConfiguration.DEFAULT_YARN_APPLICATION_CLASSPATH)) {
+Apps.addToEnvironment(appMasterEnv, Environment.CLASSPATH.name(),
+c.trim());
+}
+//将classpath添加至container的环境中
+Apps.addToEnvironment(appMasterEnv,
+Environment.CLASSPATH.name(),
+Environment.PWD.$() + File.separator + "*");
+container.setEnvironment(appMasterEnv);
+```
+
+指明对memory和CPU的要求
+```java
+Resource capability = Records.newRecord(Resource.class);
+capability.setMemory(256);
+capability.setVirtualCores(1);
+```
+提交APP至RM，使用SubmissionContext
+```java
+ApplicationSubmissionContext appContext =
+app.getApplicationSubmissionContext();
+//配置App名字
+appContext.setApplicationName("basic-dshell");
+appContext.setAMContainerSpec(container);
+appContext.setResource(capability);
+appContext.setQueue("default");
+
+ApplicationId appId = appContext.getApplicationId();
+yarnClient.submitApplication(appContext);
+```
+
+Step 1.3: Waiting for the YARN application to complete
+Client需要监控App的状态，并作出相应的调整，App状态如下图
+![](./4.6.jpg)
+我们可以监控这几种状态值，代码如下
+```java
+//获取当前状态值
+ApplicationReport report = yarnClient.getApplicationReport(appId);
+//定义AM终止状态
+YarnApplicationState state = report.getYarnApplicationState();
+EnumSet<YarnApplicationState> terminalStates =
+EnumSet.of(YarnApplicationState.FINISHED,
+YarnApplicationState.KILLED,
+YarnApplicationState.FAILED);
+//循环，直至AM处于终止状态
+while (!terminalStates.contains(state)) {
+TimeUnit.SECONDS.sleep(1);
+report = yarnClient.getApplicationReport(appId);
+state = report.getYarnApplicationState();
+}
+```
+
+Step 2: 编写AM
+AM主要需要编写3个模块，如下图
+![](./4.7.jpg)
+Step 2.1: 在RM上登记AM
+由于AM也存在于一个container中，所以要现为自己申请一个container
+```java
+Configuration conf = new YarnConfiguration();
+AMRMClient<ContainerRequest> client = AMRMClient.createAMRMClient();
+client.init(conf);
+client.start();
+client.registerApplicationMaster("", 0, "");
+```
+Step 2.2: 提交container request并当可用时launch到NM上
+```java
+//建立于NM通信的client
+NMClient nmClient = NMClient.createNMClient();
+nmClient.init(conf);
+nmClient.start();
+
+//指明优先级
+Priority priority = Records.newRecord(Priority.class);
+priority.setPriority(0);
+//编写需求
+Resource capability = Records.newRecord(Resource.class);
+capability.setMemory(128);
+capability.setVirtualCores(1);
+//建立request object以发送给RM
+ContainerRequest containerAsk =new ContainerRequest(capability, null, null, priority);
+rmClient.addContainerRequest(containerAsk);
+
+//等待收到container
+boolean allocatedContainer = false;
+while (!allocatedContainer) {
+AllocateResponse response = rmClient.allocate(0);
+for (Container container : response.getAllocatedContainers()) {
+allocatedContainer = true;
+
+//接受到container后，将其launch
+ContainerLaunchContext ctx =
+Records.newRecord(ContainerLaunchContext.class);
+ctx.setCommands(
+Collections.singletonList(
+String.format("%s 1>%s/stdout 2>%s/stderr",
+"/usr/bin/vmstat",
+ApplicationConstants.LOG_DIR_EXPANSION_VAR,
+ApplicationConstants.LOG_DIR_EXPANSION_VAR)
+));
+nmClient.startContainer(container, ctx);
+}
+TimeUnit.SECONDS.sleep(1);
+}
+```
+Step 2.3: 等待container完成
+```java
+boolean completedContainer = false;
+while (!completedContainer) {
+AllocateResponse response = rmClient.allocate(0);
+for (ContainerStatus s : response.getCompletedContainersStatuses()) {
+    completedContainer = true;
+}
+TimeUnit.SECONDS.sleep(1);
+}
+rmClient.unregisterApplicationMaster(
+FinalApplicationStatus.SUCCEEDED, "", "");
 ```
