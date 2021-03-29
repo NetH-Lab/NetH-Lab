@@ -17,7 +17,7 @@ tags:
 featured: false
 ---
 
-更新时间：2021-03-15
+更新时间：2021-03-29
 
 # 0 Raspberry Pi环境概述
 
@@ -354,3 +354,36 @@ start-dfs.sh && start-yarn.sh
 ![](./2.4.jpg)
 
 结束。
+
+# 3 后续使用报错+修复
+# 3.1 YARN + MapReduce
+1. 在mapred-site.xml添加环境变量
+```xml
+  <property>
+    <name>yarn.app.mapreduce.am.env</name>
+    <value>HADOOP_MAPRED_HOME=${HADOOP_HOME}</value>
+  </property>
+  <property>
+    <name>mapreduce.map.env</name>
+    <value>HADOOP_MAPRED_HOME=${HADOOP_HOME}</value>
+  </property>
+  <property>
+    <name>mapreduce.reduce.env</name>
+    <value>HADOOP_MAPRED_HOME=${HADOOP_HOME}</value>
+  </property>
+```
+2. Error: Java heap space
+在mapred-site.xml中添加
+```xml
+<property> 
+  <name>mapred.child.java.opts</name> 
+  <value>-Xmx1024m</value> 
+</property> 
+```
+在etc/hadoop/hadoop-env.sh中
+```shell
+export HADOOP_HEAPSIZE_MAX=1024
+```
+
+3. xxx/output already exist
+运行mapreduce之前，都要手动将mapreduce的输出文件目录删除
