@@ -73,7 +73,7 @@ url_pdf: ""
 # 2 基础知识补充与经典论文选读
 
 ## 2.1 分布式系统概述
-1. MIT 6.824 Distributed Systems学习笔记：[Link](https://neth-lab.netlify.app/publication/2021-1-1-mit-distributed-systems/)
+1. MIT 6.824 Distributed Systems学习笔记：[Link](https://neth-lab.netlify.app/publication/mit-distributed-systems/)
 
 ## 2.2 一致性
 1. Raft论文精读：[Link](https://neth-lab.netlify.app/publication/20-11-15-summary-of-raft/)
@@ -88,24 +88,30 @@ url_pdf: ""
 ## 3.2 Apache Hadoop YARN
 1. Hadoop论文精读：[Summary of Apache Hadoop YARN](https://neth-lab.netlify.app/publication/summary-of-apache-hadoop-yarn/)
 2. Hadoop系统搭建：[Configuration of Hadoop YARN Environment](https://neth-lab.netlify.app/publication/21-2-23-build-hadoop-yarn-environment/)
+系统搭建部分也可以直接参考后文的基于树莓派的集群搭建
 
 ## 3.3 Apache Spark
-
+1. Spark论文选读：[Summary of Apache Spark](https://neth-lab.netlify.app/publication/21-3-19-summary-of-apache-spark/)
 ## 3.4 Tensorflow
 
 ## 3.5 FATE
-1. 系统源码阅读：[Architecture of FATE](https://neth-lab.netlify.app/publication/21-3-12-architecture-of-fate/)
+FATE已独立成另一项目，请参考：
+[FATE - A System for Feterated Learning]()
 
 
 # 2 Galaxy：一种优化CPU和内存利用的异构分布式计算任务处理系统
 研究动机：[谁限制了数据中心的资源效率](https://neth-lab.netlify.app/publication/21-1-6-who-limits-the-resource-efficiency-of-my-datacenter-an-analysis-of-alibaba-datacenter-traces/)
 根据该论文，笔者思考是否能通过资源规划的方法，对数据中心的计算资源进行数学建模，从而对异构的计算任务给予合理的资源分配，以这样的方式提高数据中心的资源效率。
 
-## 2.1 Galaxy系统搭建
+## 2.1 Galaxy系统设计与搭建
 
 ### 2.1.1 底层Hadoop系统搭建
 
 1. [树莓派Hadoop集群搭建](https://neth-lab.netlify.app/publication/21-3-15-build-hadoop-environment-on-cluster-of-raspberrypi/)
+
+### 2.1.2 Galaxy系统设计
+
+### 2.1.3 Galaxy系统实现
 
 ## 2.2 资源调度研究
 
