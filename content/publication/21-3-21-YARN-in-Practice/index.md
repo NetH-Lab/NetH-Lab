@@ -74,7 +74,10 @@ UI方式，直接在浏览器中输入http://192.168.137.101:8088/cluster，进�
 ![](./3.2.jpg)
 
 # 4 在YARN上运行MapReduce
+
 ## 4.1 剖析YARN MapReduce
+
+### 4.1.1 MapReduce流程
 ![](./4.1.jpg)
 - step 1: clients将input分离开并写入HDFS
 - step 2: RM create AM for MapReduce job
@@ -82,6 +85,65 @@ UI方式，直接在浏览器中输入http://192.168.137.101:8088/cluster，进�
 - step 5: MapReduce AM(MRAM)从HDFS上获取input文件
 - step 6: MRAM向RM请求map containers，并要求containers的位置靠近input files存储空间
 - step 7, 8: RM向MARM分配containers，map和reduce分别开始工作
+
+### 4.1.2 编写MapReduce程序
+首先介绍Hadoop库中几个关键的类
+
+#### 4.1.2.1 Class Mapper<KEYIN,VALUEIN,KEYOUT,VALUEOUT>
+参考链接：[Package org.apache.hadoop.mapreduce](https://hadoop.apache.org/docs/stable/api/org/apache/hadoop/mapreduce/package-summary.html)
+Function: 输入key/value对，输出中间值key/value对
+Hadoop MapReduce框架中，job最初为InputFormat，通过spllit函数将其分割哼InputSplit类，而后每个map函数处理一个InputSplit
+其中，InputFormat<K, V>, 通过方法List<InputSplit>在逻辑上把InputFormat分为InputSplit
+MapReduce框架中，将首先调用setup(org.apache.hadoop.mapreduce.Mapper.Context), 再对每个InputSplit调用map函数，最终调用cleanup函数
+该类包含四个方法，cleanup（任务结束后使用），map，run，setup（任务开始前使用）
+例程：
+```java
+  public static class TokenizerMapper
+       extends Mapper<Object, Text, Text, IntWritable>{
+
+    private final static IntWritable one = new IntWritable(1);
+    private Text word = new Text();
+
+    public void map(Object key, Text value, Context context
+                    ) throws IOException, InterruptedException {
+      StringTokenizer itr = new StringTokenizer(value.toString());
+      while (itr.hasMoreTokens()) {
+        word.set(itr.nextToken());
+        context.write(word, one);
+      }
+    }
+  }
+```
+该例子中，定义类内全局变量one，word，分别代表1和Text类，context.write(word, one)的意义为在context中写入(word, one)这样一个key/value对
+对于map函数的含义也很简单，即遍历Text value，读取其中的每个单词，并转换为(word, one)输出
+
+#### 4.1.2.2 Reducer
+参考资料：[Class Reducer<KEYIN,VALUEIN,KEYOUT,VALUEOUT>](https://hadoop.apache.org/docs/stable/api/org/apache/hadoop/mapreduce/Reducer.html)
+Reducer包含3个阶段：
+1. Shuffle：通过HTTP将Mapper的已经排序好的输出拷贝到本地
+2. Sort：不同的Mapper输出的key/value对中，key是相同的，故使用key对所有copy过来的中间key/value进行重排序
+3. Reduce：
+```java
+public void reduce(Text key, Iterable<IntWritable> values,
+                    Context context
+                    ) throws IOException, InterruptedException {
+    int sum = 0;
+    for (IntWritable val : values) {
+    sum += val.get();
+    }
+    result.set(sum);
+    context.write(key, result);
+}
+```
+作用为对每个key（在wordcount中是指word），将value相加，统计sum即代表word出现的总次数。
+
+#### 4.1.2.3 Job类
+参考链接：[Class Job](https://hadoop.apache.org/docs/stable/api/org/apache/hadoop/mapreduce/Job.html)
+该类为用户提供配置、提交、控制、查询状态的接口
+
+#### 4.1.2.4 例程：WordCount类 v1.0
+详情请查阅官方文档：[Example: WordCount v1.0](https://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html)
+
 ## 4.2 API Backword Compatibility
 本章节主要描述向后兼容问题。
 - Code compatibility: 指任何MapReduce code都可以在YARN上运行。这意味着我们不需要修改以前编写好的code
@@ -277,6 +339,8 @@ nmClient.startContainer(container, ctx);
 TimeUnit.SECONDS.sleep(1);
 }
 ```
+这里，在接受到container后，AM在container上运行了/usr/bin/vmstat命令，当然我们也可以将其改变为其他任何命令，比如运行jar中的app
+
 Step 2.3: 等待container完成
 ```java
 boolean completedContainer = false;
