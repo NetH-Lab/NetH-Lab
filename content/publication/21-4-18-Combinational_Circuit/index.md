@@ -1,5 +1,13 @@
 ---
 title: 组合逻辑电路基础
+summary: '[数字电路基础][组合逻辑电路]'
+authors:
+- Zobin Huang
+tags: 
+- Digital Circuit
+- Computer Architecture
+- Combinational Circuit
+featured: false
 mathjax: true
 ---
 
@@ -18,9 +26,13 @@ mathjax: true
 
 <body>
 
+<h3>更新时间：Jan.24 2021</h3>
+
+<!--
 <div align="center" class="div_indicate_source">
   <h4>⚠ 转载请注明出处：<font color="red"><i>作者：ZobinHuang，更新日期：Jan.24 2021</i></font></h4>
 </div>
+-->
 
 <h2>1. 节点(node)和元件(element)的概念</h2>
 <div class="div_learning_post">
@@ -76,44 +88,46 @@ mathjax: true
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;布尔代数的第一种表示方式是与或式。其原理是真值表中的每一行都可以与<b>一个为TRUE的最小项</b>关联，把真值表中所有输出为TURE的这些最小项相加，就可以满足使系统输出为TRUE的所有输入条件<b>（只要系统输入满足其中任何一个这样的最小项，系统输出就为TRUE。一个为TURE就行，因此是最小项相OR的逻辑）</b>，所以可以使用与或式来描述真值表，具体例子如下所示：
   </p>
-  <table border="1" align="center">
-    <caption>包含多个TRUE最小项的真值表</caption>
-    <tr>
-      <th>A</th>
-      <th>B</th>
-      <th>Y</th>
-      <th>最小项</th>
-      <th>最小项名称</th>
-    </tr>
-    <tr>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td><span>`\overline{A}\overline{B}`</span></td>
-      <td><span>`m_0`</span></td>
-    </tr>
-    <tr>
-      <td><font color="red"><b>0</b></font></td>
-      <td><font color="red"><b>1</b></font></td>
-      <td><font color="red"><b>1</b></font></td>
-      <td><font color="red"><b><span>`\overline{A}B`</span></b></font></td>
-      <td><font color="red"><b><span>`m_1`</span></b></font></td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td><span>`A\overline{B}`</span></td>
-      <td><span>`m_2`</span></td>
-    </tr>
-    <tr>
-      <td><font color="red"><b>1</b></font></td>
-      <td><font color="red"><b>1</b></font></td>
-      <td><font color="red"><b>1</b></font></td>
-      <td><font color="red"><b><span>`AB`</b></font></span></td>
-      <td><font color="red"><b><span>`m_3`</b></font></span></td>
-    </tr>
-  </table>
+  <div align="center">
+    <table border="1" align="center">
+      <caption>包含多个TRUE最小项的真值表</caption>
+      <tr>
+        <th>A</th>
+        <th>B</th>
+        <th>Y</th>
+        <th>最小项</th>
+        <th>最小项名称</th>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td><span>`\overline{A}\overline{B}`</span></td>
+        <td><span>`m_0`</span></td>
+      </tr>
+      <tr>
+        <td><font color="red"><b>0</b></font></td>
+        <td><font color="red"><b>1</b></font></td>
+        <td><font color="red"><b>1</b></font></td>
+        <td><font color="red"><b><span>`\overline{A}B`</span></b></font></td>
+        <td><font color="red"><b><span>`m_1`</span></b></font></td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><span>`A\overline{B}`</span></td>
+        <td><span>`m_2`</span></td>
+      </tr>
+      <tr>
+        <td><font color="red"><b>1</b></font></td>
+        <td><font color="red"><b>1</b></font></td>
+        <td><font color="red"><b>1</b></font></td>
+        <td><font color="red"><b><span>`AB`</b></font></span></td>
+        <td><font color="red"><b><span>`m_3`</b></font></span></td>
+      </tr>
+    </table>
+  </div>
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;分析上面真值表，将所有输出为TRUE的最小项相加，可得所对应的布尔表达式为：<span>`Y = \overline{A}B  + AB`</span>，
   <br>有时也将与或式记为 <span>`F(A,B) = \sum(m_1, m_3)`</span>。
@@ -123,44 +137,46 @@ mathjax: true
   <P>
   &nbsp;&nbsp;&nbsp;&nbsp;布尔表达式的另一种表达式是或与式。其原理是真值表中的每一行都可以与<b>一个为FALSE的最大项</b>关联，把真值表中所有输出为FALSE的这些最大项相乘，就可以满足使系统输出为FALSE的所有输入条件<b>（只要系统输入满足其中任何一个这样的最大项，系统输出就为FALSE，一个为FALSE就行，因此是最大项相AND的逻辑）</b>，所以可以使用或与式来描述真值表，具体例子如下所示：
   </p>
-  <table border="1" align="center">
-    <caption>包含多个FALSE最大项的真值表</caption>
-    <tr>
-      <th>A</th>
-      <th>B</th>
-      <th>Y</th>
-      <th>最大项</th>
-      <th>最大项名称</th>
-    </tr>
-    <tr>
-      <td><font color="red"><b>0</td>
-      <td><font color="red"><b>0</td>
-      <td><font color="red"><b>0</td>
-      <td><font color="red"><b><span>`A + B`</span></td>
-      <td><font color="red"><b><span>`M_0`</span></td>
-    </tr>
-    <tr>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td><span>`A + \overline{B}`</span></td>
-      <td><span>`M_1`</span></td>
-    </tr>
-    <tr>
-      <td><font color="red"><b>1</b></font></td>
-      <td><font color="red"><b>0</b></font></td>
-      <td><font color="red"><b>0</b></font></td>
-      <td><font color="red"><b><span>`\overline{A} + B`</span></b></font></td>
-      <td><font color="red"><b><span>`M_2`</span></b></font></td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td><span>`\overline{A} + \overline{B}`</span></td>
-      <td><span>`M_3`</span></td>
-    </tr>
-  </table>
+  <div align="center">
+    <table border="1" align="center">
+      <caption>包含多个FALSE最大项的真值表</caption>
+      <tr>
+        <th>A</th>
+        <th>B</th>
+        <th>Y</th>
+        <th>最大项</th>
+        <th>最大项名称</th>
+      </tr>
+      <tr>
+        <td><font color="red"><b>0</td>
+        <td><font color="red"><b>0</td>
+        <td><font color="red"><b>0</td>
+        <td><font color="red"><b><span>`A + B`</span></td>
+        <td><font color="red"><b><span>`M_0`</span></td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td><span>`A + \overline{B}`</span></td>
+        <td><span>`M_1`</span></td>
+      </tr>
+      <tr>
+        <td><font color="red"><b>1</b></font></td>
+        <td><font color="red"><b>0</b></font></td>
+        <td><font color="red"><b>0</b></font></td>
+        <td><font color="red"><b><span>`\overline{A} + B`</span></b></font></td>
+        <td><font color="red"><b><span>`M_2`</span></b></font></td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td><span>`\overline{A} + \overline{B}`</span></td>
+        <td><span>`M_3`</span></td>
+      </tr>
+    </table>
+  </div>
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;分析上面真值表，将所有输出为FALSE的最大项相乘，可得所对应的布尔表达式为：<span>`Y = (A + B)(\overline{A} + B)`</span>，
   <br>有时也将与或式记为 <span>`F(A,B) = \prod(M_1, M_3)`</span>。
@@ -173,161 +189,159 @@ mathjax: true
 
   <h4>3.2.1 布尔代数的公理和定理</h4>
   <p>备注：对偶的含义是：如果符号0和1互换，操作符<span>`\cdot`</span>(AND)和<span>`+`</span>(OR)互换，表达式依然正确。</p>
-
-  <table border="1" align="center">
-    <caption>布尔代数的公理</caption>
-    <tr>
-      <th> </th>
-      <th>公理</th>
-      <th> </th>
-      <th>对偶公理</th>
-      <th>名称</th>
-    </tr>
-    <tr>
-      <td><span>`A_1`</span></td>
-      <td><span>`B=0`</span>&nbsp;如果&nbsp;<span>`B\ne1`</span></td>
-      <td><span>`A_1'`</span></td>
-      <td><span>`B=1`</span>&nbsp;如果&nbsp;<span>`B\ne0`</span></td>
-      <td>二进制量</td>
-    </tr>
-    <tr>
-      <td><span>`A_2`</span></td>
-      <td><span>`\overline{0}=1`</span></td>
-      <td><span>`A_2'`</span></td>
-      <td><span>`\overline{1}=0`</span></td>
-      <td>NOT</td>
-    </tr>
-    <tr>
-      <td><span>`A_3`</span></td>
-      <td><span>`0\cdot0=0`</span></td>
-      <td><span>`A_3'`</span></td>
-      <td><span>`1+1=1`</span></td>
-      <td>AND/OR</td>
-    </tr>
-    <tr>
-      <td><span>`A_4`</span></td>
-      <td><span>`1\cdot1=1`</span></td>
-      <td><span>`A_4'`</span></td>
-      <td><span>`0+0=0`</span></td>
-      <td>AND/OR</td>
-    </tr>
-    <tr>
-      <td><span>`A_5`</span></td>
-      <td><span>`1\cdot0=0\cdot1=0`</span></td>
-      <td><span>`A_5'`</span></td>
-      <td><span>`1+0=0+1=1`</span></td>
-      <td>AND/OR</td>
-    </tr>
-  </table>
-
-  <table border="1" align="center">
-    <caption>单变量的布尔代数定理</caption>
-    <tr>
-      <th> </th>
-      <th>定理</th>
-      <th> </th>
-      <th>对偶定理</th>
-      <th>名称</th>
-    </tr>
-    <tr>
-      <td><span>`T_1`</span></td>
-      <td><span>`B\cdot1=B`</span></td>
-      <td><span>`T_1'`</span></td>
-      <td><span>`B+0=B`</span></td>
-      <td>同一性定理</td>
-    </tr>
-    <tr>
-      <td><span>`T_2`</span></td>
-      <td><span>`B\cdot0=0`</span></td>
-      <td><span>`T_2'`</span></td>
-      <td><span>`B+1=1`</span></td>
-      <td>零元定理</td>
-    </tr>
-    <tr>
-      <td><span>`T_3`</span></td>
-      <td><span>`B\cdotB=B`</span></td>
-      <td><span>`T_3'`</span></td>
-      <td><span>`B+B=B`</span></td>
-      <td>重叠定理</td>
-    </tr>
-    <tr>
-      <td><span>`T_4`</span></td>
-      <td colspan = "3"><span>`\overline{\overline{B}}=B`</span></td>
-      <td>回旋定理</td>
-    </tr>
-    <tr>
-      <td><span>`T_5`</span></td>
-      <td><span>`B\cdot\overline{B}=0`</span></td>
-      <td><span>`T_5'`</span></td>
-      <td><span>`B+\overline{B}=1`</span></td>
-      <td>互补定理</td>
-    </tr>
-  </table>
-
-  <table border="1" align="center">
-    <caption>多变量的布尔代数定理</caption>
-    <tr>
-      <th> </th>
-      <th>定理</th>
-      <th> </th>
-      <th>对偶定理</th>
-      <th>名称</th>
-    </tr>
-    <tr>
-      <td><span>`T_6`</span></td>
-      <td><span>`B\cdotC=C\cdotB`</span></td>
-      <td><span>`T_6'`</span></td>
-      <td><span>`B+C=C+B`</span></td>
-      <td>交换律</td>
-    </tr>
-    <tr>
-      <td><span>`T_7`</span></td>
-      <td><span>`(B\cdotC)\cdotD=B\cdot(C\cdotD)`</span></td>
-      <td><span>`T_7'`</span></td>
-      <td><span>`(B+C)+D=B+(C+D)`</span></td>
-      <td>结合律</td>
-    </tr>
-    <tr>
-      <td><font color="red"><b><span>`T_8`</span></b></font></td>
-      <td><font color="red"><b><span>`(B\cdotC)+(B\cdotD)=B\cdot(C+D)`</span></td>
-      <td><font color="red"><b><span>`T_8'`</span></b></font></td>
-      <td><b>
-      <font color="red"><span>`(B+C)\cdot(B+D)`</span></font>
-      <span>`=\underbrace{[B+B\cdotC+B\cdotD]}_{吸收律}+C\cdotD`</span>
-      <font color="red"><span>`=B+(C\cdotD)`</span></font>
-      </b></td>
-      <td><font color="red"><b>分配律</b></font></td>
-    </tr>
-    <tr>
-      <td><font color="red"><b><span>`T_9`</span></b></font></td>
-      <td><font color="red"><b><span>`B\cdot(B+C)=B`</span></b></font></td>
-      <td><font color="red"><b><span>`T_9'`</span></b></font></td>
-      <td><font color="red"><b><span>`B+(B\cdotC)=B`</span></b></font></td>
-      <td><font color="red"><b>吸收律</b></font></td>
-    </tr>
-    <tr>
-      <td><font color="red"><b><span>`T_10`</span></b></font></td>
-      <td><font color="red"><b><span>`(B\cdotC)+(B\cdot\overline{C})=B`</span></b></font></td>
-      <td><font color="red"><b><span>`T_10'`</span></b></font></td>
-      <td><font color="red"><b><span>`(B+C)\cdot(B+\overline{C})=B`</span></b></font></td>
-      <td><font color="red"><b>合并律</b></font></td>
-    </tr>
-    <tr>
-      <td><font color="red"><b><span>`T_11`</span></b></font></td>
-      <td><font color="red"><b><span>`(B\cdotC)+(\overline{B}\cdotD)+(C\cdotD)=B\cdotC+\overline{B}\cdotD`</span></b></font></td>
-      <td><font color="red"><b><span>`T_11'`</span></b></font></td>
-      <td><font color="red"><b><span>`(B+C)\cdot(\overline{B}+D)\cdot(C+D)=(B+C)\cdot(\overline{B}+D)`</span></b></font></td>
-      <td><font color="red"><b>一致律</b></font></td>
-    </tr>
-    <tr>
-      <td><font color="red"><b><span>`T_12`</span></b></font></td>
-      <td><font color="red"><b><span>`\overline{B_0\cdotB_1\cdotB_2\cdot...}=(\overline{B_0}+\overline{B_1}+\overline{B_2}+...)`</span></b></font></td>
-      <td><font color="red"><b><span>`T_12'`</span></b></font></td>
-      <td><font color="red"><b><span>`\overline{B_0+B_1+B_2+...}=(\overline{B_0}\cdot\overline{B_1}\cdot\overline{B_2}\cdot...)`</span></b></font></td>
-      <td><font color="red"><b>德·摩根定理</b></font></td>
-    </tr>
-  </table>
-
+  <div align="center">
+    <table border="1" align="center">
+      <caption>布尔代数的公理</caption>
+      <tr>
+        <th> </th>
+        <th>公理</th>
+        <th> </th>
+        <th>对偶公理</th>
+        <th>名称</th>
+      </tr>
+      <tr>
+        <td><span>`A_1`</span></td>
+        <td><span>`B=0`</span>&nbsp;如果&nbsp;<span>`B\ne1`</span></td>
+        <td><span>`A_1'`</span></td>
+        <td><span>`B=1`</span>&nbsp;如果&nbsp;<span>`B\ne0`</span></td>
+        <td>二进制量</td>
+      </tr>
+      <tr>
+        <td><span>`A_2`</span></td>
+        <td><span>`\overline{0}=1`</span></td>
+        <td><span>`A_2'`</span></td>
+        <td><span>`\overline{1}=0`</span></td>
+        <td>NOT</td>
+      </tr>
+      <tr>
+        <td><span>`A_3`</span></td>
+        <td><span>`0\cdot0=0`</span></td>
+        <td><span>`A_3'`</span></td>
+        <td><span>`1+1=1`</span></td>
+        <td>AND/OR</td>
+      </tr>
+      <tr>
+        <td><span>`A_4`</span></td>
+        <td><span>`1\cdot1=1`</span></td>
+        <td><span>`A_4'`</span></td>
+        <td><span>`0+0=0`</span></td>
+        <td>AND/OR</td>
+      </tr>
+      <tr>
+        <td><span>`A_5`</span></td>
+        <td><span>`1\cdot0=0\cdot1=0`</span></td>
+        <td><span>`A_5'`</span></td>
+        <td><span>`1+0=0+1=1`</span></td>
+        <td>AND/OR</td>
+      </tr>
+    </table>
+    <table border="1" align="center">
+      <caption>单变量的布尔代数定理</caption>
+      <tr>
+        <th> </th>
+        <th>定理</th>
+        <th> </th>
+        <th>对偶定理</th>
+        <th>名称</th>
+      </tr>
+      <tr>
+        <td><span>`T_1`</span></td>
+        <td><span>`B\cdot1=B`</span></td>
+        <td><span>`T_1'`</span></td>
+        <td><span>`B+0=B`</span></td>
+        <td>同一性定理</td>
+      </tr>
+      <tr>
+        <td><span>`T_2`</span></td>
+        <td><span>`B\cdot0=0`</span></td>
+        <td><span>`T_2'`</span></td>
+        <td><span>`B+1=1`</span></td>
+        <td>零元定理</td>
+      </tr>
+      <tr>
+        <td><span>`T_3`</span></td>
+        <td><span>`B\cdotB=B`</span></td>
+        <td><span>`T_3'`</span></td>
+        <td><span>`B+B=B`</span></td>
+        <td>重叠定理</td>
+      </tr>
+      <tr>
+        <td><span>`T_4`</span></td>
+        <td colspan = "3"><span>`\overline{\overline{B}}=B`</span></td>
+        <td>回旋定理</td>
+      </tr>
+      <tr>
+        <td><span>`T_5`</span></td>
+        <td><span>`B\cdot\overline{B}=0`</span></td>
+        <td><span>`T_5'`</span></td>
+        <td><span>`B+\overline{B}=1`</span></td>
+        <td>互补定理</td>
+      </tr>
+    </table>
+    <table border="1" align="center">
+      <caption>多变量的布尔代数定理</caption>
+      <tr>
+        <th> </th>
+        <th>定理</th>
+        <th> </th>
+        <th>对偶定理</th>
+        <th>名称</th>
+      </tr>
+      <tr>
+        <td><span>`T_6`</span></td>
+        <td><span>`B\cdotC=C\cdotB`</span></td>
+        <td><span>`T_6'`</span></td>
+        <td><span>`B+C=C+B`</span></td>
+        <td>交换律</td>
+      </tr>
+      <tr>
+        <td><span>`T_7`</span></td>
+        <td><span>`(B\cdotC)\cdotD=B\cdot(C\cdotD)`</span></td>
+        <td><span>`T_7'`</span></td>
+        <td><span>`(B+C)+D=B+(C+D)`</span></td>
+        <td>结合律</td>
+      </tr>
+      <tr>
+        <td><font color="red"><b><span>`T_8`</span></b></font></td>
+        <td><font color="red"><b><span>`(B\cdotC)+(B\cdotD)=B\cdot(C+D)`</span></td>
+        <td><font color="red"><b><span>`T_8'`</span></b></font></td>
+        <td><b>
+        <font color="red"><span>`(B+C)\cdot(B+D)`</span></font>
+        <span>`=\underbrace{[B+B\cdotC+B\cdotD]}_{吸收律}+C\cdotD`</span>
+        <font color="red"><span>`=B+(C\cdotD)`</span></font>
+        </b></td>
+        <td><font color="red"><b>分配律</b></font></td>
+      </tr>
+      <tr>
+        <td><font color="red"><b><span>`T_9`</span></b></font></td>
+        <td><font color="red"><b><span>`B\cdot(B+C)=B`</span></b></font></td>
+        <td><font color="red"><b><span>`T_9'`</span></b></font></td>
+        <td><font color="red"><b><span>`B+(B\cdotC)=B`</span></b></font></td>
+        <td><font color="red"><b>吸收律</b></font></td>
+      </tr>
+      <tr>
+        <td><font color="red"><b><span>`T_10`</span></b></font></td>
+        <td><font color="red"><b><span>`(B\cdotC)+(B\cdot\overline{C})=B`</span></b></font></td>
+        <td><font color="red"><b><span>`T_10'`</span></b></font></td>
+        <td><font color="red"><b><span>`(B+C)\cdot(B+\overline{C})=B`</span></b></font></td>
+        <td><font color="red"><b>合并律</b></font></td>
+      </tr>
+      <tr>
+        <td><font color="red"><b><span>`T_11`</span></b></font></td>
+        <td><font color="red"><b><span>`(B\cdotC)+(\overline{B}\cdotD)+(C\cdotD)=B\cdotC+\overline{B}\cdotD`</span></b></font></td>
+        <td><font color="red"><b><span>`T_11'`</span></b></font></td>
+        <td><font color="red"><b><span>`(B+C)\cdot(\overline{B}+D)\cdot(C+D)=(B+C)\cdot(\overline{B}+D)`</span></b></font></td>
+        <td><font color="red"><b>一致律</b></font></td>
+      </tr>
+      <tr>
+        <td><font color="red"><b><span>`T_12`</span></b></font></td>
+        <td><font color="red"><b><span>`\overline{B_0\cdotB_1\cdotB_2\cdot...}=(\overline{B_0}+\overline{B_1}+\overline{B_2}+...)`</span></b></font></td>
+        <td><font color="red"><b><span>`T_12'`</span></b></font></td>
+        <td><font color="red"><b><span>`\overline{B_0+B_1+B_2+...}=(\overline{B_0}\cdot\overline{B_1}\cdot\overline{B_2}\cdot...)`</span></b></font></td>
+        <td><font color="red"><b>德·摩根定理</b></font></td>
+      </tr>
+    </table>
+  </div>
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;使用布尔代数化简布尔表达式的精髓：<span>`P\overline{A}+PA=P`</span>，其中P可以是任何最小项。举个例子
   <br>&nbsp;&nbsp;&nbsp;&nbsp;<span>`\overline{A}\overline{B}\overline{C}+A\overline{B}\overline{C}+A\overline{B}C`</span>
@@ -383,50 +397,50 @@ mathjax: true
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;如上左图所示，这是一个使用两级逻辑实现的三输入异或门(<span>`Y=\overline{A}\overline{B}C+\overline{A}B\overline{C}+A\overline{B}\overline{C}+ABC`</span>)，一共使用了3个非门，4个三输入与门和1个四输入或门。注意到其实异或运算是符合结合律的(i.e. <span>`A\oplusB\oplusC=(A\oplusB)\oplusC`</span>)，因此若采用多级逻辑来实现这个三输入异或门，可以使用2个二输入异或门来实现，如右上图所示。1个二输入异或门使用了2个非门，2个二输入与门和1个二输入或门，则使用2个二输入异或门总共消耗了4个非门，4个二输入与门和2个二输入或门，资源消耗相对二层逻辑实现减少。这种减少的程度随着异或门输入变量的增多而变得更加明显，比如1个八输入异或门，若采用两级逻辑实现，则需要<span>`(2^8)\div2=128`</span>个八输入与门，8个非门和一个一百二十八输入的或门，采用多层逻辑设计则可以节省很多硬件资源，如右下图所示。直观的硬件资源比较可以查看下表。
   </p>
-
-  <table>
-  <tr>
-    <th rowspan = "2">逻辑电路</th>
-    <th colspan = "3">二级逻辑</th>
-    <th colspan = "3">多级逻辑</th>
-  </tr>
-  <tr>
-    <td>非门</td>
-    <td>与门</td>
-    <td>或门</td>
-    <td>非门</td>
-    <td>与门</td>
-    <td>或门</td>
-  </tr>
-  <tr>
-    <td>二输入异或门</td>
-    <td>2个</td>
-    <td>2个二输入</td>
-    <td>1个二输入</td>
-    <td>N/A</td>
-    <td>N/A</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td>三输入异或门</td>
-    <td>3个</td>
-    <td>4个三输入</td>
-    <td>1个四输入</td>
-    <td>4个</td>
-    <td>4个二输入</td>
-    <td>2个二输入</td>
-  </tr>
-  <tr>
-    <td>八输入异或门</td>
-    <td>8个</td>
-    <td>128个八输入</td>
-    <td>1个一百二十八输入</td>
-    <td>14个</td>
-    <td>14个二输入</td>
-    <td>7个二输入</td>
-  </tr>
-  </table>
-
+  <div align="center">
+    <table>
+    <tr>
+      <th rowspan = "2">逻辑电路</th>
+      <th colspan = "3">二级逻辑</th>
+      <th colspan = "3">多级逻辑</th>
+    </tr>
+    <tr>
+      <td>非门</td>
+      <td>与门</td>
+      <td>或门</td>
+      <td>非门</td>
+      <td>与门</td>
+      <td>或门</td>
+    </tr>
+    <tr>
+      <td>二输入异或门</td>
+      <td>2个</td>
+      <td>2个二输入</td>
+      <td>1个二输入</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>三输入异或门</td>
+      <td>3个</td>
+      <td>4个三输入</td>
+      <td>1个四输入</td>
+      <td>4个</td>
+      <td>4个二输入</td>
+      <td>2个二输入</td>
+    </tr>
+    <tr>
+      <td>八输入异或门</td>
+      <td>8个</td>
+      <td>128个八输入</td>
+      <td>1个一百二十八输入</td>
+      <td>14个</td>
+      <td>14个二输入</td>
+      <td>7个二输入</td>
+    </tr>
+    </table>
+  </div>
   <h3>4.2 符号X和符号Z</h3>
   <h4>4.2.1 符号X：非法值&未初始化值</h4>
   <p>
