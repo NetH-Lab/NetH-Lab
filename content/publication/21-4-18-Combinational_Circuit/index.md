@@ -7,6 +7,8 @@ tags:
 - Digital Circuit
 - Computer Architecture
 - Combinational Circuit
+date: “2021-04-18T00:00:00Z”
+publishDate: "2021-04-18T00:00:00Z"
 featured: false
 mathjax: true
 ---
@@ -89,7 +91,7 @@ mathjax: true
   &nbsp;&nbsp;&nbsp;&nbsp;布尔代数的第一种表示方式是与或式。其原理是真值表中的每一行都可以与<b>一个为TRUE的最小项</b>关联，把真值表中所有输出为TURE的这些最小项相加，就可以满足使系统输出为TRUE的所有输入条件<b>（只要系统输入满足其中任何一个这样的最小项，系统输出就为TRUE。一个为TURE就行，因此是最小项相OR的逻辑）</b>，所以可以使用与或式来描述真值表，具体例子如下所示：
   </p>
   <div align="center">
-    <table border="1" align="center">
+    <table align="center">
       <caption>包含多个TRUE最小项的真值表</caption>
       <tr>
         <th>A</th>
