@@ -1,6 +1,16 @@
 ---
-title: 数字模块
-#date: 2021-01-06 01:00:52
+title: Digital Module
+summary: '[数字电路基础][数字模块]'
+authors:
+- Zobin Huang
+tags: 
+- Digital Circuit
+- Computer Architecture
+- Combinational Circuit
+date: “2021-04-18T00:00:00Z”
+publishDate: "2021-04-18T00:00:00Z"
+featured: false
+mathjax: true
 ---
 
 <head>
@@ -18,9 +28,13 @@ title: 数字模块
 
 <body>
 
+<h3>更新时间：Feb.11 2021</h3>
+
+<!--
 <div align="center" class="div_indicate_source">
-<h4>⚠ 转载请注明出处：<font color="red"><i>作者：ZobinHuang，更新日期：Feb.11 2021</i></font></h4>
+  <h4>⚠ 转载请注明出处：<font color="red"><i>作者：ZobinHuang，更新日期：Feb.11 2021</i></font></h4>
 </div>
+-->
 
 <!--表格-->
 <!--
@@ -70,7 +84,7 @@ title: 数字模块
     <br><span>`C_(out)=AB`</span>
   </div>
 
-  <table border="1" align="center">
+  <table align="center">
     <caption>半加器真值表</caption>
     <tr>
       <th><span>`A`</span></th>
@@ -118,7 +132,7 @@ title: 数字模块
     <br><span>`C_(out)=AB+AC_(i n)+BC_(i n)`</span>
   </div>
 
-  <table border="1" align="center">
+  <table align="center">
     <caption>全加器真值表</caption>
     <tr>
       <th><span>`C_(i n)`</span></th>
@@ -264,7 +278,7 @@ title: 数字模块
   <div align="center">
     <img src="./pic/alu.png" width=300px>
   </div>
-  <table border="1" align="center">
+  <table align="center">
     <caption>ALU运算</caption>
     <tr>
       <th><span>`F_(2:0)`</span></th>
