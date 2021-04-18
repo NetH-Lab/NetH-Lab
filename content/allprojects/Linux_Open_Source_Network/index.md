@@ -66,9 +66,9 @@ links:
 
 <div class="post_fs14_ws0">
 
-|<b>💻 “新鲜”玩意</b>|
+|<b>💻 Mellanox BlueField SmartNIC</b>|
 |:-|
-|👉 [Mellanox SmartNIC](https://neth-lab.netlify.app/publication/21-4-18-Mellanox_SmartNIC/)|
+|👉 [硬件 & 软件 Bring up](https://neth-lab.netlify.app/publication/21-4-18-Config_Mellanox_SmartNIC/)|
 </div>
 
 </body>
