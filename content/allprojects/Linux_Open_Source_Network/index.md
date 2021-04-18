@@ -50,7 +50,7 @@ links:
 
 |<b>💻 Linux开源网络</b>|
 |:-|
-|1. [<b>Linux开源网络概览</b>](https://neth-lab.netlify.app/publication/21-4-18-Cloud_Network/) <br> &nbsp;&nbsp;&nbsp;&nbsp;理解Linux开源网络世界的拓扑，介绍基于Linux基金会划分的开源网络框架|
+|1. [<b>Linux开源网络概览</b>](https://neth-lab.netlify.app/publication/21-4-18-cloud_network/1_linux_open_source_network/) <br> &nbsp;&nbsp;&nbsp;&nbsp;理解Linux开源网络世界的拓扑，介绍基于Linux基金会划分的开源网络框架|
 </div>
 
 <br>
@@ -59,7 +59,7 @@ links:
 
 |<b>💻 软件定义网络 (SDN)</b>|
 |:-|
-|👉 [OpenFlow 基础概念](https://neth-lab.netlify.app/publication/21-4-18-SDN/)|
+|👉 [OpenFlow 基础概念](https://neth-lab.netlify.app/publication/21-4-18-SDN/OpenFlow/)|
 </div>
 
 <br>

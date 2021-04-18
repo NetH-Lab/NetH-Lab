@@ -1,6 +1,15 @@
 ---
-title: OpenFlow
-#date: 2021-01-06 01:00:52
+title: OpenFlow Basic
+summary: '[OpenFlow]'
+authors:
+- Zobin Huang
+tags: 
+- OpenFlow
+- SDN
+date: “2021-04-18T00:00:00Z”
+publishDate: "2021-04-18T00:00:00Z"
+featured: false
+mathjax: true
 ---
 
 <head>
