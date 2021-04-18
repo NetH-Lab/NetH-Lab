@@ -1,6 +1,15 @@
 ---
-title: Linux开源网络概览
-#date: 2021-01-06 01:00:52
+title: Linux Open Source Network
+summary: '[Linux][Open Source Network]'
+authors:
+- Zobin Huang
+tags: 
+- Linux
+- Open Source Network
+date: “2021-04-18T00:00:00Z”
+publishDate: "2021-04-18T00:00:00Z"
+featured: false
+mathjax: true
 ---
 
 <head>
