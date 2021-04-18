@@ -251,29 +251,3 @@ print('Accuracy of logistic regression classifier on test set: {:.2f}'.format(lo
 训练结束！
 
 完整代码见github（未上传）
-
-## 1.2 联邦逻辑回归算法（Federated Logistic Regression）
-
-参考资料：
-
-- [FATE - Federated Logistic Regression](https://fate.readthedocs.io/en/latest/_build_temp/python/federatedml/linear_model/logistic_regression/README.html)
-
-在FATE下的联邦逻辑回归算法中，实体被简化为3个，party A为Guest，party B为Host，party C为"Arbiter"，用于维护私钥并负责调度工作
-
-### 1.2.1 Homogeneous LR
-
-指guests和hosts的feature spaces是相同的，故属于横向联邦学习，可以选择是否加密host parties所计算的gradients。
-
-![](./08.png)
-
-HomoLR过程如上，Party A和Party B持有相同structure的模型，每次迭代时，每个party使用自己的数据训练自己的模型，而后向Arbiter上传加密的gradients，Arbiter聚合gradients至federated gradient，再发放给各个party。
-
-具体算法可参考：[paper: Practical Secure Aggregation for Privacy-Preserving Machine Learning](https://dl.acm.org/doi/10.1145/3133956.3133982)
-
-### 1.2.2 Heterogeneous LR
-
-![](./09.png)
-
-框图如上，异构LR中，party A和party B所持数据的feature space是不同的，但sample ID space重叠较多，属纵向联邦学习。在FATE中，需要包含一个sammple data alignment过程，即提取出数据的重叠部分（sample ID space），并加密交互，使双方并不知道哪些data是重叠的。而后使用overlap data进行FL，具体算法参考：[paper: Private federated learning on vertically partitioned data via entity resolution and additively homomorphic encryption](https://arxiv.org/abs/1711.10677)
-
-## 1.3 在FATE上实施LR算法

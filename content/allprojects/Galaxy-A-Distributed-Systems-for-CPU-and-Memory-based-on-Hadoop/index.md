@@ -78,8 +78,6 @@ url_pdf: ""
 ## 2.2 一致性
 1. Raft论文精读：[Link](https://neth-lab.netlify.app/publication/20-11-15-summary-of-raft/)
 
-## 2.3 分布式计算
-
 # 3 开源分布式系统研究
 
 ## 3.1 Google MapReduce
@@ -96,7 +94,7 @@ url_pdf: ""
 
 ## 3.5 FATE
 FATE已独立成另一项目，请参考：
-[FATE - A System for Feterated Learning]()
+[FATE - A System for Feterated Learning](https://neth-lab.netlify.app/allprojects/fate-a-system-or-feterated-learning/)
 
 
 # 2 Galaxy：一种优化CPU和内存利用的异构分布式计算任务处理系统
@@ -112,6 +110,11 @@ FATE已独立成另一项目，请参考：
 ### 2.1.2 Galaxy系统设计
 
 ### 2.1.3 Galaxy系统实现
+#### Step 1: 编写Hadoop YARN app
+YARN app由JAVA编写，JAVA学习笔记：[Overview of JAVA](https://neth-lab.netlify.app/publication/21-3-21-overview-of-java/)
+
+YARN APP开发过程：[YARN in Practice](https://neth-lab.netlify.app/publication/21-3-21-yarn-in-practice/)
+
 
 ## 2.2 资源调度研究
 
