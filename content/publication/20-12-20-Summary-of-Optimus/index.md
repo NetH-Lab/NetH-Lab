@@ -13,7 +13,7 @@ publication_types: ["0"]
 tags: 
 - Study Notes
 - Distributed Machine Learning
-- Resource Schedule
+- Resource Scheduling
 featured: false
 ---
 

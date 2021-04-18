@@ -1,7 +1,7 @@
 ---
-title: Typical Federated Learning Algorithm
+title: Logistic Regression
 
-summary: '[联邦学习]记录典型FL算法学习过程以及代码实现'
+summary: '[机器学习][逻辑回归]逻辑回归算法学习与Python实现'
 authors:
 - Minel Huang
 date: “2021-03-03T00:00:00Z”
@@ -12,42 +12,21 @@ publication_types: ["0"]
 tags: 
 - Study Notes
 - Machine Learning
-- Federated Learning
+- Logistic Regression
 featured: false
 ---
 
-更新时间：2021-03-04
-
+更新时间：2021-04-18
+# 1 Logistic Regression算法解读与理论分析
 参考资料：
-
-- [FATE Github](https://github.com/FederatedAI/FATE/blob/master/python/federatedml/README_zh.rst)
-# 0 Overview of Machine Learning
-## 0.1 什么是机器学习
-参考资料：
-1. [博客: 从机器学习谈起](https://www.cnblogs.com/subconscious/p/4107357.html)
-2. [Wiki: Machine Learning](https://en.wikipedia.org/wiki/Machine_learning)
-
-
-# 1 Federated Logistic Regression
-
-参考资料：
-
 - [Wiki - Logistic Regression](https://en.wikipedia.org/wiki/Logistic_regression)
-- [FATE - Federated Logistic Regression](https://github.com/FederatedAI/FATE/blob/master/python/federatedml/linear_model/logistic_regression/README.rst)
-
-## 1.1 逻辑回归算法（Logistic Regression）
-
-### 1.1.1 算法理论分析
-
-参考资料：
-
 - [Zhihu - 【机器学习】逻辑回归（非常详细）](https://zhuanlan.zhihu.com/p/74874291)
 
-### 1.1.2 python实现
+# 2 python实现
 
 参考资料：[Building A Logistic Regression in Python, Step by Step](https://towardsdatascience.com/building-a-logistic-regression-in-python-step-by-step-becd4d56c9c8)
 
-#### 1.1.2.1 数据集整理
+## 2.1 数据集整理
 
 现在我们尝试使用LR算法解决一个实际问题。
 
@@ -155,7 +134,7 @@ to_keep=[i for i in data_vars if i not in cat_vars]
 data_final=data[to_keep]
 ```
 
-#### 1.1.2.2 使用SMOTE进行过采样
+## 2.2 使用SMOTE进行过采样
 
 上一节我们发现，已订阅人数和未订阅人数差距过大，所以我们还需要对数据进行下一步处理，减小二者差距，也即对未订阅人群进行上采样。
 
@@ -188,7 +167,7 @@ print("Proportion of subscription data in oversampled data is ",len(os_data_y[os
 
 可以看到，已订阅和未订阅人数比例已持平
 
-#### 1.1.2.3 **Recursive Feature Elimination**（递归特征消除）
+## 2.3 **Recursive Feature Elimination**（递归特征消除）
 
 该步骤中，RFE将重复建立model，并选用最好以及最坏的feature，隔离这个feature后再重复建立model。此步骤是用于选择较号的feature，以缩小模型的规模。
 
@@ -219,7 +198,7 @@ X=os_data_X[cols]
 y=os_data_y['y']
 ```
 
-#### 1.1.2.4 实施LR模型
+## 2.4 实施LR模型
 
 数据集已经处理，故现在我们可以开始正式的LR模型训练过程。
 
@@ -247,7 +226,7 @@ result=logit_model.fit()
 print(result.summary2())
 ```
 
-#### 1.1.2.5 Logistic Regression Model Fitting
+## 2.5 Logistic Regression Model Fitting
 
 ```python
 from sklearn.linear_model import LogisticRegression

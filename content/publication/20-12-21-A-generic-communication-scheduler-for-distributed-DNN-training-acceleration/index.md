@@ -12,7 +12,7 @@ publication_types: ["0"]
 
 tags: 
 - Distributed Machine Learning
-- Resource Schedule
+- Resource Scheduling
 featured: false
 ---
 
