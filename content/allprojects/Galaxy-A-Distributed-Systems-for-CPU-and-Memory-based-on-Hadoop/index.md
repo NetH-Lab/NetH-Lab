@@ -112,6 +112,10 @@ FATE已独立成另一项目，请参考：
 ### 2.1.2 Galaxy系统设计
 
 ### 2.1.3 Galaxy系统实现
+#### Step 1: 编写Hadoop YARN app
+YARN app由JAVA编写，JAVA学习笔记：[Overview of JAVA](https://neth-lab.netlify.app/publication/21-3-21-overview-of-java/)
+YARN APP开发过程：[YARN in Practice](https://neth-lab.netlify.app/publication/21-3-21-yarn-in-practice/)
+
 
 ## 2.2 资源调度研究
 

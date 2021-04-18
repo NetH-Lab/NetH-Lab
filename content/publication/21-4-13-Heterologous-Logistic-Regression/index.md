@@ -67,3 +67,11 @@ average logistic loss：
 其中Algorithm 3用于计算梯度，Algorithm 5用于更新损失函数，直到满足收敛条件，或达到最大迭代次数
 Algorithm 3：
 ![](5.4.jpg)
+
+# 6 FATE中Hetero-LR架构
+参考资料：
+- [FATE - Federated Logistic Regression](https://fate.readthedocs.io/en/latest/_build_temp/python/federatedml/linear_model/logistic_regression/README.html)
+
+在FATE下的联邦逻辑回归算法中，实体被简化为3个，party A为Guest，party B为Host，party C为"Arbiter"，用于维护私钥并负责调度工作
+![](./6.1.png)
+框图如上，异构LR中，party A和party B所持数据的feature space是不同的，但sample ID space重叠较多，属纵向联邦学习。在FATE中，需要包含一个sammple data alignment过程，即提取出数据的重叠部分（sample ID space），并加密交互，使双方并不知道哪些data是重叠的。而后使用overlap data进行FL

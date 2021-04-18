@@ -49,3 +49,7 @@ url_pdf: ""
 # 1.2 树模型算法
 
 # 2 Federated Learning基础
+# 2.1 联邦学习综述
+学习笔记：[Overview of Federated Learning](https://neth-lab.netlify.app/publication/21-3-2-overview-of-federated-learning/)
+# 2.2 Hetero-LR
+学习笔记：[Heterologous Logistic Regression](https://neth-lab.netlify.app/publication/21-4-13-heterologous-logistic-regression/)
