@@ -1,6 +1,16 @@
 ---
-title: 数值系统
-#date: 2021-01-06 01:00:52
+title: Number System
+summary: '[数字电路基础][数值系统]'
+authors:
+- Zobin Huang
+tags: 
+- Digital Circuit
+- Computer Architecture
+- Combinational Circuit
+date: “2021-04-18T00:00:00Z”
+publishDate: "2021-04-18T00:00:00Z"
+featured: false
+mathjax: true
 ---
 
 <head>
@@ -18,9 +28,13 @@ title: 数值系统
 
 <body>
 
+<h3>更新时间：Feb.6 2021</h3>
+
+<!--
 <div align="center" class="div_indicate_source">
-<h4>⚠ 转载请注明出处：<font color="red"><i>作者：ZobinHuang，更新日期：Feb.6 2021</i></font></h4>
+  <h4>⚠ 转载请注明出处：<font color="red"><i>作者：ZobinHuang，更新日期：Feb.6 2021</i></font></h4>
 </div>
+-->
 
 <!--表格-->
 <!--
@@ -248,7 +262,7 @@ title: 数值系统
   &nbsp;&nbsp;&nbsp;&nbsp;以十进制数228为例，<span>`228=(11100100)_2=(1.11001)_2*2^7`</span>。在基本版本的浮点表示法中，228的表示方法如下所示，使用高1位作为符号位，随后8位作为阶码，低23位作为尾码。
   </p>
 
-  <table border="1" align="center">
+  <table align="center">
     <caption>基本版本32浮点数表示方法</caption>
     <tr>
       <th>符号</th>
@@ -271,7 +285,7 @@ title: 数值系统
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;细心的话可以发现，如果采用科学计数法表示二进制，尾码的最高位（即小数点前1位）永远为1，因此在浮点数的表示中我们可以将其省略，低23位用于存储小数点后23 bits的数据。相比于第一种版本，尾码将多出一比特的精度。下面给出十进制数228的省略前导1版本32浮点数表示方法。
   </p>
-  <table border="1" align="center">
+  <table align="center">
     <caption>省略前导1版本32浮点数表示方法</caption>
     <tr>
       <th>符号</th>
@@ -294,7 +308,7 @@ title: 数值系统
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;再细心的话还可以发现，我们目前的阶码只能表示正数。因此在IEEE 754标准中，给阶码段加了一个偏置数127。例如，对于阶码7，阶码字段的值应是<span>`7+127=134=(10000110)_2`</span>。对于阶码-4，阶码字段的值应是<span>`-4+127=123=(01111011)_2`</span>。下面给出十进制数228的IEEE 754版本32浮点数表示方法。
   </p>
-  <table border="1" align="center">
+  <table align="center">
     <caption>IEEE 754版本32浮点数表示方法</caption>
     <tr>
       <th>符号</th>
@@ -316,7 +330,7 @@ title: 数值系统
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;对于一些特殊的数，如<span>`0`</span>，<span>`\pm\infty`</span>，<span>`NaN`</span>（非法值），IEEE754采用下面的方法进行表示。
   </p>
-  <table border="1" align="center">
+  <table align="center">
     <caption>IEEE 754对<span>`0`</span>，<span>`\pm\infty`</span>，<span>`NaN`</span>的表示方法</caption>
     <tr>
       <th>数字</th>
@@ -354,7 +368,7 @@ title: 数值系统
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;IEEE 754中同时规定了32位（单精度浮点数，signle-precision，signle或float）和64位（双精度浮点数，double-precision，double）浮点数表示法，具体如下所示。
   </p>
-  <table border="1" align="center">
+  <table align="center">
     <caption>单、双精度浮点数</caption>
     <tr>
       <th>格式</th>
