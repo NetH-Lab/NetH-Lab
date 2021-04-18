@@ -45,8 +45,10 @@ url_pdf: ""
 1. [博客: 从机器学习谈起](https://www.cnblogs.com/subconscious/p/4107357.html)
 2. [Wiki: Machine Learning](https://en.wikipedia.org/wiki/Machine_learning)
 # 1.1 逻辑回归算法
+学习笔记：[Logistic Regression](https://neth-lab.netlify.app/publication/21-4-18-logistic-regression/)
 
 # 1.2 树模型算法
+学习笔记：[Machine Learning Algorithms based on Tree Model](https://neth-lab.netlify.app/publication/21-3-18-machine-learning-algorithms-based-on-tree-model/)
 
 # 2 Federated Learning基础
 # 2.1 联邦学习综述

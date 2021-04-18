@@ -539,19 +539,4 @@ train_pred_res = model.predict(train_data)
 在model.fit中，通过密态的梯度下降算法计算loss并update本地模型
 在model.predict中，获取host的probability，最终生成predict_probability，并更新数据的mapValues
 
-
-# 4 FATE Cluster搭建与Architecture解读
-## 4.1 组件
-1. FATE: 算法库以及FATE Server
-2. eggroll: 集群系统，使集群可以运行分布式FL运算
-整个系统框架如下：
-![](./15.jpg)
-可以看到整个FTAE Cluster实际上包含了两个集群，Host和Guest。每个集群使用eggroll作为底层。
-## 4.2 部署Cluster
-参考资料：
-1. [FATE官方文档](https://fate.readthedocs.io/en/latest/_build_temp/cluster-deploy/README.html)
-
-前几部基本是部署Cluster的必须步骤，包含配置静态ip，关闭防火墙，配置用户组，配置hostname和ip映射关系，配置无密码ssh等。但注意，这是guest和host之间的无密码ssh与ip映射，说明在官方文档中，认为guest和host同属于一个集群，实际上笔者认为应该是两个集群
-
-host party id: 10000
-guest party id: 9999
+至此，笔者对FATE架构已经有了较为充分的了解，后面将分模块进行有针对性的源码阅读与修改。
