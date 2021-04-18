@@ -1,5 +1,5 @@
 ---
-title: 组合逻辑电路基础
+title: Foundation of Combinational Circuit
 summary: '[数字电路基础][组合逻辑电路]'
 authors:
 - Zobin Huang

@@ -1,8 +1,17 @@
 ---
-title: 时序逻辑电路基础
-#date: 2021-01-06 01:00:52
+title: Foundation of Sequential Circuit
+summary: '[数字电路基础][时序逻辑电路]'
+authors:
+- Zobin Huang
+tags: 
+- Digital Circuit
+- Computer Architecture
+- Sequential Circuit
+date: “2021-04-18T00:00:00Z”
+publishDate: "2021-04-18T00:00:00Z"
+featured: false
+mathjax: true
 ---
-
 <head>
 <style>
     img{margin-left: 20px; margin-right: 20px;}
@@ -12,15 +21,20 @@ title: 时序逻辑电路基础
     .div_learning_post{font-size: 16px; word-spacing:0px;}
     .div_indicate_source{font-size: 18px; word-spacing:0px; background-color: #E0E0E0;}
 </style>
+
 <!--支持网页公式显示-->    
 <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=AM_HTMLorMML-full"></script>
 </head>
 
 <body>
 
+<h3>更新时间：Jan.30 2021</h3>
+
+<!--
 <div align="center" class="div_indicate_source">
 <h4>⚠ 转载请注明出处：<font color="red"><i>作者：ZobinHuang，更新日期：Jan.30 2021</i></font></h4>
 </div>
+-->
 
 <!--标题-->
 <!--
@@ -75,7 +89,7 @@ title: 时序逻辑电路基础
   <div align="center">
     <img src="./pic/sr_latch.png" width=300px>
   </div>
-  <table border="1" align="center">
+  <table align="center">
     <!--<caption>SR锁存器真值表</caption>-->
     <tr>
       <th><span>`S`</span></th>
@@ -116,7 +130,7 @@ title: 时序逻辑电路基础
   <div align="center">
     <img src="./pic/d_latch.png" width=300px>
   </div>
-  <table border="1" align="center">
+  <table align="center">
     <!--<caption>D锁存器真值表</caption>-->
     <tr>
       <th><span>`CLK`</span></th>
@@ -239,7 +253,7 @@ title: 时序逻辑电路基础
   &nbsp;&nbsp;&nbsp;&nbsp;在状态转移图中，我们使用圆圈代表状态，圆弧代表两个状态之间的转换，而且对于同步时序逻辑电路来说，转换发生在时钟上升沿。如上图所示，我们分别画出了使用两种状态机设计的状态转移模型。对于Moore型状态机，由于系统的输出仅取决于系统状态，因此我们将系统的输出值也在了圆圈中，并且在圆弧上写上了对应输入造成的系统状态转移。而对于Mealy型状态机，由于是系统输入和系统状态同时决定系统输出，因此我们将系统的输入和输出以<b>输入/输出</b>的方式写在了各条圆弧上。
   </p>
   <h5>STEP2：根据状态转移图，画出状态转移表和输出表</h5>
-  <table border="1" align="center">
+  <table align="center">
     <caption>Moore型有限状态机的状态转换表</caption>
     <tr>
       <th>当前状态<span>`S`</span></th>
@@ -298,7 +312,7 @@ title: 时序逻辑电路基础
     </tr>
   </table>
 
-  <table border="1" align="center">
+  <table align="center">
     <caption>Mealy型有限状态机的状态转换表和输出表</caption>
     <tr>
       <th>当前状态<span>`S`</span></th>
@@ -342,7 +356,7 @@ title: 时序逻辑电路基础
   <br>&nbsp;&nbsp;&nbsp;&nbsp;可以看出，独热编码比二进制编码需要更多的触发器来存储系统状态，但是独热编码也会使系统下一状态逻辑和输出逻辑的设计变得更加简单，因此使用哪种编码，还是取决于具体的情况。下面我们使用二进制编码对上面问题继续进行建模。
   </p>
 
-  <table border="1" align="center">
+  <table align="center">
     <caption>使用二进制编码的Moore型有限状态机的状态转换表</caption>
     <tr>
       <th colspan = "2">当前状态</th>
@@ -400,7 +414,7 @@ title: 时序逻辑电路基础
     </tr>
   </table>
 
-  <table border="1" align="center">
+  <table align="center">
     <caption>使用二进制编码的Moore型有限状态机的输出表</caption>
     <tr>
       <th colspan = "2">当前状态</th>
@@ -428,7 +442,7 @@ title: 时序逻辑电路基础
     </tr>
   </table>
 
-  <table border="1" align="center">
+  <table align="center">
     <caption>使用二进制编码的Moore型有限状态机的输出表</caption>
     <tr>
       <th colspan = "2">当前状态</th>
@@ -456,7 +470,7 @@ title: 时序逻辑电路基础
     </tr>
   </table>  
 
-  <table border="1" align="center">
+  <table align="center">
     <caption>使用二进制编码的Mealy型有限状态机的状态转移表和输出表</caption>
     <tr>
       <th>当前状态<span>`S_0`</span></th>
@@ -557,7 +571,7 @@ title: 时序逻辑电路基础
   <div align="center">
     <img src="./pic/no_pipeline.png" width=600px>
   </div>
-  <table border="1" align="center">
+  <table align="center">
     <tr>
       <th>组合电路逻辑  1</th>
       <th>组合电路逻辑  2</th>
@@ -584,7 +598,7 @@ title: 时序逻辑电路基础
   <div align="center">
     <img src="./pic/pipeline_1.png" width=600px>
   </div>
-  <table border="1" align="center">
+  <table align="center">
     <tr>
       <th>组合电路逻辑  1</th>
       <th>组合电路逻辑  2</th>
@@ -614,7 +628,7 @@ title: 时序逻辑电路基础
   <div align="center">
     <img src="./pic/pipeline_2.png" width=600px>
   </div>
-  <table border="1" align="center">
+  <table align="center">
     <tr>
       <th>组合电路逻辑  1</th>
       <th>组合电路逻辑  2</th>
