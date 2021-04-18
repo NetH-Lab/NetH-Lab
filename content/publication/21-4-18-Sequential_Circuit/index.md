@@ -292,7 +292,7 @@ mathjax: true
     </tr>
   </table>
 
-  <table border="1" align="center">
+  <table align="center">
     <caption>Moore型有限状态机的输出表</caption>
     <tr>
       <th>当前状态<span>`S`</span></th>
