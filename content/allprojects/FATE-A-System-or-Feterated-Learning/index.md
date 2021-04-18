@@ -1,6 +1,6 @@
 ---
 title: FATE - A System for Feterated Learning
-summary: 
+summary: FATE系统学习与源码剖析
 type: project
 tags: 
 - 工程项目
