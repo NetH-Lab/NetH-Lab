@@ -242,7 +242,7 @@ mathjax: true
   <h3>1.2 减法器</h3>
   <p>
 
-  &nbsp;&nbsp;&nbsp;&nbsp;在 [数值系统](/sec_learning/Computer_Architerture/num_system/index.html) 一节中，我们知道了计算机实现二进制减法的原理是采用补码的形式利用加法器实现的，即:
+  &nbsp;&nbsp;&nbsp;&nbsp;在 [数值系统](https://neth-lab.netlify.app/publication/21-4-18-Nubmer_System/) 一节中，我们知道了计算机实现二进制减法的原理是采用补码的形式利用加法器实现的，即:
   </p>
   
   <p>
