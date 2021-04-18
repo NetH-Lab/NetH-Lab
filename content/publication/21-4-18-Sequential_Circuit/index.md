@@ -28,13 +28,9 @@ mathjax: true
 
 <body>
 
-<h3>更新时间：Jan.30 2021</h3>
-
-<!--
 <div align="center" class="div_indicate_source">
-<h4>⚠ 转载请注明出处：<font color="red"><i>作者：ZobinHuang，更新日期：Jan.30 2021</i></font></h4>
+  <h4>⚠ 转载请注明出处：<font color="red"><i>作者：ZobinHuang，更新日期：Jan.30 2021</i></font></h4>
 </div>
--->
 
 <!--标题-->
 <!--
