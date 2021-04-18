@@ -1,6 +1,17 @@
 ---
-title: Lecture 1：课程简介和算法分析
-#date: 2021-01-06 01:00:52
+title: Introduction to Algorithm
+summary: '[算法导论][导读]'
+authors:
+- Zobin Huang
+tags: 
+- Algorithm Introduction
+- Asymptotic Notation
+- Recurrences
+- Open Lecture
+date: “2021-04-18T00:00:00Z”
+publishDate: "2021-04-18T00:00:00Z"
+featured: false
+mathjax: true
 ---
 
 <head>
