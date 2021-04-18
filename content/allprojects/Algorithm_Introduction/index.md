@@ -6,8 +6,6 @@ tags:
 - 基础知识
 - Algorithm Introduction
 - 算法导论
-authors:
-- Zobin Huang
 ---
 
 <head>
