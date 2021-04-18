@@ -83,41 +83,42 @@ mathjax: true
     <br><span>`S=A\oplusB`</span>
     <br><span>`C_(out)=AB`</span>
   </div>
-
-  <table align="center">
-    <caption>半加器真值表</caption>
-    <tr>
-      <th><span>`A`</span></th>
-      <th><span>`B`</span></th>
-      <th><span>`C_(out)`</span></th>
-      <th><span>`S`</span></th>
-    </tr>
-    <tr>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-  </table>
-
+  <div align="center">
+    <table align="center">
+      <caption>半加器真值表</caption>
+      <tr>
+        <th><span>`A`</span></th>
+        <th><span>`B`</span></th>
+        <th><span>`C_(out)`</span></th>
+        <th><span>`S`</span></th>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+    </table>
+  </div>
+  
   <h4>1.1.2 全加器（full adder）</h4>
   <div align="center">
     <img src="./pic/full_adder.png" width=300px>
@@ -131,74 +132,74 @@ mathjax: true
     <br><span>`S=A\oplusB\oplusC_(i n)`</span>
     <br><span>`C_(out)=AB+AC_(i n)+BC_(i n)`</span>
   </div>
-
-  <table align="center">
-    <caption>全加器真值表</caption>
-    <tr>
-      <th><span>`C_(i n)`</span></th>
-      <th><span>`A`</span></th>
-      <th><span>`B`</span></th>
-      <th><span>`C_(out)`</span></th>
-      <th><span>`S`</span></th>
-    </tr>
-    <tr>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-  </table>
-
+  <div align="center">
+    <table align="center">
+      <caption>全加器真值表</caption>
+      <tr>
+        <th><span>`C_(i n)`</span></th>
+        <th><span>`A`</span></th>
+        <th><span>`B`</span></th>
+        <th><span>`C_(out)`</span></th>
+        <th><span>`S`</span></th>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+    </table>
+  </div>
   <h4>1.1.3 进位传播加法器(Carry Propagate Adder, CPA)</h4>
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;N位加法器接收两个N位的输入<span>`A`</span>和<span>`B`</span>，和一个进位值<span>`C_(i n)`</span>，产生一个N位的结果<span>`S`</span>和一个输出进位<span>`C_(out)`</span>，由于1位进位要传播到下一位中，因此这种加法器也被称为<b>进位传播加法器(Carry Propagate Adder, CPA)</b>。
@@ -278,22 +279,23 @@ mathjax: true
   <div align="center">
     <img src="./pic/alu.png" width=300px>
   </div>
-  <table align="center">
-    <caption>ALU运算</caption>
-    <tr>
-      <th><span>`F_(2:0)`</span></th>
-      <th>功能</th>
-      <th><span>`F_(2:0)`</span></th>
-      <th>功能</th>
-    </tr>
-    <tr>
-      <td><span>`000`</span></td>
-      <td><span>`A`</span> AND <span>`B`</span></td>
-      <td><span>`100`</span></td>
-      <td><span>`A`</span> AND <span>`B`</span></td>
-      
-    </tr>
-  </table>
+  <div align="center">
+    <table align="center">
+      <caption>ALU运算</caption>
+      <tr>
+        <th><span>`F_(2:0)`</span></th>
+        <th>功能</th>
+        <th><span>`F_(2:0)`</span></th>
+        <th>功能</th>
+      </tr>
+      <tr>
+        <td><span>`000`</span></td>
+        <td><span>`A`</span> AND <span>`B`</span></td>
+        <td><span>`100`</span></td>
+        <td><span>`A`</span> AND <span>`B`</span></td>
+      </tr>
+    </table>
+  </div>
 </div>
 
 <!--ref-->
