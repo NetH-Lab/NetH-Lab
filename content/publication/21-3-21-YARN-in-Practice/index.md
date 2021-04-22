@@ -86,7 +86,7 @@ UI方式，直接在浏览器中输入http://192.168.137.101:8088/cluster，进�
 - step 6: MRAM向RM请求map containers，并要求containers的位置靠近input files存储空间
 - step 7, 8: RM向MARM分配containers，map和reduce分别开始工作
 
-### 4.1.2 编写MapReduce程序
+### 4.1.2 编写MapReduce程序（基于Hadoop库）
 首先介绍Hadoop库中几个关键的类
 
 #### 4.1.2.1 Class Mapper<KEYIN,VALUEIN,KEYOUT,VALUEOUT>
@@ -354,3 +354,8 @@ TimeUnit.SECONDS.sleep(1);
 rmClient.unregisterApplicationMaster(
 FinalApplicationStatus.SUCCEEDED, "", "");
 ```
+
+### 4.3.3 编写一个YARN app，打出Hello World
+在上一节，我们实现了使用Client完成任务提交，部署AM后申请container，最终在container中运行一条cmd命令。
+本节中，笔者将对上一节Client与AM代码进行更改，试图在container中运行Hello.java，打印出Hello World。
+
