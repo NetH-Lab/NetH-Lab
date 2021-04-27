@@ -87,6 +87,8 @@ UI方式，直接在浏览器中输入http://192.168.137.101:8088/cluster，进�
 - step 7, 8: RM向MARM分配containers，map和reduce分别开始工作
 
 ### 4.1.2 编写MapReduce程序（基于Hadoop库）
+[示例代码：https://github.com/Huangxy-Minel/galaxy/tree/main/dataprocess/mapreduce](https://github.com/Huangxy-Minel/galaxy/tree/main/dataprocess/mapreduce)
+
 首先介绍Hadoop库中几个关键的类
 
 #### 4.1.2.1 Class Mapper<KEYIN,VALUEIN,KEYOUT,VALUEOUT>
@@ -171,6 +173,8 @@ Launching a Container
 NM根据localResources，将数据从HDFS下载到本地，而后开始launch container
 
 ### 4.3.2 编写一个收集cluster statistics的YARN application
+[示例代码：https://github.com/Huangxy-Minel/galaxy/tree/main/yarnapp/dstat](https://github.com/Huangxy-Minel/galaxy/tree/main/yarnapp/dstat)
+
 下图显示了我们需要编写哪些程序：
 ![](./4.5.jpg)
 Step 1: YARN client
@@ -355,7 +359,53 @@ rmClient.unregisterApplicationMaster(
 FinalApplicationStatus.SUCCEEDED, "", "");
 ```
 
+### 4.3.3 总结
+根据之前的代码例程，总结一下编写Client和AM步骤
+#### 4.3.3.1 Client
+Client的作用很简单，即向RM申请一个container并运行AM。该过程可以被细化为以下几点：
+1. 创建Client实体
+2. 配置container参数
+3. 配置AM参数
+4. 提交请求，并监控App运行状态
+
+具体来说如下：
+Step 0: 生成配置模板YarnConfiguration类
+
+Step 1: 创建Client实体
+参考YarnClient类
+
+Step 2: 配置container参数
+参考ContainerLaunchContext类，该类的创建方法为Records.newRecord(ContainerLaunchContext.class)
+container中比较关键的参数是launch命令、localresource、environment
+
+Step 3: 配置AM参数
+参考YarnClientApplication类
+其中需要生成ApplicationSubmissionContext，该context是Client向RM提交的报文
+
+Step 4: 提交请求，监控App
+使用YarnClient中submitApplication方法
+使用ApplicationReport类以获取App运行状态
+
+#### 4.3.3.2 ApplicationMaster
+AM的功能是向RM请求container，请求成功后告知NM launch container，这两步通过AMRMClient，NMClient两个实体完成
+大体过程与Client相同，向RM提交container请求报文，向NM提交ContainerLaunchContext以运行container
+具体过程如下：
+
+Step 0: 创建通信实体
+AMRMClient.createAMRMClient();
+NMClient.createNMClient();
+
+Step 1: 请求container
+配置ContainerRequest类
+通过AMRMClient方法提交请求
+
+Step 2: 得到container后，launch container
+配置ContainerLaunchContext类
+通过NMClient方法提交launch命令
+
+
+
 ### 4.3.3 编写一个YARN app，打出Hello World
 在上一节，我们实现了使用Client完成任务提交，部署AM后申请container，最终在container中运行一条cmd命令。
-本节中，笔者将对上一节Client与AM代码进行更改，试图在container中运行Hello.java，打印出Hello World。
+本节中，笔者将对上一节Client与AM代码进行更改，将申请多个container，并执行Hello.java，将生成的文件上传至HDFS中。
 
