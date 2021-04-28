@@ -405,7 +405,97 @@ Step 2: 得到container后，launch container
 
 
 
-### 4.3.3 编写一个YARN app，打出Hello World
+### 4.3.4 编写一个YARN app，打出Hello World
+完整代码请参考：[https://github.com/Huangxy-Minel/galaxy/tree/main/yarnapp/hello](https://github.com/Huangxy-Minel/galaxy/tree/main/yarnapp/hello)
+
 在上一节，我们实现了使用Client完成任务提交，部署AM后申请container，最终在container中运行一条cmd命令。
 本节中，笔者将对上一节Client与AM代码进行更改，将申请多个container，并执行Hello.java，将生成的文件上传至HDFS中。
 
+Client并不需要更改，它的作用依然是申请一个container以运行AM。
+
+AM中添加两个containerAsk，即
+```java
+// ----------------Ask for container----------------
+// Config requirements of containers
+Priority priority = Records.newRecord(Priority.class);
+priority.setPriority(0);
+Resource capability = Records.newRecord(Resource.class);
+capability.setMemory(64);
+capability.setVirtualCores(1);
+// Make container requests to ResourceManager
+ContainerRequest containerAsk = new ContainerRequest(capability, null, null, priority);
+System.out.println("adding two container asks:" + containerAsk);
+rmClient.addContainerRequest(containerAsk);
+rmClient.addContainerRequest(containerAsk);
+```
+接着提交containerRequest，如下
+```java
+// ----------------Wait and launch containers----------------
+int allocatedContainer = 0;
+while (allocatedContainer < 2) {
+    System.out.println("Waiting for containers......");
+    AllocateResponse response = rmClient.allocate(0);
+    for (Container container : response.getAllocatedContainers()) {
+        ContainerId containerID = container.getId();
+        System.out.println("Get a container! ID: " + containerID.toString());
+        allocatedContainer++;
+        ContainerLaunchContext ctx = createContainerLaunchContext(conf);
+        System.out.println("Launching container " + container);
+        nmClient.startContainer(container, ctx);
+    }
+    TimeUnit.SECONDS.sleep(1);
+}
+```
+Logs输出为：
+```
+registerApplicationMaster: pending
+registerApplicationMaster: complete
+adding two container asks:Capability[<memory:64, vCores:1>]Priority[0]AllocationRequestId[0]ExecutionTypeRequest[{Execution Type: GUARANTEED, Enforce Execution Type: false}]Resource Profile[null]
+Waiting for containers......
+Waiting for containers......
+Get a container! ID: container_1619516610899_0001_01_000002
+Launching container Container: [ContainerId: container_1619516610899_0001_01_000002, AllocationRequestId: 0, Version: 0, NodeId: raspberrypi03:38607, NodeHttpAddress: raspberrypi03:8042, Resource: <memory:64, vCores:1>, Priority: 0, Token: Token { kind: ContainerToken, service: 192.168.137.103:38607 }, ExecutionType: GUARANTEED, ]
+Get a container! ID: container_1619516610899_0001_01_000003
+Launching container Container: [ContainerId: container_1619516610899_0001_01_000003, AllocationRequestId: 0, Version: 0, NodeId: raspberrypi02:39481, NodeHttpAddress: raspberrypi02:8042, Resource: <memory:64, vCores:1>, Priority: 0, Token: Token { kind: ContainerToken, service: 192.168.137.102:39481 }, ExecutionType: GUARANTEED, ]
+allocate (wait)
+Completed container ContainerStatus: [ContainerId: container_1619516610899_0001_01_000003, ExecutionType: GUARANTEED, State: COMPLETE, Capability: <memory:64, vCores:1>, Diagnostics: , ExitStatus: 0, IP: null, Host: null, ContainerSubState: DONE]
+unregister
+exiting
+```
+
+可见对于多个container申请，仅需要在rmClient中添加contaienrRequest，在RM中将存放一个申请队列。response.getAllocatedContainers()会返回所有最近申请的container列表，使用for循环遍历即可简单的对所有container操作。当一个container被分配给AM后，其申请队列将减少一个container。
+
+接下来我们尝试在container中进行文件的下载与上传，首先修改AM，使之仅申请一个container，修改Hello代码如下：
+```java
+public class Hello{
+    public static void main(String[] args) throws Exception {
+        System.out.println("Hello World!");
+
+        // ----------------Init instance of fs----------------
+        YarnConfiguration conf = new YarnConfiguration();
+        FileSystem fs = FileSystem.get(conf);
+        Path helloPath = new Path(fs.getHomeDirectory(), "hello");
+        // ----------------Create Hello----------------
+        FSDataOutputStream helloFile = fs.create(helloPath);
+        helloFile.writeBytes("Hello World!\n");
+    }
+}
+```
+这里我们在HDFS上创建了一个hello文件，并在其中写入"Hello World!"。注意，这段程序是运行在container中的，并在其中使用了hadoop接口，如果不更改AM种的launch cmd，会报错NoClassDefFoundError: org/apache/hadoop/conf/Configuration
+所以我们需要使用hadoop命令来运行该函数，修改AM如下：
+```java
+final String cmd = "/home/galaxy/hadoop-3.2.2/bin/hadoop jar Container.jar galaxy.testfile.Hello";
+String ctnLaunchCmd =
+    String.format(
+        "%s 1>%s/stdout 2>%s/stderr",
+        cmd, 
+        ApplicationConstants.LOG_DIR_EXPANSION_VAR,
+        ApplicationConstants.LOG_DIR_EXPANSION_VAR);
+```
+运行Client，可以在HDFS中观察结果如下：
+![](./4.8.jpg)
+以上，完成了container中的基本操作
+
+## 4.4 编写YarnApp: MapReduce
+本节笔者尝试不适用Hadoop MapReduce接口，以编写一个WordCount程序。
+### 4.4.1 WordCount.Map
