@@ -217,3 +217,7 @@ federatedai/client:${TAG}
 ```
 ipc使container间可以通信
 network-alias使container名可以被dns解析
+
+通过以上命令，我们成功启动了fate-cluster版本。
+
+# 3 在docker container中添加GPU
