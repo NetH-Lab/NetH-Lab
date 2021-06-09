@@ -15,9 +15,9 @@ tags:
 featured: false
 ---
 
-更新时间：2020/02/05
+更新时间：2021/06/04
 
-## 01 Introduction
+# 01 Introduction
 
 参考资料：[MIT lecture 01](https://www.youtube.com/watch?v=cQP8WApzIQQ&t); [Paper: MapReduce]()
 
@@ -35,7 +35,7 @@ paper中描述的东西：
 - Fault-Tolerance：指在出现一定错误下，系统依然availability。这里的availability包括recoverability
 - consistency（一致性）：包括强一致性和弱一致性
 
-### MapReduce
+## MapReduce
 
 为什么要设计MapReduce？Google需要处理海量的文件（由Web服务产生），为了降低延迟，需要使用一个分布式系统（几千台计算机）来处理。那么每个处理任务是使用不同的程序的，难道需要针对一个任务写一个独立的分布式应用程序吗？这太expensive。所以MapReduce出现了，搭建出一个分布式框架，使应用开发者不需要考虑如何将程序扩展到几千台计算机上，仅仅需要编写Map函数和Reduce函数，就可以完成大部分功能。
 
@@ -53,7 +53,7 @@ paper中描述的东西：
 
 课程到此已经结束，若对MapReduce有兴趣请参考[Summary of MapReduce]()
 
-## 02 RPC and Threads
+# 02 RPC and Threads
 
 参考资料：[MIT lecture 02](https://www.youtube.com/watch?v=gA4YXUJX7t8)
 
@@ -65,13 +65,41 @@ Threads：main tool to manage concurrency in programs
 
 thread challenges：share memory导致be easy to get bug，两个线程同时对一个内存进行操作而产生的问题，成为RACE。解决办法可以使用locks。第二个问题是coordination，即两个线程需要进行协作，比如为交互一些信息而带来的等待，解决的办法有channels, condition variables, wait group。最后一个问题是Deadlock
 
-## 03 GFS
+# 03 GFS
 
 参考资料：[MIT lecture 03](https://www.youtube.com/watch?v=EpIgvowZr00)
 
+GFS: Google File System
 目标：big storage systems
 
 为什么hard：
+1. 性能和分区：为了支持成百上千台机器使用
+2. 容错：自动修复错误和容错措施，方法可以是replication
+3. replication带来一致性问题
+4. 一致性带来low performance
 
+GFS的特点：
+1. 适用于单一的datacenter
+2. 提供间接服务
+3. 为big sequential access设计（非 random access）
+4. 优化目标主要为提高吞吐量，而非时延
 
+# 04 Primary-Backup Replication
+参考资料：[MIT lecture 04](https://www.youtube.com/watch?v=M_teob23ZzY)
 
+Replication可以解决何种failures？
+Covered： 由错误导致的stop：某些错误使计算机停止工作（停电、网络通信错误等）
+Not Covered：程序bug、系统设计错误等
+
+该paper提出两个主要技术点：state transfer和replicated state machine
+1. state transfer：这是一种，直接拷贝primary的状态（可能使memory/RAM等）的复制方法
+2. replicated state machine：大部分应用中，计算机处理一个event包含了很多的内部过程，该方法仅拷贝primary所经历的外部events（例如从外部输入的某些参数），backup计算机便可恢复primary所经历的所有过程。
+
+随着多核/并行架构的出现，复制状态机的方法并不能很好的满足需求（不够robust），故在该情况，常考虑直接复制state
+
+业界在设计backup系统时所常考虑的因素：
+1. 复制何种状态
+2. 如何使primary和backup更接近同步状态
+3. 如何设计一个cut-over系统（切换系统），使Client从old primary切换至backup
+4. 现实世界中一定会发生异常，如何针对这些异常状况（即使异常是不可见的）
+5. 如何快速生成一个新的backup server/computer
