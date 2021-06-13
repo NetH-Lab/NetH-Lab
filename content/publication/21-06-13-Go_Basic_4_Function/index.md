@@ -1,6 +1,14 @@
 ---
 title: Golang 函数
-#date: 2021-01-06 01:00:52
+summary: '[Golang][Go语言]'
+authors:
+- Zobin Huang
+tags: 
+- Golang
+date: “2021-06-13T00:00:00Z”
+publishDate: "2021-06-13T00:00:00Z"
+featured: false
+mathjax: true
 ---
 
 <head>
