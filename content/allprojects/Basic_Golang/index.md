@@ -1,15 +1,17 @@
 ---
-title: How to find papers and research topic in CS
-summary: [基础知识] 如何找到自己的研究方向（CS领域）
+title: Basic Golang
+summary: Golang 基础概念，以及日常开发所总结的使用经验
 type: project
 
 tags: 
 - 基础知识
+- Golang
+- Go语言
 authors:
-- Minel Huang
+- Zobin Huang
 
-date: "2021-06-15T00:00:00Z"
-lastmod: "2021-06-15T00:00:00Z"
+date: "2021-06-13T00:00:00Z"
+lastmod: "2021-06-13T00:00:00Z"
 
 # Optional external URL for project (replaces project detail page).
 external_link: ""
