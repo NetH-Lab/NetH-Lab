@@ -90,11 +90,11 @@ mathjax: true
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;Section 0. <a href="#0_preface"><font color="blue"><b>前言</b></font></a>：介绍了本章所阐述的内容
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 1. <a href="#1_name"><font color="blue"><b>文献类型</b></font></a>：介绍笔者所接触到的文献类型与分级
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 1. <a href="#section1"><font color="blue"><b>文献类型</b></font></a>：介绍笔者所接触到的文献类型与分级
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#2_declaration"><font color="blue"><b>文献检索</b></font></a>：介绍几种检索文献的网站与文献质量评估方法
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section2"><font color="blue"><b>文献检索</b></font></a>：介绍几种检索文献的网站与文献质量评估方法
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 3. <a href="#3_variable"><font color="blue"><b>寻找方向</b></font></a>：描述笔者寻找研究方向的方法和评判标准
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 3. <a href="#section3"><font color="blue"><b>寻找方向</b></font></a>：描述笔者寻找研究方向的方法和评判标准
     <p>
   </div>
 </div>
@@ -114,7 +114,7 @@ mathjax: true
 </div>
 
 
-<h2><a name="1_name">1. 文献类型</a></h2>
+<h2><a name="section1">1. 文献类型</a></h2>
 <div class="div_learning_post_boder">
   <p>
   参考文章链接：<br>
@@ -163,7 +163,7 @@ mathjax: true
   &nbsp;&nbsp;&nbsp;&nbsp;可以通过上述4类会议来了解当前计算机领域中的热点研究方向（系统方面，不包含AI），在第三章中将描述如何运用会议论文寻找与确定研究方向。
 </div>
 
-<h2><a name="2_preface">2. 文献检索</a></h2>
+<h2><a name="section2">2. 文献检索</a></h2>
 <div class="div_learning_post_boder">
   <p>
   参考文章链接：<br>
@@ -208,7 +208,7 @@ mathjax: true
   &nbsp;&nbsp;&nbsp;&nbsp;3. <b>有了研究方向后该如何检索</b>：一个很好的办法是对已经提取出的文章的参考文献进行溯源，以及继续关注该文献被谁引用。参考文献的溯源较为简单，因为已经找到了文章标题，检索即可。关于被引，推荐谷歌学术的引用快讯（科研人员人工添加的引用链接）和作者快讯（可以获取该作者的新文章、新引用）。
 </div>
 
-<h2><a name="3_preface">3. 寻找方向</a></h2>
+<h2><a name="section3">3. 寻找方向</a></h2>
 <div class="div_learning_post_boder">
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;研究方向是一份科研工作的起始，“好”的方向可以说是决定了产出的频率和质量，在此笔者希望总结自己对方向的看法以及一套方法论，该看法仅为笔者先阶段的思想，随着不断学习将逐步修改。
