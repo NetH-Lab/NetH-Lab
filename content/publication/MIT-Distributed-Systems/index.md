@@ -103,3 +103,5 @@ Not Covered：程序bug、系统设计错误等
 3. 如何设计一个cut-over系统（切换系统），使Client从old primary切换至backup
 4. 现实世界中一定会发生异常，如何针对这些异常状况（即使异常是不可见的）
 5. 如何快速生成一个新的backup server/computer
+
+## VMware虚拟机backup方法
