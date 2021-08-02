@@ -1,13 +1,13 @@
 ---
-title: Galaxy - Research on Distributed Systems
-summary: Galaxy分布式系统开发记录
+title: Research on Distributed Systems
+summary: 分布式系统研究过程纪要
 type: project
 tags: 
 - 科研项目
 - 工程项目
 - Distributed Systems
-- Datacenter Networks
-- Distributed Machine Learning
+- Distributed Computing
+- Scheduling
 authors:
 - Minel Huang
 
@@ -38,64 +38,126 @@ url_pdf: ""
 #   Otherwise, set `slides = ""`.
 #slides: example
 ---
+<head>
+<style>
+    img{margin-left: 20px; margin-right: 20px;}
+    #table th{text-align:center;}
+    #table td{text-align:center;}
+    p{margin-left: 15px; margin-right: 15px;}
+    .div_catalogue{padding: 10px 10px; font-size: 16px; background-color: #E0E0E0; word-spacing:0px;  border:1px solid black; border-radius: 10px;}
+    .div_licence{font-size: 16px; word-spacing:0px; border:1px solid black;}
+    .div_learning_post{font-size: 16px; word-spacing:0px;}
+    .div_indicate_source{font-size: 18px; word-spacing:0px; background-color: #E0E0E0;}
+    .div_learning_post_boder{padding: 10px 10px; font-size: 16px; word-spacing:0px;  border:1px solid black;}
+</style>
+<!--支持网页公式显示-->    
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=AM_HTMLorMML-full"></script>
+</head>
 
-更新时间：2021/03/15
+<body>
 
-# 1 Overview
-## 1.1 研究目的
+<div align="center" class="div_indicate_source">
+  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: MinelHuang，更新日期：Aug.02 2021</i></font></h4>
+  <div align="left">
+  <font size="2px">
+  </font>
+  </div>
+</div>
 
-我们通常使用的计算机都为单机系统，它很强大，可以运行复杂的程序，快速的处理计算任务，足够去完成我们日常生活中的任务，比如看视频、玩游戏等等。然而，随着互联网的不断发展，人类世界中产生的数据与日俱增，这些数据需要被处理，需要存储，同时带来了更大的计算任务。比如百度要在极短的时间内在海量的数据中查询我们搜索的关键词，并且这种搜索请求也是海量的。
+<div class="div_licence">
+  <br>
+  <div align="center">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="知识共享许可协议" style="border-width:0; margin-left: 20px; margin-right: 20px;" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a>
+  </div>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;本<span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" rel="dct:type">作品</span>由 <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName"><b>MinelHuang</b></span> 采用 <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><font color="red">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</font></a> 进行许可，在进行使用或分享前请查看权限要求。若发现侵权行为，会采取法律手段维护作者正当合法权益，谢谢配合。
+  </p>
+</div>
 
-单机系统不足以完成这样的任务，所以我们考虑使用多台机器去处理这种任务，单机系统也变成了分布式系统。然而，相较于单机系统，分布式系统是十分复杂的，故而衍生出了一个新的研究领域。作为一个系统研究人员，笔者希望在分布式系统领域进行一番研究，故开展此博客簇，以记录我的学习历程和研究方法。
+<br>
 
-## 1.2 研究方向
+<div class="div_catalogue">
+  <div align="center">
+    <h2> 目录 </h2>
+    <p>
+  </div>
+  <div class="div_learning_post_boder">
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 0. <a href="#section0"><font color="blue"><b>前言</b></font></a>：简单介绍研究目的以及方向概述，维护当前研究进度和计划
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 1. <a href="#section1"><font color="blue"><b>知识补充</b></font></a>：记录笔者的学习路线，包括理论知识与工具学习
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section2"><font color="blue"><b>工程项目</b></font></a>：总结与分布式系统相关的项目开发过程
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 3. <a href="#section3"><font color="blue"><b>研究项目</b></font></a>：总结研究路线和各阶段进展
+    <p>
+  </div>
+</div>
 
-现如今，数据中心大多为分布式系统，以处理海量的数据。这种系统是紧耦合的，即机器之间的距离很近，带宽很大，大量的算法被应用于此。如今运用在紧耦合分布式系统包括Hadoop，Spark，MapReduce等，如何优化现有系统框架以提高处理速度为一类研究方向。
+<h2><a name="section0">0. 前言</a></h2>
+<div class="div_learning_post_boder">
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;本项目旨在记录笔者在<font color="red">MPhil阶段中的各类工作成果</font>，每项工作由单独的文档记录，可能是工程项目，可能是学习笔记。笔者希望通过此项目整理自己的工作成果，由此给出当前阶段的<font color="red">工作计划</font>。<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;为与其他项目作区分，本项目仅总结归纳<b>分布式系统（Distributed System）</b>方向的工作，下面对该方向作简要介绍。
 
-随着Machine Learning的运用日益广泛，数据中心如何加速Machine Learning成为一类问题，故需要研究如何优化数据中心网络或分布式系统以支持或加速ML过程。
+  <h3>0.1 研究目的 </h3>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;我们通常使用的计算机都为单机系统，它很强大，可以运行复杂的程序，快速的处理计算任务，足够去完成我们日常生活中的任务，比如看视频、玩游戏等等。然而，随着互联网的不断发展，人类世界中产生的数据与日俱增，这些数据需要被处理，需要存储，同时带来了更大的计算任务。比如百度要在极短的时间内在海量的数据中查询我们搜索的关键词，并且这种搜索请求也是海量的。<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;单机系统不足以完成这样的任务，所以我们考虑使用多台机器去处理这种任务，单机系统也变成了分布式系统。然而，相较于单机系统，分布式系统是十分复杂的，故而衍生出了一个新的研究领域。作为一个系统研究人员，笔者希望在分布式系统领域进行一番研究，故开展此博客簇，以记录我的学习历程和研究方法。
 
-在数据中心之外，大量的计算机（如个人电脑）之间通过Internet连接，由个人电脑组成的P2P网络是松耦合的，并且有很强的异构性，那么是否可以制作松耦合的分布式提供，以利用这种分散的计算资源呢？
+  <h3>0.2 研究方向 </h3>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;关于如何寻找研究方向，请参考此文档<a herf="https://neth-lab.netlify.app/publication/21-06-15-how_to_find_papers_and_find_research_topic_in_cs/"> How to find papers and research topics in CS</a> <br>
+  当前的研究场景为：<font color="red">Distributed System for Privacy Computing</font>，故目前的项目包含分布式计算系统和隐私计算两个部分
 
-综上所述，笔者将从这三个方向寻找研究机会：
+  <h3>0.3 研究计划</h3>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;已完成的工作：<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;1. 分布式计算系统Galaxy搭建<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;正在进行的工作：<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;1. 经典分布式系统论文研读<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;2. 近三年（2018-2021）会议论文分类<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;3. 分布式系统课程学习<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;4. 基础知识补充<br>
+  
+  <h3>0.4 本文档章节规划</h3>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;文档大体将分为知识补充、工程项目、研究项目三个类别，其中知识补充重点在于总结基础知识学习笔记、经典论文学习笔记等；工程项目重点在于总结与分布式系统相关的项目过程文档与项目成果；研究项目重点在于根据研究方向记录重点research笔记。<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;笔者将从此三个方向对个人知识结构进行梳理，你可以根据您的兴趣进行针对性阅读。
+</div>
 
-1. 对现有分布式系统（Hadoop，Spark等）进行分析研究，寻找其优化点以加速数据中心网络处理速度。
-2. 对分布式机器学习（如联邦学习）进行分析研究，改善现有分布式机器学习系统（如Spark，FATE等）。
-3. 对软耦合分布式系统进行分析研究，探寻搭建该系统的可能性，与在该系统运行软件的可行性（如分布式游戏）。
+<h2><a name="section1">1. 知识补充</a></h2>
+<div class="div_learning_post_boder">
+  <h3>1.1 基础知识补充</h2>
+  &nbsp;&nbsp;&nbsp;&nbsp;1. <a herf="https://neth-lab.netlify.app/publication/mit-distributed-systems/">MIT 6.824 Distributed Systems学习笔记</a> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;2. 大数据基础<font color="red">（未完成）</font> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;3. Linux系统知识学习<font color="red">（未完成）</font>
 
-## 1.3 研究计划
+  <h3>1.2 经典论文选读</h2>
+  &nbsp;&nbsp;&nbsp;&nbsp;根据MIT 6.824课程，本章节总结了有关论文的学习笔记，同时针对行业广泛使用的系统论文做了针对性阅读。<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;1. 一致性：<a herf="https://neth-lab.netlify.app/publication/20-11-15-summary-of-raft/">Raft学习笔记</a> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;2. <a herf="https://neth-lab.netlify.app/publication/21-1-4-summary-of-mapreduce/">MapReduce学习笔记</a> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;3. <a herf="https://neth-lab.netlify.app/publication/summary-of-apache-hadoop-yarn/">Hadoop YARN学习笔记</a> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;4. <a herf="https://neth-lab.netlify.app/publication/summary-of-apache-hadoop-yarn/">Spark学习笔记</a> <br>
 
-分布式系统是和工程应用紧密相关的，所以笔者将从三个方面“修炼”分布式系统，理论研究与工程系统搭建同步进行，以搭建出“属于”自己的分布式系统：
+  <h3>1.3 工具学习</h2>
+  &nbsp;&nbsp;&nbsp;&nbsp;1. Docker技术学习笔记<font color="red">（未完成）</font> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;2. k8s技术学习笔记<font color="red">（未完成）</font> <br>
+</div>
 
-1. 分布式系统基础学习与经典论文研读。
-2. 搭建研究Hadoop、Spark、FATE系统。
-3. 搭建自己的计算集群：Galaxy
+<h2><a name="section2">2. 工程项目</a></h2>
+<div class="div_learning_post_boder">
+  &nbsp;&nbsp;&nbsp;&nbsp;此节仅是对项目的整理归纳，创建索引表，具体项目内容将在github上或neth-lab其他project中介绍。<br>
+  <h3>1.1 Galaxy系统开发 - 已完成</h2>
+  &nbsp;&nbsp;&nbsp;&nbsp;Github地址：<a herf="https://github.com/Huangxy-Minel/galaxy">https://github.com/Huangxy-Minel/galaxy</a><br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;项目简介：<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;该系统为笔者本科毕业设计，使用了三块树莓派模拟一个工作集群，并基于Hadoop YARN实现了一系列计算过程。在YARN的基础上，笔者引入了一种高扩展的scheduling框架，称为Galaxy，使其可以承载异构的工作负载。具体项目内容请见github文档<font color="red">（Github文档未完成）</font>。<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;项目研究动机：<a herf=>
+  &nbsp;&nbsp;&nbsp;&nbsp;1. 
 
-# 2 基础知识补充与经典论文选读
-
-## 2.1 分布式系统概述
-1. MIT 6.824 Distributed Systems学习笔记：[Link](https://neth-lab.netlify.app/publication/mit-distributed-systems/)
-
-## 2.2 一致性
-1. Raft论文精读：[Link](https://neth-lab.netlify.app/publication/20-11-15-summary-of-raft/)
-
-# 3 开源分布式系统研究
-
-## 3.1 Google MapReduce
-1. MapReduce论文精读：[Link](https://neth-lab.netlify.app/publication/21-1-4-summary-of-mapreduce/)
-
-## 3.2 Apache Hadoop YARN
-1. Hadoop论文精读：[Summary of Apache Hadoop YARN](https://neth-lab.netlify.app/publication/summary-of-apache-hadoop-yarn/)
-2. Hadoop系统搭建：[Configuration of Hadoop YARN Environment](https://neth-lab.netlify.app/publication/21-2-23-build-hadoop-yarn-environment/)
-系统搭建部分也可以直接参考后文的基于树莓派的集群搭建
-
-## 3.3 Apache Spark
-1. Spark论文选读：[Summary of Apache Spark](https://neth-lab.netlify.app/publication/21-3-19-summary-of-apache-spark/)
-## 3.4 Tensorflow
-
-## 3.5 FATE
-FATE已独立成另一项目，请参考：
-[FATE - A System for Feterated Learning](https://neth-lab.netlify.app/allprojects/fate-a-system-or-feterated-learning/)
-
+</div>
 
 # 2 Galaxy：一种优化CPU和内存利用的异构分布式计算任务处理系统
 研究动机：[谁限制了数据中心的资源效率](https://neth-lab.netlify.app/publication/21-1-6-who-limits-the-resource-efficiency-of-my-datacenter-an-analysis-of-alibaba-datacenter-traces/)
