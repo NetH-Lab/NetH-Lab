@@ -118,7 +118,7 @@ mathjax: true
 <div class="div_learning_post_boder">
   <p>
   参考文章链接：<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;1. <a herf="https://ying-zhang.github.io/misc/2016-we-love-paper/"> 如何收集和整理论文（面向CS专业）</a> 作者：Ying ZHANG
+  &nbsp;&nbsp;&nbsp;&nbsp;1. <a href="https://ying-zhang.github.io/misc/2016-we-love-paper/"> 如何收集和整理论文（面向CS专业）</a> 作者：Ying ZHANG
 
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;通常将文献分为期刊与会议论文，其整体质量为期刊>会议。但对于CS领域而言，由于期刊的审稿与修改时间较为漫长，通常时间跨度在一年左右，并且期刊通常按季度发布（每期称为Issue）、每期收录论文较少，这都不太符合CS领域的高速发展现状。故在CS领域中，大多数成果都将在会议论文中，期刊主要收录一些理论性较强或综述类论文，这是与传统学科有所区别的地方。故作为CS学生，接触的较多论文为<b>会议论文</b>。
@@ -130,13 +130,13 @@ mathjax: true
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;会议论文是在周期型举办的学术会议上发表的论文，一般而言每次学术会议举办前都会给出一个call for paper（cpf，征稿启事），并且提供征稿的截止日期（ddl）。世界各地的学者需在ddl前向会议投稿，经审稿、修改后将被会议收录，而作者最后需在会议举办时赴会做Presentation。<br>
   &nbsp;&nbsp;&nbsp;&nbsp;会议中被录用的文章会结集出版，称为<b>Proceedings</b>，有些会议还会对论文进行评奖（杰出论文等）。一些优秀的论文可能会被推荐到合作的期刊，由作者进行扩展最后作为期刊论文发表。<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;会议分为<b>Symposium，Conference和Workshop</b>，其学术严肃性依次降低，大部分会议都被称为Conference。这里对会议的分级参考<b>CCF</b>（中国计算机学会）目录，其将会议/期刊为A、B、C三类，具体可参考<a herf="https://www.ccf.org.cn/Academic_Evaluation/By_category/">中国计算机学会推荐国际学术会议和期刊目录-2019</a>。
+  &nbsp;&nbsp;&nbsp;&nbsp;会议分为<b>Symposium，Conference和Workshop</b>，其学术严肃性依次降低，大部分会议都被称为Conference。这里对会议的分级参考<b>CCF</b>（中国计算机学会）目录，其将会议/期刊为A、B、C三类，具体可参考<a href="https://www.ccf.org.cn/Academic_Evaluation/By_category/">中国计算机学会推荐国际学术会议和期刊目录-2019</a>。
 
   <p>
   相信大家更多接触到的文献描述词汇为<b>SCI和EI</b>，其网址如下：
   <ul>
-    <li> EI <b>Engineering Index</b> <a herf="https://www.engineeringvillage.com/">https://www.engineeringvillage.com/</a>
-    <li> SCI <b>Science Citation Index</b> <a herf="https://apps.webofknowledge.com/">https://apps.webofknowledge.com/</a>
+    <li> EI <b>Engineering Index</b> <a href="https://www.engineeringvillage.com/">https://www.engineeringvillage.com/</a>
+    <li> SCI <b>Science Citation Index</b> <a href="https://apps.webofknowledge.com/">https://apps.webofknowledge.com/</a>
   </ul>
   &nbsp;&nbsp;&nbsp;&nbsp;看名称也可以发现，SCI与EI仅是针对文章的收录（包括所有领域的论文），上述两个数据库的用途基本上<b>仅为已知文章标题，检索是否被收录</b>，而<b>不是</b>真正用于收集文章。
 
@@ -146,9 +146,9 @@ mathjax: true
   <h4> 推荐会议集 </h4>
   <p>
   <ul>
-    <li> <a herf="https://dl.acm.org/sigs"><b>ACM SIGs</b> </a>：<br>
+    <li> <a href="https://dl.acm.org/sigs"><b>ACM SIGs</b> </a>：<br>
     ACM之下针对CS多个子方向的“分舵”，称为Special Interest Group, SIG。其子方向分的较为详细，一些会议网站中还维护了部分会议的最佳论文列表以及后文将介绍的USENIX的各会议最佳论文。
-    <LI> <a herf="https://www.usenix.org/conferences"><b>USENIX</b> </a>：<br>
+    <LI> <a href="https://www.usenix.org/conferences"><b>USENIX</b> </a>：<br>
     USENIX最初称为Unix User Group。它组织了OSDI 、ATC、FAST、NSDI、LISA等会议，不但学术水平很高，贴近工业界，而且免费提供全文下载，还提供一些论文作者在会议上的slides及演讲视频。
   </ul>
 
@@ -167,7 +167,7 @@ mathjax: true
 <div class="div_learning_post_boder">
   <p>
   参考文章链接：<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;1. <a herf="https://ying-zhang.github.io/misc/2016-we-love-paper/"> 如何收集和整理论文（面向CS专业）</a> 作者：Ying ZHANG
+  &nbsp;&nbsp;&nbsp;&nbsp;1. <a href="https://ying-zhang.github.io/misc/2016-we-love-paper/"> 如何收集和整理论文（面向CS专业）</a> 作者：Ying ZHANG
 
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;一般会议和期刊都有自己的网站，但很少能在上面获取全文。又因为来源分散，直接从它们那里检索Paper很不方便。有几个大型的论文数据库，它们与期刊或者会议主办方合作，或者自己组织会议或编辑出版期刊，比如下面的表格：
@@ -178,19 +178,19 @@ mathjax: true
     <th>链接</th>
   </tr>
   <tr>
-    <td>Association for Computing Machinery, ACM</td><td>ACM Digital Library </td> <td><a herf="dl.acm.org">dl.acm.org</a></td>
+    <td>Association for Computing Machinery, ACM</td><td>ACM Digital Library </td> <td><a href="dl.acm.org">dl.acm.org</a></td>
   </tr>
   <tr>
-    <td>IEEE Computer Society</td><td>IEEE Xplore DL</td> <td><a herf="ieeexplore.ieee.org/">ieeexplore.ieee.org/</a></td>
+    <td>IEEE Computer Society</td><td>IEEE Xplore DL</td> <td><a href="ieeexplore.ieee.org/">ieeexplore.ieee.org/</a></td>
   </tr>
   <tr>
-    <td>Elsevier ScienceDirect</td><td>-</td> <td><a herf="	www.sciencedirect.com">	www.sciencedirect.com</a></td>
+    <td>Elsevier ScienceDirect</td><td>-</td> <td><a href="	www.sciencedirect.com">	www.sciencedirect.com</a></td>
   </tr>
   <tr>
-    <td>Springer</td><td>Springer Link</td> <td><a herf="	www.springer.com">	www.springer.com</a></td>
+    <td>Springer</td><td>Springer Link</td> <td><a href="	www.springer.com">	www.springer.com</a></td>
   </tr>
   <tr>
-    <td>Wiley</td><td>Wiley Online Lib</td> <td><a herf="onlinelibrary.wiley.com">onlinelibrary.wiley.com</a></td>
+    <td>Wiley</td><td>Wiley Online Lib</td> <td><a href="onlinelibrary.wiley.com">onlinelibrary.wiley.com</a></td>
   </tr>
 </table>
 
@@ -252,7 +252,7 @@ mathjax: true
 <div class="div_learning_post">
 <p>
 
-1. <a herf="https://ying-zhang.github.io/misc/2016-we-love-paper/"> 如何收集和整理论文（面向CS专业）</a> 作者：Ying ZHANG
+1. <a href="https://ying-zhang.github.io/misc/2016-we-love-paper/"> 如何收集和整理论文（面向CS专业）</a> 作者：Ying ZHANG
 </p>
 </div>
 

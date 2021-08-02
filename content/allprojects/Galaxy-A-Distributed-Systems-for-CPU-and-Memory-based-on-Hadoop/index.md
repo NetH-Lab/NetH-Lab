@@ -107,7 +107,7 @@ url_pdf: ""
 
   <h3>0.2 研究方向 </h3>
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;关于如何寻找研究方向，请参考此文档<a herf="https://neth-lab.netlify.app/publication/21-06-15-how_to_find_papers_and_find_research_topic_in_cs/"> How to find papers and research topics in CS</a> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;关于如何寻找研究方向，请参考此文档<a href="https://neth-lab.netlify.app/publication/21-06-15-how_to_find_papers_and_find_research_topic_in_cs/">How to find papers and research topics in CS</a><br>
   当前的研究场景为：<font color="red">Distributed System for Privacy Computing</font>，故目前的项目包含分布式计算系统和隐私计算两个部分
 
   <h3>0.3 研究计划</h3>
@@ -130,16 +130,16 @@ url_pdf: ""
 <h2><a name="section1">1. 知识补充</a></h2>
 <div class="div_learning_post_boder">
   <h3>1.1 基础知识补充</h2>
-  &nbsp;&nbsp;&nbsp;&nbsp;1. <a herf="https://neth-lab.netlify.app/publication/mit-distributed-systems/">MIT 6.824 Distributed Systems学习笔记</a> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;1. <a href="https://neth-lab.netlify.app/publication/mit-distributed-systems/">MIT 6.824 Distributed Systems学习笔记</a> <br>
   &nbsp;&nbsp;&nbsp;&nbsp;2. 大数据基础<font color="red">（未完成）</font> <br>
   &nbsp;&nbsp;&nbsp;&nbsp;3. Linux系统知识学习<font color="red">（未完成）</font>
 
   <h3>1.2 经典论文选读</h2>
   &nbsp;&nbsp;&nbsp;&nbsp;根据MIT 6.824课程，本章节总结了有关论文的学习笔记，同时针对行业广泛使用的系统论文做了针对性阅读。<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;1. 一致性：<a herf="https://neth-lab.netlify.app/publication/20-11-15-summary-of-raft/">Raft学习笔记</a> <br>
-  &nbsp;&nbsp;&nbsp;&nbsp;2. <a herf="https://neth-lab.netlify.app/publication/21-1-4-summary-of-mapreduce/">MapReduce学习笔记</a> <br>
-  &nbsp;&nbsp;&nbsp;&nbsp;3. <a herf="https://neth-lab.netlify.app/publication/summary-of-apache-hadoop-yarn/">Hadoop YARN学习笔记</a> <br>
-  &nbsp;&nbsp;&nbsp;&nbsp;4. <a herf="https://neth-lab.netlify.app/publication/summary-of-apache-hadoop-yarn/">Spark学习笔记</a> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;1. 一致性：<a href="https://neth-lab.netlify.app/publication/20-11-15-summary-of-raft/">Raft学习笔记</a> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;2. <a href="https://neth-lab.netlify.app/publication/21-1-4-summary-of-mapreduce/">MapReduce学习笔记</a> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;3. <a href="https://neth-lab.netlify.app/publication/summary-of-apache-hadoop-yarn/">Hadoop YARN学习笔记</a> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;4. <a href="https://neth-lab.netlify.app/publication/summary-of-apache-hadoop-yarn/">Spark学习笔记</a> <br>
 
   <h3>1.3 工具学习</h2>
   &nbsp;&nbsp;&nbsp;&nbsp;1. Docker技术学习笔记<font color="red">（未完成）</font> <br>
@@ -150,11 +150,11 @@ url_pdf: ""
 <div class="div_learning_post_boder">
   &nbsp;&nbsp;&nbsp;&nbsp;此节仅是对项目的整理归纳，创建索引表，具体项目内容将在github上或neth-lab其他project中介绍。<br>
   <h3>1.1 Galaxy系统开发 - 已完成</h2>
-  &nbsp;&nbsp;&nbsp;&nbsp;Github地址：<a herf="https://github.com/Huangxy-Minel/galaxy">https://github.com/Huangxy-Minel/galaxy</a><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;Github地址：<a href="https://github.com/Huangxy-Minel/galaxy">https://github.com/Huangxy-Minel/galaxy</a><br>
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;项目简介：<br>
   &nbsp;&nbsp;&nbsp;&nbsp;该系统为笔者本科毕业设计，使用了三块树莓派模拟一个工作集群，并基于Hadoop YARN实现了一系列计算过程。在YARN的基础上，笔者引入了一种高扩展的scheduling框架，称为Galaxy，使其可以承载异构的工作负载。具体项目内容请见github文档<font color="red">（Github文档未完成）</font>。<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;项目研究动机：<a herf=>
+  &nbsp;&nbsp;&nbsp;&nbsp;项目研究动机：<a href=""> </a>
   &nbsp;&nbsp;&nbsp;&nbsp;1. 
 
 </div>
