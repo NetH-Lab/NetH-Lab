@@ -138,8 +138,8 @@ url_pdf: ""
   &nbsp;&nbsp;&nbsp;&nbsp;根据MIT 6.824课程，本章节总结了有关论文的学习笔记，同时针对行业广泛使用的系统论文做了针对性阅读。<br>
   &nbsp;&nbsp;&nbsp;&nbsp;1. 一致性：<a href="https://neth-lab.netlify.app/publication/20-11-15-summary-of-raft/">Raft学习笔记</a> <br>
   &nbsp;&nbsp;&nbsp;&nbsp;2. <a href="https://neth-lab.netlify.app/publication/21-1-4-summary-of-mapreduce/">MapReduce学习笔记</a> <br>
-  &nbsp;&nbsp;&nbsp;&nbsp;3. <a href="https://neth-lab.netlify.app/publication/summary-of-apache-hadoop-yarn/">Hadoop YARN学习笔记</a> <br>
-  &nbsp;&nbsp;&nbsp;&nbsp;4. <a href="https://neth-lab.netlify.app/publication/summary-of-apache-hadoop-yarn/">Spark学习笔记</a> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;3. <a href="https://neth-lab.netlify.app/publication/21-3-21-yarn-in-practice/">Hadoop YARN学习笔记</a> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;4. <a href="https://neth-lab.netlify.app/publication/21-3-19-summary-of-apache-spark/">Spark学习笔记</a> <br>
 
   <h3>1.3 工具学习</h2>
   &nbsp;&nbsp;&nbsp;&nbsp;1. Docker技术学习笔记<font color="red">（未完成）</font> <br>

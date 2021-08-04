@@ -59,20 +59,20 @@ featured: false
   </div>
   <div class="div_learning_post_boder">
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 1. <a href="#section0"><font color="blue"><b>从Cloud Computing开始</b></font></a>：简单介绍大数据相关基本概念和研究目标
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 1. <a href="#section1"><font color="blue"><b>从Cloud Computing开始</b></font></a>：简单介绍大数据相关基本概念和研究目标
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section1"><font color="blue"><b>Spark计算框架</b></font></a>：用户态介绍Spark框架
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section2"><font color="blue"><b>Spark计算框架</b></font></a>：用户态介绍Spark框架
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 3. <a href="#section2"><font color="blue"><b>Resilient Distributed Datasets (RDD)</b></font></a>：Spark核心RDDs介绍
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 3. <a href="#section3"><font color="blue"><b>Resilient Distributed Datasets (RDD)</b></font></a>：Spark核心RDDs介绍
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 4. <a href="#section3"><font color="blue"><b>Spark SQL</b></font></a>：Spark扩展，Spark SQL介绍
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 4. <a href="#section4"><font color="blue"><b>Spark SQL</b></font></a>：Spark扩展，Spark SQL介绍
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 5. <a href="#section3"><font color="blue"><b>Apache Spark</b></font></a>：介绍Spark是如何处理海量异构任务的
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 5. <a href="#section5"><font color="blue"><b>Apache Spark</b></font></a>：介绍Spark是如何处理海量异构任务的
     <p>
   </div>
 </div>
 
-<h2><a name="section0">1. 从Cloud Computing开始</a></h2>
+<h2><a name="section1">1. 从Cloud Computing开始</a></h2>
 <div class="div_learning_post_boder">
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;参考文献：A view of cloud computing. 作者：Armbrust Michael et al. 文献来源：Communications of the ACM. 年份：2010 <br>
@@ -97,7 +97,7 @@ featured: false
   <img src="pic/1.3.png" style="margin: 0 auto;"><br>
 </div>
 
-<h2><a name="section0">2. Spark计算框架</a></h2>
+<h2><a name="section2">2. Spark计算框架</a></h2>
 <div class="div_learning_post_boder">
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;参考文献：Spark: Cluster Computing with Working Sets. 作者：Matei Zaharia et al. 文献来源：HotCloud. 年份：2010
@@ -162,7 +162,7 @@ featured: false
   &nbsp;&nbsp;&nbsp;&nbsp;当一个parallel operation被启用（reduce）后，Spark将创建一个task来处理每个数据的partition，并发送这些task到工作节点上，这种技术称为<font color="red">delay scheduling</font>。
 </div>
 
-<h2><a name="section0">3. Resilient Distributed Datasets (RDD)</a></h2>
+<h2><a name="section3">3. Resilient Distributed Datasets (RDD)</a></h2>
 <div class="div_learning_post_boder">
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;参考文献：Resilient Distributed Datasets: A Fault-Tolerant Abstraction for In-Memory Cluster Computing. 作者：Matei Zaharia et al. 文献来源：NSDI. 年份：2012
@@ -219,7 +219,7 @@ featured: false
   &nbsp;&nbsp;&nbsp;&nbsp;根据RDDs Graph，可以先将其转换为DAG，以wide dependencies为界，将各个RDD分为不同的stage。调度方法采用delay scheduling，即如果一个task所需的partition已经在某个节点的memory中可以被获取，则将该任务发送给此节点；否则，则根据RDD中的数据位置进行分配。
 </div>
 
-<h2><a name="section0">4. Spark SQL</a></h2>
+<h2><a name="section4">4. Spark SQL</a></h2>
 <div class="div_learning_post_boder">
 <p>
   &nbsp;&nbsp;&nbsp;&nbsp;参考文献：Spark SQL: Relational Data Processing in Spark. 作者：Michael Armbrust. 文献来源：ACM SIGMOD. 年份：2015<br>
@@ -271,7 +271,7 @@ featured: false
   <img src="pic/4.3.png" style="margin: 0 auto;"><br>
 </div>
 
-<h2><a name="section0">5. Apache Spark</a></h2>
+<h2><a name="section5">5. Apache Spark</a></h2>
 <div class="div_learning_post_boder">
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;参考文献：Apache spark: A unified engine for big data processing. 作者：Zaharia, Matei et al. 文献来源：Communication of the ACM. 年份：2016
