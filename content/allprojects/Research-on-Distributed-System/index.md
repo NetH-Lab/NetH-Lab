@@ -108,7 +108,7 @@ url_pdf: ""
   <h3>0.2 研究方向 </h3>
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;关于如何寻找研究方向，请参考此文档<a href="https://neth-lab.netlify.app/publication/21-06-15-how_to_find_papers_and_find_research_topic_in_cs/">How to find papers and research topics in CS</a><br>
-  当前的研究场景为：<font color="red">Distributed System for Privacy Computing</font>，故目前的项目除分布式计算系统外，还可能涉及部分隐私计算系统。关于隐私计算请参考另一个Project：<a href="">Research on Privacy Computing</a>
+  当前的研究场景为：<font color="red">Distributed System for Privacy Computing</font>，故目前的项目除分布式计算系统外，还可能涉及部分隐私计算系统。关于隐私计算请参考另一个Project：<a href="https://neth-lab.netlify.app/allprojects/research-on-privacy-computing/">Research on Privacy Computing</a>
 
   <h3>0.3 研究计划</h3>
   <p>
