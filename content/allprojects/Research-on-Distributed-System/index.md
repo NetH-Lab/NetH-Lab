@@ -130,6 +130,7 @@ url_pdf: ""
 <h2><a name="section1">1. 知识补充</a></h2>
 <div class="div_learning_post_boder">
   <h3>1.1 基础知识补充</h2>
+  <p>
   &nbsp;&nbsp;&nbsp;&nbsp;1. <a href="https://neth-lab.netlify.app/publication/mit-distributed-systems/">MIT 6.824 Distributed Systems学习笔记</a> <br>
   &nbsp;&nbsp;&nbsp;&nbsp;2. 大数据基础<font color="red">（正在进行）</font> <br>
   &nbsp;&nbsp;&nbsp;&nbsp;3. Linux系统知识学习<font color="red">（正在进行）</font>
@@ -148,22 +149,29 @@ url_pdf: ""
 
 <h2><a name="section2">2. 工程项目</a></h2>
 <div class="div_learning_post_boder">
+  <p>
   &nbsp;&nbsp;&nbsp;&nbsp;此节仅是对项目的整理归纳，创建索引表，具体项目内容将在github上或neth-lab其他project中介绍。<br>
 
   <h3>2.1 Galaxy系统开发 - 已完成</h2>
+  <p>
   &nbsp;&nbsp;&nbsp;&nbsp;Github地址：<a href="https://github.com/Huangxy-Minel/galaxy">https://github.com/Huangxy-Minel/galaxy</a><br>
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;项目简介：<br>
   &nbsp;&nbsp;&nbsp;&nbsp;该系统为笔者本科毕业设计，使用了三块树莓派模拟一个工作集群，并基于Hadoop YARN实现了一系列计算过程。在YARN的基础上，笔者引入了一种高扩展的scheduling框架，称为Galaxy，使其可以承载异构的工作负载。具体项目内容请见github文档<font color="red">（Github文档未完成）</font>。<br>
   &nbsp;&nbsp;&nbsp;&nbsp;项目研究动机：<a href="https://neth-lab.netlify.app/publication/21-1-6-who-limits-the-resource-efficiency-of-my-datacenter-an-analysis-of-alibaba-datacenter-traces/">谁限制了数据中心的资源效率</a><br>
   &nbsp;&nbsp;&nbsp;&nbsp;根据该论文，笔者思考是否能通过资源规划的方法，对数据中心的计算资源进行数学建模，从而对异构的计算任务给予合理的资源分配，以这样的方式提高数据中心的资源效率。<br>
+  <p>
   &nbsp;&nbsp;&nbsp;&nbsp;此过程产出两篇较为重要的过程文档，分别为：<br>
   &nbsp;&nbsp;&nbsp;&nbsp;1. <a href="https://neth-lab.netlify.app/publication/21-3-15-build-hadoop-environment-on-cluster-of-raspberrypi/">树莓派Hadoop集群搭建</a><br>
   &nbsp;&nbsp;&nbsp;&nbsp;2. <a href="https://neth-lab.netlify.app/publication/21-3-21-yarn-in-practice/">YARN in Practice</a><br>
   &nbsp;&nbsp;&nbsp;&nbsp;您可以参考此两篇文档，尝试从零搭建一个Hadoop YARN集群，并完成MapReduce任务。若您没有Hadoop相关的基础知识，您可以参考<font color="red">Section 1.2</font>中的MapReduce和Hadoop YARN学习笔记。
 
   <h3>2.2 分布式FATE异构计算系统开发<font color="red">（正在进行）</font></h3>
+  <p>
   &nbsp;&nbsp;&nbsp;&nbsp;FATE为WeBank开发的一款面向联邦学习的计算系统，笔者当前的工作为引入GPU加速并将FATE部署在Spark环境中，以实现分布式运算。在此章节中，将详细描述如何将FATE移植到Spark环境中，并引入GPU异构加速的。关于FATE本体开发，请见<font color="red">Privacy Computing</font>项目中的内容。
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;过程文档记录：<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;1. Spark集群搭建
 
 </div>
 
