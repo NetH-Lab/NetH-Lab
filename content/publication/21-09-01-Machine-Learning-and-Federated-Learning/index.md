@@ -73,7 +73,7 @@ mathjax: true
 
 <br>
 
-<h2><a name="section0">0. 机器学习引言</a></h2>
+<h2><a name="0_preface">0. 机器学习引言</a></h2>
 <div class="div_learning_post_boder">
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;该部分您可以参考博客<a href="https://www.cnblogs.com/subconscious/p/4107357.html">博客: 从机器学习谈起</a>，原作者：计算机的潜意识。
