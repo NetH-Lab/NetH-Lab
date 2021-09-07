@@ -127,7 +127,7 @@ url_pdf: ""
 <h2><a name="section1">1. 知识补充</a></h2>
 <div class="div_learning_post_boder">
   <h3>1.1 基础知识补充</h2>
-  &nbsp;&nbsp;&nbsp;&nbsp;1. 机器学习与联邦学习基础 <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;1. <a href="https://neth-lab.netlify.app/publication/21-09-01-machine-learning-and-federated-learning/">机器学习与联邦学习基础</a><br>
 
   <h3>1.2 经典论文选读</h2>
   &nbsp;&nbsp;&nbsp;&nbsp;1. ABY3学习笔记

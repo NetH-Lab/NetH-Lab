@@ -260,6 +260,7 @@ featured: false
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;DataFrame支持所有常用的relational operators如select，filter，join和groupby，例如：<br>
   <img src="pic/4.2.png" style="margin: 0 auto;"><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;其中，employees为一个DataFrame，实际上DF是一个distributed collection rows with the same schema，意味着DF所指向的数据实际上是分布式的。故在对DF进行的交互式操作实际上是一种分布式操作，如where(employees("gender")==="female")，这是与传统的数据库不一致的。Spark SQL希望将类似的操作做成Lazy的，这样可以给scheduler更大的优化空间。故在DF中，仅记录对数据的操作，类似log，故在文章中指出，每个DataFrame代表了对dataset计算的一种logistic plan。在后文中，我们需要重点关注<font color="red">operateion是如何描述的</font>以及<font color="red">如何schedule</font>。
 
   <h3>4.3 Catalyst Optimizer</h3>
   <p>
