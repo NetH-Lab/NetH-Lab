@@ -69,6 +69,7 @@ featured: false
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;Section 5. <a href="#section5"><font color="blue"><b>Apache Spark</b></font></a>：介绍Spark是如何处理海量异构任务的
     <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 6. <a href="#section5=6"><font color="blue"><b>总结</b></font></a>：对Spark的Insights进行总结
   </div>
 </div>
 
@@ -301,3 +302,14 @@ featured: false
     &nbsp;&nbsp;&nbsp;&nbsp;RDDs和Spark定位到了这两个问题。针对data sharing，RDDs避免对中间数据进行复制；针对latency问题，Spark可以在100ms时延内完成一个类Map-Reduce任务。<br>
 </div>
 
+<h2><a name="section6">6. 总结</a></h2>
+<div class="div_learning_post_boder">
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;Spark系统的目标优化场景为，data是<font color="red">reused</font>的，并且function是<font color="red">stateless</font>。其中，reused指的是，sub-computation的输入不变；stateless指的是，第k个sub-computation不需要k-1个sub-computation的结果。在迭代时机器学习场景中，数据流图可以如下所示：<br>
+  <img src="pic/6.1.jpg" style="margin: 0 auto;"><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;Graph中的顶点代表数据，边代表function，其中k代表迭代次数，那么reused指的是Dataset在每次迭代时不发生改变；stateless指的是k次迭代中的function f和g不需要k-1次迭代中的结果。其中g代表更新Weight过程，显然是需要k-1次迭代中的Weight的，但是Weight个数<font color="red">远远小于</font>Dataset个数，故在简单的迭代式机器学习中，我们认为f和g依然是stateless的，即Weight作为function参数传递。
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;data reused和stateless function是构建Spark的重要基础。首先，data本身就分布在各个节点中，reused意味着两次迭代计算之间，workers仅需要更新参数，而不需要shuffle数据；其次，stateless function使得function可以在任意worker上执行。二者结合我们可以发现，将function的执行位置和其输入数据位置绑定，便可以最大化的减少数据拷贝带来的开销，同时function也可以高效的被执行。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;Spark便是希望使用该思想，将dataflow graph扩充为RDD关系图，RDD被reuse的次数越多，其效率则越高。当然，作为分布式系统，Spark还提供了容错管理。当计算场景改变了reused和stateless特性时，以Spark为代表的batch-processing system显然会收到新的挑战，这点将在后续系统论文选读中给出。
+</div>
