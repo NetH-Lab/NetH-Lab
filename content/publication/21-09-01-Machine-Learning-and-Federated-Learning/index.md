@@ -64,9 +64,10 @@ mathjax: true
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section2"><font color="blue"><b>基于树的算法</b></font></a>：Tree-based Machine Learning Algorithm
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 3. <a href="#section3"><font color="blue"><b>联邦学习引言</b></font></a>：联邦学习入门相关内容
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 3. <a href="#section3"><font color="blue"><b>DNN</b></font></a>：深度神经网络相关
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 4. <a href="#section4"><font color="blue"><b>联邦学习引言</b></font></a>：联邦学习入门相关内容
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 4. <a href="#section4"><font color="blue"><b>纵向联邦逻辑回归</b></font></a>：Heterologous Logistic Regression
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 5. <a href="#section5"><font color="blue"><b>纵向联邦逻辑回归</b></font></a>：Heterologous Logistic Regression
     <p>
   </div>
 </div>
@@ -114,13 +115,22 @@ mathjax: true
     &nbsp;&nbsp;&nbsp;&nbsp;最开始我们仅含一个根节点，并且所有的feature还没有分割开。我们有3个features，所以我们有3种可能使用的splits。一个最简单的方式为，计算每种方式的cost函数，选择最小的情况最为分割方式。在本例种我们选择sex作为根节点，随后的分割方法同样可以以这种方式进行。这种方法也被称为贪心算法。
 </div>
 
-<h2><a name="section3">3. </a>联邦学习引言</h2>
+<h2><a name="section3">3. </a>DNN</h2>
+<div class="div_learning_post_boder">
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;关于DNN基础，您可以参考<a href="https://zhuanlan.zhihu.com/p/29815081">https://zhuanlan.zhihu.com/p/29815081</a>此文章，在本节笔者将以此文章为基础，介绍如何进行分布式的DNN训练。<br>
+    <p>
+    DNN中
+    `\bar{x}+a`
+</div>
+
+<h2><a name="section4">4. </a>联邦学习引言</h2>
 <div class="div_learning_post_boder">
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;关于此节内容，您可以参考此blog：<a href="https://neth-lab.netlify.app/publication/21-3-2-overview-of-federated-learning/">Overview of Federated Learning</a>
 </div>
 
-<h2><a name="section4">4. </a>纵向联邦逻辑回归</h2>
+<h2><a name="section5">5. </a>纵向联邦逻辑回归</h2>
 <div class="div_learning_post_boder">
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;关于heterogeneous federated logistic regression，在<a href="https://neth-lab.netlify.app/publication/21-4-13-heterologous-logistic-regression/">Heterologous Logistic Regression</a>中笔者对其进行了系统解读。以下内容则是对该博客的补充。<br>
