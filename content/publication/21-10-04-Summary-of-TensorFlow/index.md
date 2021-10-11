@@ -72,5 +72,10 @@ featured: false
 <div class="div_learning_post_boder">
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;场景：Neural Network Training，其中以image classification and language modeling为代表性应用。<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;在叙述Problems之前，您可以先参考<a href="">aa</a>来了解下DNN的训练原理
+  &nbsp;&nbsp;&nbsp;&nbsp;在叙述Problems之前，您可以先参考<a href="https://neth-lab.netlify.app/publication/21-09-01-machine-learning-and-federated-learning/">Machine Learning & Federated Learning</a>来了解DNN的训练原理。<br>
+
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;DNN的训练过程包含前向传播和反向传播两个过程，其function特性是包含大量的state信息。例如更新第l层的W时，需要第l+1层的W和第l层的z；在计算l层的z时，需要l-1层的a。故function涉及两类依赖关系，一次迭代中，前向传播和反向传播包含层与层的依赖，并且包含对W的依赖；更新W又依赖前向传播的结果，与l+1层W的更新结果。故每个sub-computation几乎都要依赖一组state，例如W，z。在DNN训练这种复杂的场景下，我们再来审视batch-processing system(Spark)和parameter server system(DistBelief)，会出现哪些问题？<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;首先，Spark调度在data reuse和stateless function时是最高效的，DNN中大量的state信息导致Spark必须多次shuffle，来保证其sub-computation是stateless的（因为其系统中都是stateless worker），从而提高效率。然而我们发现，DNN的训练过程中每个function都需要state信息
 </div>

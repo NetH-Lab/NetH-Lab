@@ -122,6 +122,7 @@ mathjax: true
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;DNN中一次迭代的步骤可以如下表示：<br>
     <p>
+    --------------------------------<br>
     # 前向传播<br>
     for l = 2 to L:<br>
     &nbsp;&nbsp;&nbsp;&nbsp;# l: 第l层; W^l,b^l: 第l层的权重和偏转, `\sigma`: 激活函数 <br>
@@ -135,8 +136,11 @@ mathjax: true
     for l = 2 to b:<br>
     &nbsp;&nbsp;&nbsp;&nbsp;`W^l = W^l - \alpha \sum_{i=1}^m {\delta^l (a^{l-1})^T}`<br>
     &nbsp;&nbsp;&nbsp;&nbsp;`b^l = b^l - \alpha \sum_{i=1}^m \delta^l`<br>
-
+    --------------------------------<br>
     <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;从上述步骤可以看到，当第k此迭代时，`a^{l,k}, z^{l,k}`的计算需要第k-1次迭代时的`W^{l,k-1}`，也即需要`\delta^{l,k-1}`来更新W；同时层与层之间的计算也具有联系，即计算l层需要l-1层的结果。故可以说DNN的训练过程是复杂的，针对复杂计算的并行化可以考虑分布式的执行function，如下图：<br>
+    <img src="pic/3.1.png" style="margin: 0 auto;"><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;如若使用PS架构，可以构建上述Task Dependencies，使workers可以分布式的执行前向传播和反向传播过程，中间变量由parameter servers维护。如此，每个worker预先拷贝好其需要的数据集，再依照Task Dependencies执行即可。
 
     
 </div>
