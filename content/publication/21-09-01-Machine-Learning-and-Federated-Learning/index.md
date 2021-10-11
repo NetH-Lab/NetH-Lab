@@ -121,22 +121,21 @@ mathjax: true
     &nbsp;&nbsp;&nbsp;&nbsp;关于DNN基础，您可以参考<a href="https://zhuanlan.zhihu.com/p/29815081">https://zhuanlan.zhihu.com/p/29815081</a>此文章，在本节笔者将以此文章为基础，介绍如何进行分布式的DNN训练。<br>
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;DNN中一次迭代的步骤可以如下表示：<br>
-    
-    ```python
-    # 前向传播
-    for l = 2 to L:
-        # l: 第l层; W^l,b^l: 第l层的权重和偏转, `\sigma`: 激活函数
-        计算`a^l = \sigma(W^l a^{l-1} + b^l)`
-    计算输出层的'\delta^L'
-    # 反向传播
-    for l = L to 2:
-        # `z^l`: 第l层激活函数的输入
-        计算`\delta^l = (W^{l+1})^T \delta^{l+1} \bigodot \sigma'(z^l)`
-    # 更新W和b
-    for l = 2 to b:
-        `W^l = W^l - \alpha \sum_{i=1}^m {\delta^l (a^{l-1})^T}`
-        `b^l = b^l - \alpha \sum_{i=1}^m \delta^l`
-    ```
+    <p>
+    # 前向传播<br>
+    for l = 2 to L:<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;# l: 第l层; W^l,b^l: 第l层的权重和偏转, `\sigma`: 激活函数 <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;计算`a^l = \sigma(W^l a^{l-1} + b^l)`
+    计算输出层的'\delta^L'<br>
+    # 反向传播<br>
+    for l = L to 2:<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;# `z^l`: 第l层激活函数的输入<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;计算`\delta^l = (W^{l+1})^T \delta^{l+1} \bigodot \sigma'(z^l)`<br>
+    # 更新W和b<br>
+    for l = 2 to b:<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;`W^l = W^l - \alpha \sum_{i=1}^m {\delta^l (a^{l-1})^T}`<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;`b^l = b^l - \alpha \sum_{i=1}^m \delta^l`
+
     
 </div>
 
