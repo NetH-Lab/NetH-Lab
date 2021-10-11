@@ -125,16 +125,18 @@ mathjax: true
     # 前向传播<br>
     for l = 2 to L:<br>
     &nbsp;&nbsp;&nbsp;&nbsp;# l: 第l层; W^l,b^l: 第l层的权重和偏转, `\sigma`: 激活函数 <br>
-    &nbsp;&nbsp;&nbsp;&nbsp;计算`a^l = \sigma(W^l a^{l-1} + b^l)`
-    计算输出层的'\delta^L'<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;计算`a^l = \sigma(W^l a^{l-1} + b^l)`<br>
+    计算输出层的`\delta^L`<br>
     # 反向传播<br>
     for l = L to 2:<br>
     &nbsp;&nbsp;&nbsp;&nbsp;# `z^l`: 第l层激活函数的输入<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;计算`\delta^l = (W^{l+1})^T \delta^{l+1} \bigodot \sigma'(z^l)`<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;计算`\delta^l = (W^{l+1})^T \delta^{l+1} \odot \sigma'(z^l)`<br>
     # 更新W和b<br>
     for l = 2 to b:<br>
     &nbsp;&nbsp;&nbsp;&nbsp;`W^l = W^l - \alpha \sum_{i=1}^m {\delta^l (a^{l-1})^T}`<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;`b^l = b^l - \alpha \sum_{i=1}^m \delta^l`
+    &nbsp;&nbsp;&nbsp;&nbsp;`b^l = b^l - \alpha \sum_{i=1}^m \delta^l`<br>
+
+    <p>
 
     
 </div>
