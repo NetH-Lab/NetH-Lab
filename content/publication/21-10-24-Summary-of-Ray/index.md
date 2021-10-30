@@ -64,9 +64,11 @@ featured: false
   </div>
   <div class="div_learning_post_boder">
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 1. <a href="#section1"><font color="blue"><b>前言</b></font></a>：介绍Ray的应用场景和Problems
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 1. <a href="#section1"><font color="blue"><b>前言</b></font></a>：介绍Ray的应用场景和Problems。
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section2"><font color="blue"><b>Programming and Computation Model</b></font></a>：介绍Ray是如何解释，翻译用户的program的，并介绍Ray提供了哪些用户接口，用户如何使用这些接口完成RL任务的编写。
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 3. <a href="#section2"><font color="blue"><b>Architecture</b></font></a>：介绍Ray的系统架构，重点在于描述Ray如何将它的task graph分配给各个workers，又是如何动态执行的。
   </div>
 </div>
 
@@ -130,6 +132,37 @@ featured: false
   <h3>Computation Model</h3>
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;Ray使用一个动态的task graph来描述用户程序，当remote functions和actor methods的输入available时便开始自动执行。本节重点描述Ray如何通过Actor、Task来构建computation graph。<br>
+
+  <b>Dynamic task graph</b><br>
+  <img src="pic/2.2.png" style="margin: 0 auto;"><br>
   <p>
-  
+  &nbsp;&nbsp;&nbsp;&nbsp;Ray中的动态task graph如上图所示，其中包含两类node：data object和remote function；和两类边：data edges和control edges。于是，用户的程序可以使用task graph来描述，其中使用data edges描述function的输入输出，使用control edges描述function之间的调用关系（computation dependencies）。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;当引入actor后，actor method同样也是function，故不需要在task graph中加入新的节点；然而actor method还需要state信息作为输入，而state是仅存在stateful worker上的，对于这样一种特性，Ray中使用state edges来描述state间的依赖关系。如此，若一个actor method调用了另一个actor method，则在这两个actor间加入一条state edge，代表两个actor method共用一部分state信息。终于，我们在一副task graph中同时描述了stateless function和stateful function，这意味着该task graph能解释任意的User program。
 </div>
+
+<h2><a name="section3">3. Architecture</a></h2>
+<div class="div_learning_post_boder">
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;首先，我们先简单分析一下上一节的task graph包含了哪些内容。第一是node，graph中包含了两类节点，分别是data node和remote function，故在系统中需要想办法承载这两类node，需要关注两类node可否置于同一个worker上。当node的执行位置固定后，显然function的输入可以根据edge来进行数据拷贝，然而对于actor而言是比较头疼的，因为state信息被多个nodes共用，所以如何在多个node中share states是一个问题。最后一点，该task graph是被动态创建并执行的，那么如何快速的schedule新的node和edge同样是一个问题。<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;在本章中，笔者将带着这三个问题来介绍Ray的architecture。
+
+  <h3>Application layer</h3>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;Ray中引入三个逻辑节点来向cluster描述task graph，分别是Driver，Worker和Actor。显然，Driver是真正编译程序的地方；worker是处理stateless function的地方；actor是处理stateful function的地方。每一个实际的machine（或者是VMs或者是container）都是这三种逻辑节点中的一种，Driver仅有一个。于是，一个task graph便可以分布式的在一个集群中执行。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;至此，一个集群便可以承载所有的task graph。当然，集群管理者首先需要配置好每个machine的角色。于是问题只剩下了如何将function分配给各个机器，该问题由Ray中的System layer解决。<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;Ray architecture如下图所示：<br>
+  <img src="pic/2.3.png" style="margin: 0 auto;"><br>
+
+  <h3>System layer</h3>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;首先，我们要先解决function会被动态创建的问题。在执行过程中，remote function node会动态的创建新的node。那么我们可以认为，remote function node还需要维护它创建的function的一些meta信息，例如输入输出数据的位置和程序的执行状态，这意味着该function不是stateless的了。举一个例子，如果f1创建了f2，那么f1还需要维护f2的运行状态和meta数据，这样的话执行f1的worker或actor便维护了一部分state，并且当错误发生时很难恢复f2。，所以，我们希望所以function在被执行的时候都是stateless的，这意味着每个计算节点仅需要执行完当前function后便可以结束，这大大简化了系统的设计。<br>
+
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;所以，Ray引入了Global Control Store (GCS)来存储、维护function间的依赖关系。于是，上述f1创建f2的过程可以被描述为，f1执行，向GCS报告创建了f2，f1执行完毕，schedule再为f2分配新的执行节点（根据GCS上存储的f2 meta信息）。GCS的设计使得每个function都是stateless的，这里的stateless指的是执行节点仅需要获取输入，然后执行，执行结束后便可以释放掉所有的资源并等待下一次的schedule即可。<br>
+
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;当所有的function都是stateless的了，我们仅需要关注如何快速的schedule所有的function即可。在架构图中我们可以看到两类scheduler，分别是local scheduler和global scheduler。在这里的matric是如何低延迟的schedule，故不能像Spark那样仅使用一个centralized scheduler
+</div>
+
