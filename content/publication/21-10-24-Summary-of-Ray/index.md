@@ -106,7 +106,7 @@ featured: false
   &nbsp;&nbsp;&nbsp;&nbsp;2. <b>Heterogeneous tasks</b>：在RL任务中，用户调用的Deep learning原语和RL simulation都会产生execution time和resource requirements不同的（widely different）tasks，故系统需要支持tasks和resources的异构型。该点可以理解为，假设一个机器人，simulation获得的数据有视频和前方环境的距离，那么policy的训练过程可以采用不同的算法（视频使用DNN，距离使用LR），即异构任务。第二类异构任务为stateless和stateful，其中stateless指的是可以在任何worker上运行的任务，stateful指的是需要在特定的worker上运行，以适应parameter server架构或提高GPU使用效率（让GPU进行重复计算）<br>
   &nbsp;&nbsp;&nbsp;&nbsp;3. <b>Arbitrary dataflow dependencies</b>：与上述两点类似，deep learning primitives和RL simulations会生成随机的并且often fine-grained task dependencies。<br>
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;<b>模型执行需求</b>：<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;<b>实际应用需求</b>：<br>
   &nbsp;&nbsp;&nbsp;&nbsp;1. Transparent fault tolerance<br>
   &nbsp;&nbsp;&nbsp;&nbsp;2. Debuggability and Profiling<br>
 
