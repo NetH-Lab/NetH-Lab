@@ -62,7 +62,9 @@ featured: false
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;Section 1. <a href="#section1"><font color="blue"><b>前言</b></font></a>：介绍近年federtaed learning system的场景分类。
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section1"><font color="blue"><b>Mitigating Communication Overhead</b></font></a>：通过减少edge devices和center server通信次数，降低通信开销。
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section2"><font color="blue"><b>CMFL</b></font></a>：通过减少edge devices和center server通信次数，降低通信开销。
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 3. <a href="#section3"><font color="blue"><b>Gaia</b></font></a>：。
   </div>
 </div>
 
@@ -70,7 +72,7 @@ featured: false
 <div class="div_learning_post_boder">
 </div>
 
-<h2><a name="section1">2. Mitigating Communication Overhead</a></h2>
+<h2><a name="section2">2. CMFL</a></h2>
 <div class="div_learning_post_boder">
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;参考文献：<a href="https://ieeexplore.ieee.org/abstract/document/8885054">CMFL: Mitigating Communication Overhead for Federated Learning</a>. 2019. ICDCS <br>
@@ -88,4 +90,9 @@ featured: false
 
   <h2>3 Related work</h2>
   &nbsp;&nbsp;&nbsp;&nbsp;CMFL主要对比的工作为Gaia，Gaia是一种为geo-distributed machine learning设计的communication优化器。其工作原理主要是，在训练开始前设置一个predefined threshold，定义significance来表示一个local update的重要程度，若小于阈值，则不进行传输。在定义significance时，Gaia关注的是模型训练的speed，而忽略了optimization direction。这里笔者仅是总结CMFL文章中的观点，具体Gaia是如何优化的笔者将在后文中具体描述。可以看到，横向联邦学习对比的应用场景是geo-distributed learning。
+</div>
+
+<h2><a name="section3">3. Gaia</a></h2>
+<div class="div_learning_post_boder">
+
 </div>
