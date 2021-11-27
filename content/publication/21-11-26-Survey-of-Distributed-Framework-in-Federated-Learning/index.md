@@ -71,11 +71,7 @@ featured: false
 <div class="div_learning_post_boder">
 </div>
 
-<h2><a name="section2">2. </a></h2>
-<div class="div_learning_post_boder">
-</div>
-
-<h2><a name="section3">3. GAIA</a></h2>
+<h2><a name="section2">2. GAIA</a></h2>
 <div class="div_learning_post_boder">
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;参考资料：<a href="https://www.usenix.org/conference/nsdi21/presentation/qian-zhengping">GAIA: A System for Interactive Analysis on Distributed Graphs Using a High-Level Language</a>. NSDI 2021 <br>
