@@ -63,12 +63,16 @@ featured: false
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;Section 1. <a href="#section1"><font color="blue"><b>前言</b></font></a>：介绍近年federtaed learning system的场景分类。
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section3"><font color="blue"><b>Gaia</b></font></a>：与distributed infrastructure层面上内存管理，其应用场景为interactive graph computing。
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section2"><font color="blue"><b>GAIA</b></font></a>：与distributed infrastructure层面上内存管理，其应用场景为interactive graph computing。
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 3. <a href="#section3"><font color="blue"><b>Scaling FL System</b></font></a>：一种为横向联邦学习设计的大规模FL架构。
   </div>
 </div>
 
 <h2><a name="section1">1. 前言</a></h2>
 <div class="div_learning_post_boder">
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;本章将从综述的角度，介绍适用于Fedrated Learning的在分布式Framework方面的系统框架、分类与挑战。
 </div>
 
 <h2><a name="section2">2. GAIA</a></h2>

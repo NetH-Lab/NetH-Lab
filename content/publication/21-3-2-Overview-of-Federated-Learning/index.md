@@ -15,7 +15,7 @@ tags:
 featured: false
 ---
 
-更新时间：2021/03/02
+更新时间：2021/11/30
 
 参考资料：github论文库[Awesome-Federated-Learning](https://github.com/chaoyanghe/Awesome-Federated-Learning)
 
@@ -211,3 +211,29 @@ table 1和2包含更详细的过程。如下：
 
 类比1.1.4.2，A和B仅有一小部分重合的datasets，那么A和B交换的是一些有用的intermediate results
 
+## 2 FL总结
+参考资料：[UNDERSTANDING THE TYPES OF FEDERATED LEARNING](https://blog.openmined.org/federated-learning-types/)
+
+FL可以分为两类：Model-Centric和Data-Centric联邦学习，通常有以下几组术语来描述FL: Cross-Silo & Cross-Device; Horizontal & Vertical; Federated Transfer Learning。我们在前文中已经介绍了FL的重要性，有什么用，并列举了一个FL算法以介绍FL的一般过程，下面这一章节将重点介绍上述的几个术语，和它们之间的区别是什么。
+
+### 2.1 Model-Centric Federated Learning
+在FL最初，也即谷歌的FL框架中，数据分布在各个用户的终端设备上，每个用户使用自己的数据计算updates而后传送给center server，用户更新一个global model。Model-Centric指的便是全局model。那么，根据数据的分布情况，我们可以将Model-Centric FL再细分为Cross-Device和Cross-Silo两类。
+
+#### 2.1.1 Cross-Device Federated Learning
+![](12.png)
+Cross-Device FL的特点是，每个用户持有的数据的feature相同，但是ID可能不同，这样的分布也被称为Horizontal Federated Learning，通常参与的设备是大规模的（millions of devices），并且用户设备可能离线。
+具体的数据特性如下：
+![](13.png)
+用户持有的数据被称为Horizontal data，即features相同并且都包含label项。横向联邦学习通常使用的开源Framework是TensorFlow Federated和闭源的Gboard。
+
+### 2.1.2 Cross-Silo Federated Learning
+![](14.png)
+Cross-Silo又名Vertical Federated Learning，其参与方通常是大型数据持有者，例如医院、银行等，与Cross-Device的目标相同，都是需要联合的训练一个global model，但不同的是Cross-Silo FL参与方通常都持有一个数据中心，也即参与方的计算能力不同。
+在纵向联邦学习中，数据特性如下：
+![](15.png)
+参与方持有数据的ID相同，但features不相同。由于数据是根据feature分片的，所以我们会使用一些与传统形式不同的训练方法，在第一章所列举的FL算法便是VFL训练算法。纵向联邦学习常使用的开源框架通常是FATE框架。
+
+## 2.2 Federated Transfer Learning
+
+# 2.3 Data Centric Federated Learning
+另一类联邦学习是以数据为中心的。一个场景可能为，各个用户将自己的数据通过某种手段上传到一个外部组织，并且这种手段不会使得用户的数据泄露（例如3PC等多方安全计算技术）。通过这样一组集中式的技术，用户可以基于此进行模型训练。类似的工作包括differential privacy & PSI。
