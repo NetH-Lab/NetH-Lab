@@ -34,7 +34,7 @@ featured: false
 <body>
 
 <div align="center" class="div_indicate_source">
-  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: MinelHuang，更新日期：Aug.04 2021</i></font></h4>
+  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: MinelHuang，更新日期：Dec.01 2021</i></font></h4>
   <div align="left">
   <font size="2px">
   </font>
@@ -83,7 +83,7 @@ featured: false
   <h3>场景和Problems</h3>
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;Gaia的应用场景为，在大型集群中对graph data进行迭代式分析。首先简单介绍一下什么是Graph data。<br>
-  <img src="pic/3.1.png" style="margin: 0 auto;"><br>
+  <img src="pic/2.1.png" style="margin: 0 auto;"><br>
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;Figure 1便是一个典型的graph data，其描述的是一个罪犯的现金流，例如在t1时，罪犯购买了一个网络商品，t2时银行将钱打给了3号商户。而后在t3时商户将这笔钱又打给了中间人账户，通过一系列中间人，最后再将这笔钱打回罪犯手中（t4）。Graph data analyze便是通过这样一个图数据，分析出是否有洗钱的嫌疑。通常，graph data由点和边组成，点代表着一个实体，边代表实体间的关系，在social networks，commerce transaction，online payments等领域存有大量的graph data。一份图数据可能包含billions of vertices，hundreds of billions to trillions of edges，所以一般需要在一个large cluster上进行处理。Gaia的应用场景是，对于这样一种大规模的图数据，用户会对其进行interactive query analyze，例如提交一个查询query以寻找某个顶点是否存在。故如何低时延的反馈是用户对cluster的需求。Gaia的场景可以概括为：scaling graph data，big cluster，interactive queries and low latency<br>
   <p>
@@ -92,5 +92,45 @@ featured: false
   <h3>内容概述</h3>
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;此文章中提出Gremlin，其提供了high-level的编程框架。用户提交Gremlin queries，GAIA系统将使用Scope Abstraction描述一个query中的data dependencies，这允许使用dataflow来描述Gremlin traversal，最终达到高效的parallel execution。为了防止memory crash，GAIA在runtime中优化了parallel graph traversal。GAIA的系统框架如下图所示：<br>
+  <img src="pic/2.2.png" style="margin: 0 auto;"><br>
+</div>
+
+<h2><a name="section3">3. Scaling FL System</a></h2>
+<div class="div_learning_post_boder">
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;参考资料：<a href="https://arxiv.org/abs/1902.01046">Towards Federated Learning at Scale: System Design</a>. MLSys 2019 <br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;此文章提出了一种应用于大规模横向联邦学习的框架，基于TensorFlow开发，同时也是现阶段横向联邦学习的主要应用系统。本章将简单描述此框架。<br>
+
+  <h2>Protocol</h2>
+  <img src="pic/3.1.png" style="margin: 0 auto;"><br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;上图是该系统的成员和流程描述图。在此系统中，参与方被称为devices，所有的参与方在本地通过本地数据计算updates，而后上传给centric server。Centric server使用updates更新全局模型，再下发给各个devices，一次迭代结束。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;这里首先介绍下该系统中的术语，在Devices上运行的任务称为FL Tasks，在一次迭代中的所有参与devices的规模称为FL population。Server每次迭代会选择此次迭代的FL population，并下发FL plan（一个TensorFlow Graph，用于指导device如何完成FL Tasks）。一次迭代称为round，一旦round被建立，server会给每个参与方发送当前的global model parameters，和FL checkpoint。在同步了术语之后，本章将描述一个round中会有哪些具体的阶段（Phases）。
+
+  <h3>Phases</h3>
+  &nbsp;&nbsp;&nbsp;&nbsp;<b>Selection</b>: 对应途中黄色部分。Devices向server汇报自身的存在，而后server根据certain goals like the optimal number of participating devices选择合适的参与方。<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;<b>Configuration</b>: 根据aggregation mechanism，配置devices，而后发送FL checkpoint和global model。<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;<b>Reporting</b>: Server等待devices上传updates。当收到了updates，server使用Federated Averaging方法聚合所有的updates，并更新global model。<be>
+
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;在上述过程中包含两个问题，一是如何设置每一次的FL populations，而是在report阶段如何设置recieve time window。在该框架中，提供了Pace Steering阶段，用于Server在round开始前，通过某种算法设置这两个变量以达到某种goal。
+
+  <h2>Device</h2>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;本章将描述Device的计算框架。<br>
   <img src="pic/3.2.png" style="margin: 0 auto;"><br>
+  Device中的软件架构如上图。Device需要维护一个example store，例如SQLite database，用于存储本地用于训练或evaluation的数据。在Phase章节中描述的FL训练过程的实现是FL Runtime。
+
+  <h2>Server</h2>
+  &nbsp;&nbsp;&nbsp;&nbsp;本章描述Server的框架。在横向联邦学习场景中，Server接受到的updates的规模可能是KB到几十MB级别的，每次参与训练的devices数量在几十到hundreds of millions，所以在一次训练时，Server接受到的信息是高度可变的。为了应对这种可变性，通常使用Actor-based系统。Actor可以对接受到的message作出反应，允许创建新的actor和task，下面来介绍Server是如何使用actor承载updates并完成training的。<br>
+  <p>
+  <img src="pic/3.3.png" style="margin: 0 auto;"><br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;<b>Coordinator</b>是framework中的top-level actor，每一个coordinator与一个FL population相对应。而后Coordinator将该population告知selector，开始一次round。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;<b>Selectors</b>负责接收device connections，它们周期性的接受来自Coordinator的FL population信息，而后在本地决策选择哪些devices用于此轮训练并接受updates。当收到updates后，Selector会将updates传递给Aggregators。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;<b>Master Aggregators</b>负责管理每个FL task，在runtime中，其动态决定Aggregator的数量。
 </div>
