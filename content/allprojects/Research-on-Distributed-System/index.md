@@ -57,7 +57,7 @@ url_pdf: ""
 <body>
 
 <div align="center" class="div_indicate_source">
-  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: MinelHuang，更新日期：Aug.02 2021</i></font></h4>
+  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: MinelHuang，更新日期：Dec.02 2021</i></font></h4>
   <div align="left">
   <font size="2px">
   </font>
@@ -114,37 +114,30 @@ url_pdf: ""
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;已完成的工作：<br>
   &nbsp;&nbsp;&nbsp;&nbsp;1. 分布式计算系统Galaxy搭建<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;2. 领域经典论文阅读<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;3. 论文List整理<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;4. 基于docker的分布式实验环境部署<br>
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;正在进行的工作：<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;1. 经典分布式系统论文研读<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;2. 近三年（2018-2021）会议论文分类<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;3. 分布式系统课程学习<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;4. 基础知识补充<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;1. 分布式系统课程学习<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;2. Actor-based系统框架设计调研<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;3. Motivation of Framework for Vertical Federated Learning攥写<br>
   
   <h3>0.4 本文档章节规划</h3>
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;文档大体将分为知识补充、工程项目、研究项目三个类别，其中知识补充重点在于总结基础知识学习笔记、经典论文学习笔记等；工程项目重点在于总结与分布式系统相关的项目过程文档与项目成果；研究项目重点在于根据研究方向记录重点research笔记。<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;笔者将从此三个方向对个人知识结构进行梳理，你可以根据您的兴趣进行针对性阅读。
+  &nbsp;&nbsp;&nbsp;&nbsp;文档大体将分为基础知识与论文List、工程项目、研究项目三个类别，其中知识补充重点在于总结基础知识学习笔记、经典论文学习笔记等；工程项目重点在于总结与分布式系统相关的项目过程文档与项目成果；研究项目重点在于根据研究方向记录重点research笔记。<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;笔者将从此三个方向对个人知识结构进行梳理，您可以根据您的兴趣进行针对性阅读。
 </div>
 
-<h2><a name="section1">1. 知识补充</a></h2>
+<h2><a name="section1">1. 基础知识与论文List</a></h2>
 <div class="div_learning_post_boder">
-  <h3>1.1 基础知识补充</h2>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <h3>1.1 Course</h2>
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;1. <a href="https://neth-lab.netlify.app/publication/mit-distributed-systems/">MIT 6.824 Distributed Systems学习笔记</a> <br>
-  &nbsp;&nbsp;&nbsp;&nbsp;2. 大数据基础<font color="red">（正在进行）</font> <br>
-  &nbsp;&nbsp;&nbsp;&nbsp;3. Linux系统知识学习<font color="red">（正在进行）</font>
 
-  <h3>1.2 经典论文选读</h2>
-  &nbsp;&nbsp;&nbsp;&nbsp;根据MIT 6.824课程，本章节总结了有关论文的学习笔记，同时针对行业广泛使用的系统论文做了针对性阅读。<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;1. 一致性：<a href="https://neth-lab.netlify.app/publication/20-11-15-summary-of-raft/">Raft学习笔记</a> <br>
-  &nbsp;&nbsp;&nbsp;&nbsp;2. <a href="https://neth-lab.netlify.app/publication/21-1-4-summary-of-mapreduce/">MapReduce学习笔记</a> <br>
-  &nbsp;&nbsp;&nbsp;&nbsp;3. <a href="https://neth-lab.netlify.app/publication/21-3-21-yarn-in-practice/">Hadoop YARN学习笔记</a> <br>
-  &nbsp;&nbsp;&nbsp;&nbsp;4. <a href="https://neth-lab.netlify.app/publication/21-3-19-summary-of-apache-spark/">Spark学习笔记</a> <br>
-
-  <h3>1.3 工具学习</h2>
-  &nbsp;&nbsp;&nbsp;&nbsp;1. Docker技术学习笔记<font color="red">（未完成）</font> <br>
-  &nbsp;&nbsp;&nbsp;&nbsp;2. k8s技术学习笔记<font color="red">（未完成）</font> <br>
+  <h3></h3>
 </div>
 
 <h2><a name="section2">2. 工程项目</a></h2>

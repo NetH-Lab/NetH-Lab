@@ -113,7 +113,11 @@ mathjax: true
 
 <h4>2.1.2 Recursive Binary Splitting</h4>
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;最开始我们仅含一个根节点，并且所有的feature还没有分割开。我们有3个features，所以我们有3种可能使用的splits。一个最简单的方式为，计算每种方式的cost函数，选择最小的情况最为分割方式。在本例种我们选择sex作为根节点，随后的分割方法同样可以以这种方式进行。这种方法也被称为贪心算法。
+    &nbsp;&nbsp;&nbsp;&nbsp;最开始我们仅含一个根节点，并且所有的feature还没有分割开。我们有3个features，所以我们有3种可能使用的splits。一个最简单的方式为，计算每种方式的cost函数，选择最小的情况最为分割方式。在本例中我们选择sex作为根节点，随后的分割方法同样可以以这种方式进行。这种方法也被称为贪心算法。所以我们发现，在树模型中，最为关键的是如何评估每种splitting的开销（cost），我们将cost的评估方法统称为cost function。
+
+<h3>2.2 CART</h3>
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;本节将介绍一个一个经典的决策树算法，CART算法。
 </div>
 
 <h2><a name="section3">3. </a>DNN</h2>
