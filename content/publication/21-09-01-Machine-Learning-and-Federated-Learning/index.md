@@ -117,7 +117,12 @@ mathjax: true
 
 <h3>2.2 CART</h3>
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;本节将介绍一个一个经典的决策树算法，CART算法。
+    &nbsp;&nbsp;&nbsp;&nbsp;参考资料：<a href="https://wires.onlinelibrary.wiley.com/doi/full/10.1002/widm.8">Classification and regression trees. Wei-Yin Loh. 2011</a>
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;本节将介绍一个一个经典的决策树算法，CART算法。CART全称为: Classification and regression trees，即分类回归树。首先，在上文中我们简单概述了树模型的一般流程，那么现在我们用数学上的定义来更加准确的定义所谓树模型。<br>
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;对于一次观测，随机变量`Y=\{1, 2, 3, ..., k\}`表示此次观测的结果（标签），使用`p`维随机变量`X=\{X_1, X_2, ..., X_p\}`表示观测对象，我们需要找到一个模型`f`，使得`Y = f(X)`。树模型的思想是，我们可以找一种分类方式对`X`进行分割（partition），将其从一个`p`维随机变量分割成`k`个1维随机变量`A_1, A_2, ..., A_k`，根据分割结果，若`X = A_j`，则代表`Y = j`。我们可以使用树结构来代表这一过程，该树则被称为分类树（classification tree）。
+    
 </div>
 
 <h2><a name="section3">3. </a>DNN</h2>
