@@ -119,14 +119,15 @@ mathjax: true
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;参考资料：<a href="https://wires.onlinelibrary.wiley.com/doi/full/10.1002/widm.8">Classification and regression trees. Wei-Yin Loh. 2011</a>
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;本节将介绍一个一个经典的决策树算法，CART算法。CART全称为: Classification and regression trees，即分类回归树。首先，在上文中我们简单概述了树模型的一般流程，那么现在我们用数学上的定义来更加准确的定义所谓树模型。<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;本节将介绍一个经典的决策树算法，CART算法。CART全称为: Classification and regression trees，即分类回归树。首先，在上文中我们简单概述了树模型的一般流程，那么现在我们用数学上的定义来更加准确的定义所谓树模型。<br>
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;对于一次观测，随机变量`Y=\{1, 2, 3, ..., k\}`表示此次观测的结果（标签），使用`p`维随机变量`X=\{X_1, X_2, ..., X_p\}`表示观测对象（`p`个特征），我们需要找到一个模型`f`，使得`Y = f(X)`。树模型的思想是，我们可以找一种分类方式对`X`进行分割（partition），将其从一个`p`维随机变量分割成`k`个集合`A_1, A_2, ..., A_k`，根据分割结果，若`X \in A_j`，则代表`Y = j`。我们可以使用树结构来代表这一过程，该树则被称为分类树（classification tree）。
     <img src="pic/2.2.png" style="margin: 0 auto;"><br>
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;如Figure 1右，一个2维随机变量`X`被分割成两组（根据`X_2`分割）`X|X_2 \leq 0.7, X|X_2 \geq 0.7`，再根据`X_1`，我们最终将`X`归类到`A_1, A_2, A_3`三类。例如，当`X=(1, 0)`时，根据分割结果，`X \in A_3`，即绿色叶节点，故`Y=3`。注意，这里的分割并不指的是降维，而是根据某一个或者几个纬度`X_i`来对`X`进行分组，我们的目的是可以将`X`分至`k`个组，进而得到对`Y`的预测结果。<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;如Figure 1右，一个2维随机变量`X`被分割成两组（根据`X_2`分割）`X|X_2 \leq 0.7, X|X_2 > 0.7`，再根据`X_1`，我们最终将`X`归类到`A_1, A_2, A_3`三类。例如，当`X=(1, 0)`时，根据分割结果，`X \in A_3`，即绿色叶节点，故`Y=3`。注意，这里的分割并不指的是降维，而是根据某一个或者几个纬度`X_i`来对`X`进行分组，我们的目的是可以将`X`分至`k`个组，进而得到对`Y`的预测结果。<br>
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;下面我们来介绍CART算法，该算法用来指导如何对一个节点进行split。首先我们从上面对树模型的定义可以发现，split的作用是，将预测结果Y相同的X分成同一组，也就是说，split后的X之间应该更相似，或者说更纯（pure）。CART使用基尼系数Gini来表示X集的纯度，其公式为：<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;`Gini(D) = \sum_{i=1}^{n} p(x_i)*(1-p(x_i))`
 
 </div>
 
