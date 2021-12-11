@@ -99,7 +99,13 @@ mathjax: true
     &nbsp;&nbsp;&nbsp;&nbsp;回顾下之前的线性模型，在线性模型中，我们对每个特征附上权重，与输入相乘相加后的到一个新的值，我们使用这个值来对输入进行划分。而在树模型中，我们需要对特征一个一个处理。决策树与逻辑回归的分类区别也如此，逻辑回归是将所有特征变化为概率，大于某一阈值的划分一类；决策树是对每个特征做一个划分。
 
 <h3>2.1 决策树算法</h3>
-    &nbsp;&nbsp;&nbsp;&nbsp;参考资料：<a href="https://towardsdatascience.com/decision-trees-in-machine-learning-641b9c4e8052">Decision Trees in Machine Learning</a>
+    &nbsp;&nbsp;&nbsp;&nbsp;参考资料：
+    <ul>
+    <li><a href="https://towardsdatascience.com/decision-trees-in-machine-learning-641b9c4e8052">Decision Trees in Machine Learning</a>
+    <li><a href="https://zhuanlan.zhihu.com/p/139523931">决策树算法--CART分类树算法</a>
+    <li><a href="https://zhuanlan.zhihu.com/p/139519852">决策树算法--CART回归树算法</a>
+    <li><a href="https://wizardforcel.gitbooks.io/dm-algo-top10/content/cart.html">数据挖掘十大经典算法--CART: 分类与回归树</a>
+    </ul>
 <h4>2.1.1 从一个例子出发</h4>
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;假设我们想得到一个模型，用于预测在一场事故中，什么样的乘客可以生还。数据使用3个特征来表示：性别、年龄和配偶+孩子的数量。<br>

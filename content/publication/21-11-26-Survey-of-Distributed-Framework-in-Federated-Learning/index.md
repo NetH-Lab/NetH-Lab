@@ -65,7 +65,9 @@ featured: false
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section2"><font color="blue"><b>GAIA</b></font></a>：与distributed infrastructure层面上内存管理，其应用场景为interactive graph computing。
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 3. <a href="#section3"><font color="blue"><b>Scaling FL System</b></font></a>：一种为横向联邦学习设计的大规模FL架构。
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 3. <a href="#section3"><font color="blue"><b>Scaling FL System</b></font></a>：种为横向联邦学习设计的大规模FL架构。
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 4. <a href="#section4"><font color="blue"><b>ParSync</b></font></a>：一种分布式的资源分配框架，使用partitioned synchronization方法降低了由contention on high-quality resources和staleness of local states带来的scheduling latency。
   </div>
 </div>
 
@@ -133,4 +135,20 @@ featured: false
   &nbsp;&nbsp;&nbsp;&nbsp;<b>Selectors</b>负责接收device connections，它们周期性的接受来自Coordinator的FL population信息，而后在本地决策选择哪些devices用于此轮训练并接受updates。当收到updates后，Selector会将updates传递给Aggregators。<br>
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;<b>Master Aggregators</b>负责管理每个FL task，在runtime中，其动态决定Aggregator的数量。
+</div>
+
+<h2><a name="section4">4. ParSync</a></h2>
+<div class="div_learning_post_boder">
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;参考资料：<a href="https://www.usenix.org/conference/atc21/presentation/feng-yihui">Scaling Large Production Clusters with Partitioned Synchronization</a>. 2021. ATC<br>
+
+  <h2>场景和Problems</h2>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;该论文的场景为对大型集群上运行的billions of tasks进行资源分配，scheduler需要对诸如scheduling efficiency, scheduling quality, resource utilization, fairness and priority等做复杂的取舍。这样以来，scheduler会产生很大的延迟，那么对于大部分short-jobs而言是不能容忍的。故需要降低scheduler的latency。<br>
+
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;传统的集中式资源分配架构如YARN很难应对大规模集群，故在此考虑使用分布式资源分配架构。在distributed scheduler中，例如Omega，最大的问题是如何维护cluster state。在Omega中使用master维护cluster state，其余的local scheduler周期性地拷贝cluster state from master，于是在local scheduler中，会存在stale state问题。第二个问题是，多个scheduler会产生scheduling confilcts，这时需要使用master进行裁决。两个问题都会导致high scheduling latency。<br>
+
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;故在此文中，将集群划分为N个部分，每个部分的local scheduler对自身部分持有fresh states，对其他部分持有possible stale states。文章证明了这样的架构明显减少了resource contention，不同的parts之间通过<b>partitioned synchronization (ParSync)</b>实现state交换。
 </div>
