@@ -198,5 +198,5 @@ mathjax: true
     &nbsp;&nbsp;&nbsp;&nbsp;参考资料：<a href="https://ieeexplore.ieee.org/abstract/document/9440789">SecureBoost: A Lossless Federated Learning Framework</a>. 2021. IEEE Intelligent Systems
     <h3>Problem Statement</h3>
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;设`\{X^k \in \mathbb{R}^{n_k \times d_k} \}^m_{k=1}`，`X_k`代表数据集，其分布在`m`个parties中。对于一个party，数据集`X^1`有`d_1`个features，其feature set使用`\mathcal{F}^1 = \{f_1, ..., f_{d_1}\}`表示。对于任意两个parties `p, q`，`\mathcal{F}^p \cap \mathcal{F}^q = \varnothing`
+    &nbsp;&nbsp;&nbsp;&nbsp;设`\{X^k \in \mathbb{R}^{n_k \times d_k} \}_{k=1}^m`，`X_k`代表数据集，其分布在`m`个parties中。对于一个party，数据集`X^1`有`d_1`个features，其feature set使用`\mathcal{F}^1 = \{f_1, \dot , f_{d_1}\}`表示。对于任意两个parties `p, q`，`\mathcal{F}^p \cap \mathcal{F}^q = \o`。仅有一个party持有标签`Y`。
 </div>
