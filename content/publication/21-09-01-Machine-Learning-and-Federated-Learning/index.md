@@ -31,7 +31,7 @@ mathjax: true
 <body>
 
 <div align="center" class="div_indicate_source">
-  <h4>⚠ 转载请注明出处：<font color="red"><i>协作者：MinelHuang，更新日期：June.15 2021</i></font></h4>
+  <h4>⚠ 转载请注明出处：<font color="red"><i>协作者：MinelHuang，更新日期：Dec.11 2021</i></font></h4>
   <div align="left">
   <font size="2px">
   </font>
@@ -70,6 +70,7 @@ mathjax: true
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;Section 5. <a href="#section5"><font color="blue"><b>纵向联邦逻辑回归</b></font></a>：Heterologous Logistic Regression
     <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 6. <a href="#section6"><font color="blue"><b>Secureboost</b></font></a>：纵向联邦树模型
   </div>
 </div>
 
@@ -132,9 +133,13 @@ mathjax: true
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;如Figure 1右，一个2维随机变量`X`被分割成两组（根据`X_2`分割）`X|X_2 \leq 0.7, X|X_2 > 0.7`，再根据`X_1`，我们最终将`X`归类到`A_1, A_2, A_3`三类。例如，当`X=(1, 0)`时，根据分割结果，`X \in A_3`，即绿色叶节点，故`Y=3`。注意，这里的分割并不指的是降维，而是根据某一个或者几个纬度`X_i`来对`X`进行分组，我们的目的是可以将`X`分至`k`个组，进而得到对`Y`的预测结果。<br>
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;下面我们来介绍CART算法，该算法用来指导如何对一个节点进行split。首先我们从上面对树模型的定义可以发现，split的作用是，将预测结果Y相同的X分成同一组，也就是说，split后的X之间应该更相似，或者说更纯（pure）。CART使用基尼系数Gini来表示X集的纯度，其公式为：<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;`Gini(D) = \sum_{i=1}^{n} p(x_i)*(1-p(x_i))`
-
+    &nbsp;&nbsp;&nbsp;&nbsp;下面我们来介绍CART算法，该算法用来指导如何对一个节点进行split。首先我们从上面对树模型的定义可以发现，split的作用是，将预测结果Y相同的X分成同一组，也就是说，split后的X之间应该更相似，或者说更纯（pure）。CART使用基尼系数Gini来表示数据集D的纯度，其公式为：<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;`Gini(D) = \sum_{i=1}^{k} p(y_i)*(1-p(y_i))`<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;其中`p(y_i)`代表在`D`这一分组中，`y_i`这一标签出现的概率，`k`代表总的标签种类个数。<br>
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;故在一次split中，尝试根据某一个特征`x_i`进行划分，而后分别计算划分后的两组D的Gini指数。通过计算划分前和划分后的Gini增益，选择让Gini指数下降最大的一种split方式。<br>
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;最终，我们可以通过以上这种贪心的方法逐渐的减小Gini指数，也即划分出来的组越纯。在划分完后，还需使用剪枝的方法防止过拟合，在本文中将不再介绍。
 </div>
 
 <h2><a name="section3">3. </a>DNN</h2>
@@ -185,5 +190,13 @@ mathjax: true
     &nbsp;&nbsp;&nbsp;&nbsp;其中，[[·]]代表使用同态加密方法加密数据。
     <img src="pic/4.4.png" style="margin: 0 auto;"><br>
     <img src="pic/4.5.png" style="margin: 0 auto;"><br>
+</div>
 
+<h2><a name="section6">6. </a>Secureboost</h2>
+<div class="div_learning_post_boder">
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;参考资料：<a href="https://ieeexplore.ieee.org/abstract/document/9440789">SecureBoost: A Lossless Federated Learning Framework</a>. 2021. IEEE Intelligent Systems
+    <h3>Problem Statement</h3>
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;设`\{\}`
 </div>
