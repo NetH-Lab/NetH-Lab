@@ -33,7 +33,7 @@ featured: false
 <body>
 
 <div align="center" class="div_indicate_source">
-  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: MinelHuang，更新日期：Nov.27 2021</i></font></h4>
+  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: Dec.13 2021</i></font></h4>
   <div align="left">
   <font size="2px">
   </font>
@@ -65,6 +65,8 @@ featured: false
     &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section2"><font color="blue"><b>CMFL</b></font></a>：通过减少edge devices和center server通信次数，降低通信开销。
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;Section 3. <a href="#section3"><font color="blue"><b>BatchCrypt</b></font></a>：一种高效的同态加密方法，场景为Cross-Silo Federated Learning。
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 4. <a href="#section4"><font color="blue"><b>Octo</b></font></a>：一种INT8量化训练模型，应用于tiny on-device learning。
   </div>
 </div>
 
@@ -112,4 +114,15 @@ featured: false
 
   <h2>Contribution</h2>
   &nbsp;&nbsp;&nbsp;&nbsp; 与传统的同态加密相比，BatchEncrypt在3-layer全连接神经网络、AlexNet、LSTM model三个模型中分别达到了23x、71x和93x的加速，并分别降低了66x、71x和101x的通信负载。
+</div>
+
+<h2><a name="section3">4. Octo</a></h2>
+<div class="div_learning_post_boder">
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;参考文献：<a href = "https://www.usenix.org/conference/atc21/presentation/zhou-qihua">Octo: INT8 Training with Loss-aware Compensation and Backward Quantization for Tiny On-device Learning</a>. 2021. ATC
+  <h2>场景和Problem</h2>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;在边缘计算中，终端设备资源是有限的（算力，内存等），故在一些文章中使用量化训练模型（quantization training methods）来压缩模型。传统的量化模型如Low-rank, Decomposition, Model Pruning and Network Sparsification等适用于large-scale training tasks，但在tiny on-device learning中并不是很有效。故本文体重一种基于INT8的量化训练模型。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;在传统的量化训练模型中，存在以下几个问题：一是无法运用于训练过程，二是需要特定的网络支持，三是不能使用hardware-level INT8加速。在本文中提出一种轻量级的INT8 training method，并提出Loss-aware Compensation (LAC) and Parameterized Range Clipping (PRC) methods来分别处理forward pass和backward pass中的量化损耗问题。
 </div>
