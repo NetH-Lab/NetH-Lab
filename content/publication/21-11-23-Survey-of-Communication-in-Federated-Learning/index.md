@@ -116,7 +116,7 @@ featured: false
   &nbsp;&nbsp;&nbsp;&nbsp; 与传统的同态加密相比，BatchEncrypt在3-layer全连接神经网络、AlexNet、LSTM model三个模型中分别达到了23x、71x和93x的加速，并分别降低了66x、71x和101x的通信负载。
 </div>
 
-<h2><a name="section3">4. Octo</a></h2>
+<h2><a name="section4">4. Octo</a></h2>
 <div class="div_learning_post_boder">
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;参考文献：<a href = "https://www.usenix.org/conference/atc21/presentation/zhou-qihua">Octo: INT8 Training with Loss-aware Compensation and Backward Quantization for Tiny On-device Learning</a>. 2021. ATC

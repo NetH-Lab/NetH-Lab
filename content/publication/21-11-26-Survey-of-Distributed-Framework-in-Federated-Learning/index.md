@@ -155,7 +155,7 @@ featured: false
   &nbsp;&nbsp;&nbsp;&nbsp;故在此文中，将集群划分为N个部分，每个部分的local scheduler对自身部分持有fresh states，对其他部分持有possible stale states。文章证明了这样的架构明显减少了resource contention，不同的parts之间通过<b>partitioned synchronization (ParSync)</b>实现state交换。
 </div>
 
-<h2><a name="section4">5. Hoplite</a></h2>
+<h2><a name="section5">5. Hoplite</a></h2>
 <div class="div_learning_post_boder">
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;参考资料：<a href="https://dl.acm.org/doi/abs/10.1145/3452296.3472897">Hoplite: efficient and fault-tolerant collective communication for task-based distributed systems</a>. 2021. OSDI<br>
