@@ -31,7 +31,7 @@ mathjax: true
 <body>
 
 <div align="center" class="div_indicate_source">
-  <h4>⚠ 转载请注明出处：<font color="red"><i>协作者：MinelHuang，更新日期：Dec.11 2021</i></font></h4>
+  <h4>⚠ 转载请注明出处：<font color="red"><i>协作者：MinelHuang，更新日期：Dec.14 2021</i></font></h4>
   <div align="left">
   <font size="2px">
   </font>
@@ -207,5 +207,16 @@ mathjax: true
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;在第`t`次迭代时，最小化(3)式来进行split。在得到最优的树后，计算每个叶子结点的权重。我们发现，上述两步计算都依赖于`g_i, h_i`，并且根据这两个参数，还可以得出class label。例如，`g_i = \hat{y_i}^{t-1} - y_i`。<br>
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;于是我们可以得出：(a) 未持有标签的参与方可以根据本地数据和`g_i, h_i`计算出本地最佳split。 (b) `g_i, h_i`应该被认为是敏感数据，也即不同party间应该交互的是加密后的`g_i,h_i`。在一次split中，和XGBoost一样，需要对于每一个可能的feature分割点进行穷举，并对每次分割使用(3)式打分，使(3)式最低的可以认为是最佳分割点。我们发现，(3)式的计算是需要知道`\sum g_i, \sum h_i`的，于是现在问题变为，当各个party持有不同feature，并只有active party持有label时该如何计算`\sum g_i, \sum h_i`。
+    &nbsp;&nbsp;&nbsp;&nbsp;于是我们可以得出：(a) 未持有标签的参与方可以根据本地数据和`g_i, h_i`计算出本地最佳split。 (b) `g_i, h_i`应该被认为是敏感数据，也即不同party间应该交互的是加密后的`g_i,h_i`。在一次split中，和XGBoost一样，需要对于每一个可能的feature分割点进行穷举，并对每次分割使用(3)式打分，使(3)式最低的可以认为是最佳分割点。我们发现，(3)式的计算是需要知道`\sum g_i, \sum h_i`的，于是现在问题变为，当各个party持有不同feature，并只有active party持有label时该如何计算`\sum g_i, \sum h_i`。<br>
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;首先，论文中使用了approximation scheme用于减少参与方交互`g_i, h_i`的次数，其各参与方计算梯度的过程如下：<br>
+    <img src="pic/6.2.png" style="margin: 0 auto;"><br>
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;每个passive party使用local data计算完`G, H`矩阵后将其发送给active party，注意这里两个矩阵中的值都已经经历过同态加密，故不会有信息泄露。在active party中经历如下过程：
+    <img src="pic/6.3.png" style="margin: 0 auto;"><br>
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;该过程即active party计算自身的gradient，而后将其加入进`G, H`矩阵中，再使用矩阵中的值计算最终的score。通过score，active party得到了最佳的feature分割点`k_{opt}`和最佳阈值`v_{opt}`。当然还有一个问题，我们发现对于passive party而言，是需要输入由active party计算好的`g_i, h_i`的，那么active party当然也得先有`\hat{y_i}`，所以最后一块拼图为，如何得到`\hat{y_i}`？<br>
+    <img src="pic/6.4.png" style="margin: 0 auto;"><br>
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;对于一条record `x_1`，我们需要得到其预测值`\hat{y_1}`。于是从root node开始一步一步的进行判断，root node中需要根据passive party 1中的feature Bill Payment进行判决，故active party通知party 1；party 1发现`x_1`被划分到node 1，故与party 3进行交互，让party 3进行下一步。最终我们得到`x_1`的预测值为`w_2`，并传递给所有参与方。于是，active party可以计算出`g_i, h_i`并传递给各个passive party，再进行上述的`G, H`和score计算过程。
 </div>
