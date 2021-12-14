@@ -198,5 +198,14 @@ mathjax: true
     &nbsp;&nbsp;&nbsp;&nbsp;参考资料：<a href="https://ieeexplore.ieee.org/abstract/document/9440789">SecureBoost: A Lossless Federated Learning Framework</a>. 2021. IEEE Intelligent Systems
     <h3>Problem Statement</h3>
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;设`\{X^k \in \mathbb{R}^{n_k \times d_k} \}_{k=1}^m`，`X_k`代表数据集，其分布在`m`个parties中。对于一个party，数据集`X^1`有`d_1`个features，其feature set使用`\mathcal{F}^1 = \{f_1, \dot , f_{d_1}\}`表示。对于任意两个parties `p, q`，`\mathcal{F}^p \cap \mathcal{F}^q = \o`。仅有一个party持有标签`Y`。
+    &nbsp;&nbsp;&nbsp;&nbsp;设`\{X^k \in \mathbb{R}^{n_k \times d_k} \}_{k=1}^m`，`X_k`代表数据集，其分布在`m`个parties中。对于一个party，数据集`X^1`有`d_1`个features，其feature set使用`\mathcal{F}^1 = \{f_1, \dot , f_{d_1}\}`表示。对于任意两个parties `p, q`，`\mathcal{F}^p \cap \mathcal{F}^q = \o`。仅有一个party持有标签`Y`。<br>
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;首先，简单提一下XGBoost过程，如下：<br>
+    <img src="pic/6.1.png" style="margin: 0 auto;"><br>
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;`l`为损失函数，这里我们可以简单的使用平方损失函数`l(y_i, \hat{y_i} = (y_i - \hat{y_i})^2)`，`\Omega`代表正则项。对XGBoost更深的理解请参考另一博文<a href="https://www.cnblogs.com/mantch/p/11164221.html">终于有人说清楚了--XGBoost算法</a>
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;在第`t`次迭代时，最小化(3)式来进行split。在得到最优的树后，计算每个叶子结点的权重。我们发现，上述两步计算都依赖于`g_i, h_i`，并且根据这两个参数，还可以得出class label。例如，`g_i = \hat{y_i}^{t-1} - y_i`。<br>
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;于是我们可以得出：(a) 未持有标签的参与方可以根据本地数据和`g_i, h_i`计算出本地最佳split。 (b) `g_i, h_i`应该被认为是敏感数据，也即不同party间应该交互的是加密后的`g_i,h_i`。在一次split中，和XGBoost一样，需要对于每一个可能的feature分割点进行穷举，并对每次分割使用(3)式打分，使(3)式最低的可以认为是最佳分割点。我们发现，(3)式的计算是需要知道`\sum g_i, \sum h_i`的，于是现在问题变为，当各个party持有不同feature，并只有active party持有label时该如何计算`\sum g_i, \sum h_i`。
 </div>
