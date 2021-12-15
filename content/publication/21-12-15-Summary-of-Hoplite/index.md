@@ -54,10 +54,6 @@ featured: false
 <br>
 
 <div class="div_catalogue">
-  <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;参考资料：<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;1. <a href="https://dl.acm.org/doi/abs/10.1145/3102980.3102998">Real-time machine learning: The missing pieces</a>. 2017. HotOS (workshop)<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;2. <a href="https://www.usenix.org/conference/osdi18/presentation/moritz">Ray: A distributed framework for emerging {AI} applications</a>.2018.OSDI
   <div align="center">
     <h2> 目录 </h2>
     <p>
@@ -106,5 +102,13 @@ featured: false
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;第二步是使所有的worker上每一个`1/N`块都完整，称为allgather，每一步的通信耗时`\alpha + S/(NB)`，没有计算开销。该步对应上图右侧部分。<br>
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;那么，整体的耗时可以表示为，`2*(N-1)*[\alpha + S/(NB)] + (N-1)*[(S/N) * C]`
+  &nbsp;&nbsp;&nbsp;&nbsp;那么，整体的耗时可以表示为，`2*(N-1)*[\alpha + S/(NB)] + (N-1)*[(S/N) * C]`。对比于Parameter Server模型，每一步一个worker仅会发送一次、接受一次`S/N`大小的数据块，于是我们可以说单步通信开销减少，并且负载均衡；在计算部分由于所有worker都参与了计算，故计算时间开销降低了`N`倍；甚至该方法节省了每台worker上的内存开销。后面笔者会描述，在Machine Learning领域，allreduce的用途和研究点。
+
+  <h4>AllReduce in Machine Learning</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;参考资料：<a href = "https://andrew.gibiansky.com/blog/machine-learning/baidu-allreduce/">Bringing HPC Techniques to Deep Learning</a>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;假设我们使用data parallel stochastic gradient descent，其过程是，数据分布在各个worker上，每个worker计算出gradients后，与其他workers交换，最后使用所有的gradients更新本地模型。在这一情景中，数据是distributed，而每个worker持有全部的模型信息。首先明确的是，我们使用很庞大的模型，即parameters的数量庞大。这样导致每个worker产生的gradients数量也很庞大，由此导致较长的communication costs。我们尝试着，能否使用ring allreduce方式，同时达到distributed computation、降低单步communication cost和节省GPU空间三个目的。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;在DNN反向传播中，每一层的weight更新都需要对该层的梯度信息进行求和，显然在分布式SGD中梯度信息是分布在各个worker上的。在这里我们可以使用allreduce来降低该部分的时间开销。
 </div>
