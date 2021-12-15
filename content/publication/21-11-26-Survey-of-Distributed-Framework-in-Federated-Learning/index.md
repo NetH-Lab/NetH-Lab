@@ -158,7 +158,7 @@ featured: false
 <h2><a name="section5">5. Hoplite</a></h2>
 <div class="div_learning_post_boder">
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;参考资料：<a href="https://dl.acm.org/doi/abs/10.1145/3452296.3472897">Hoplite: efficient and fault-tolerant collective communication for task-based distributed systems</a>. 2021. OSDI<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;参考资料：<a href="https://dl.acm.org/doi/abs/10.1145/3452296.3472897">Hoplite: efficient and fault-tolerant collective communication for task-based distributed systems</a>. 2021. SIGCOMM<br>
 
   <h2>场景和Problems</h2>
   <p>
