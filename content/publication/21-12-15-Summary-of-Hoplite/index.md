@@ -34,7 +34,7 @@ featured: false
 <body>
 
 <div align="center" class="div_indicate_source">
-  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: MinelHuang，更新日期：Dec.16 2021</i></font></h4>
+  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: MinelHuang，更新日期：Dec.18 2021</i></font></h4>
   <div align="left">
   <font size="2px">
   </font>
@@ -163,4 +163,23 @@ featured: false
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;其二是在错误发生后，Hoplite可以动态的调整data transfer schedule以降低failed task对整体结果的影响。该fault-tolerance方法允许live tasks make progress，也允许failed task rejoins。
   
+  <h4>Design</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;首先我们先明确在Ray中，reduce的瓶颈在何处。<br>
+  <img src="pic/3.4.png" style="margin: 0 auto;"><br>
+  <img src="pic/3.5.png" style="margin: 0 auto;"><br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;上图为使用Ray异步的训练policy过程。何为异步？(a)中程序表示，对所有agent下发上一次迭代更新后的policy，每个agent各自计算gradients。对于training process，只要有gradient产生便立即更新policy，直至batchsize，而后向所有agents下发新的policy。这样做我们发现，快的agent在完成一次rollout（即产生gradients）后不需要等待慢的agents完成，便可以开始下一轮rollout，即异步操作。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;(b)中可以看到对gradients显然要进行reduce操作，即aggregation。对于training process而言，其既需要接受来自agents的gradients，又需要做reduce运算，最后还要向所有agents下发policy，显然当model较大时会产生通信瓶颈/计算瓶颈，故在此我们希望使用allreduce。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;对于设计allreduce，我们需要考虑两个challenges。第一为在Ray中所有的任务都是动态创建的，也即我们不知道参与此次allreduce的参与方（worker/actor产生的objects）准备好的时间和位置，即不知道communication pattern；并且我们也不能等待所有参与方准备好了再开始，因为这样便退化为与spark等相同的BSP模型（强一致性的同步），对效率有很大的损耗。第二点是与上文讲的相同，需要设计fault-tolerance。<br>
+  <h5>Workflow</h5>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;该节主要讲述Hoplite包含哪些组件，以及和task-based system间的关系。<br>
+  <img src="pic/3.6.png" style="margin: 0 auto;"><br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;如上图，Hoplite包含两个重要组件：Object store & Object directory。对于collective communication而言，重点在于收发两方。对于发送方，一旦某个object被准备好，则将其拷贝到local object store中，并在object directory上登记此Object ID；对于接收方，其在code上可以得知所需的future object，但receiver想要开始执行必须要等待接受到所有的future object，故在sender还未准备好future obect前，receiver只能block.<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;我们的目的是完成allreduce操作，故设立object directory来记录当前已经准备好的object。而后当一个worker需要执行allreduce时（会给出allreduce所需的future object），Hoplite可以根据current object directory来判断参与此次allreduce的输入object是否准备好了。而后需要考虑的是，如何使用部分object开启collective communication。所以我们看到，Hoplite是通过动态调整allreduce中的data transfer部分（也叫data transfer schedule）来实现allreduce的。当然对于reduce等操作也同样可以使用Hoplite，故在论文中，Hoplite的服务对象为collective communication。
 </div>
