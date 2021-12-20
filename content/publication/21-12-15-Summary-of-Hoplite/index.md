@@ -181,5 +181,26 @@ featured: false
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;如上图，Hoplite包含两个重要组件：Object store & Object directory。对于collective communication而言，重点在于收发两方。对于发送方，一旦某个object被准备好，则将其拷贝到local object store中，并在object directory上登记此Object ID；对于接收方，其在code上可以得知所需的future object，但receiver想要开始执行必须要等待接受到所有的future object，故在sender还未准备好future obect前，receiver只能block.<br>
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;我们的目的是完成allreduce操作，故设立object directory来记录当前已经准备好的object。而后当一个worker需要执行allreduce时（会给出allreduce所需的future object），Hoplite可以根据current object directory来判断参与此次allreduce的输入object是否准备好了。而后需要考虑的是，如何使用部分object开启collective communication。所以我们看到，Hoplite是通过动态调整allreduce中的data transfer部分（也叫data transfer schedule）来实现allreduce的。当然对于reduce等操作也同样可以使用Hoplite，故在论文中，Hoplite的服务对象为collective communication。
+  &nbsp;&nbsp;&nbsp;&nbsp;我们的目的是完成allreduce操作，故设立object directory来记录当前已经准备好的object。而后当一个worker需要执行allreduce时（会给出allreduce所需的future object），Hoplite可以根据current object directory来判断参与此次allreduce的输入object是否准备好了。而后需要考虑的是，如何使用部分object开启collective communication。所以我们看到，Hoplite是通过动态调整allreduce中的data transfer部分（也叫data transfer schedule）来实现动态allreduce的。至于是否要使用allreduce，allreduce前的data partition方式都不属于Hoplite的管辖范围。当然对于reduce等操作也同样可以使用Hoplite，故在论文中，Hoplite的服务对象为collective communication。<br>
+
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;关于Hoplite具体的优化方法（pipeline、receiver-based collective operation、fault-tolerance）请自行阅读论文，笔者会在总结中给出solution的main ideas。
+
+<h4>总结</h4>
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;Hoplite的核心思想是，如何动态的调整data transfer来适应动态任务环境。对于collective communication如broadcast、reduce、allreduce而言，动态环境指的是参与此次reduce操作的数据object可能是准备好了，可能没有准备好（future），我们希望的是能动态的调整object间的data transfer依赖关系，从而高效的实现collective operation。<br>
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;那么第一点，在两方情景下（sender+receiver）下的通信如何高效？Hoplite提供了Object Directory Service来告知object的准备情况，并使用pipeline来高效的完成data transfer（sender向ODS中copy object的同时便开始和receiver之间的data transfer，这样用network transfer掩盖了copy object from node to OBS的时间）。<br>
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;第二点是，如何动态的调整data transfer以实现collective operation。Hoplite提供了broadcast和reduce方法，其中broadcast参考P2P传输方式，如下图，OBS记录object当前的拷贝情况，并通过调整data transfer关系来实现P2P传输。<br>
+<img src="pic/3.7.png" style="margin: 0 auto;"><br>
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;Reduce操作较为复杂些，Hoplite采用tree-structured reduce algorithm为所有的参与方建立树模型，并提供scheduler来优化树的深度（使得communication cost最优），如下图<br>
+<img src="pic/3.8.png" style="margin: 0 auto;"><br>
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;最后，为了与其他工作做区别，笔者将high-level的概述下Hoplite到底是对分布式计算的哪一方面做了贡献。分布式系统是为一个task中的所有functions分配worker以运行，Ray做到了在runtime中为新的function分配worker。那么对于一个function而言，包含数据输入（data partition）、计算、数据输出三个过程，Hoplite做到的是让输入输出中包含的data transfer过程更加高效。而并没有定义一个runtime function的输入数据、输出数据该如何分片、或者是由哪些节点进行计算。所以，Hoplite必须被告知输入输出数据的位置，以及哪些节点参与此function的运算。<br>
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;同样的，Ray也没有对上述两点进行schedule，其关注的是对于app开发人员提供一个动态的分布式编程接口，而后根据“哪个worker有足够的资源就在哪运行”的原则为新的function/task分配workers。所以笔者认为，可以根据app的需求设计schedule方法，继续进一步的优化分布式task执行效率。<br>
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;END
 </div>
