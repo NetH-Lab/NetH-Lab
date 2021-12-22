@@ -34,7 +34,7 @@ featured: false
 <body>
 
 <div align="center" class="div_indicate_source">
-  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: MinelHuang，更新日期：Dec.13 2021</i></font></h4>
+  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: MinelHuang，更新日期：Dec.21 2021</i></font></h4>
   <div align="left">
   <font size="2px">
   </font>
@@ -89,7 +89,8 @@ featured: false
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;分布式机器学习通常有两个原因，其一是model designer希望使用分布式来提高并行度或I/O带宽总量，例如对TB级的输入数据的训练；其二是数据本身是inherently distributed（大型企业的数据存放在不同的地理位置上）或在single computer上无法存放庞大的数据（分布式存储）。在分布式后，通常一个分布式系统要解决三类问题：<b>parallel computation, data distribution and resilience to failures</b>。<br>
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;本节的章节安排为，Section 2讨论ML中的系统challenges和High Performance Computing中的ideas是如何应用在ML System上的（用于加速和scaling）；Section 3讨论ML architecture，覆盖algorithms层面到network communication层面（entire stack）；Section 4讨论widely used systems 爱你的libraries和其underlying designs；Section 5讨论分布式机器学习的main challenges。<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;本节的章节安排为，Section 2讨论ML中的系统challenges和High Performance Computing中的ideas是如何应用在ML System上的（用于加速和scaling）；Section 3讨论ML architecture，覆盖algorithms层面到network communication层面（entire stack）；Section 4讨论widely used systems and
+  libraries和其underlying designs；Section 5讨论分布式机器学习的main challenges。<br>
 
   <h3>1.2 Machine Learning - A High-performance Computing Challenge?</h3>
   <p>
@@ -123,6 +124,30 @@ featured: false
   &nbsp;&nbsp;&nbsp;&nbsp;常用的分布式方法分为两种：data parallelizing和model parallelizing。数据并行指的是所有workers可以使用相同的算法，但数据输入不同来进行计算，例如在LR算法中我们可以将数据分成各个partition，对每个partition进行gradients的计算。所以我们发现，数据并行的前提一般是ML算法假定了independent and identical distribution (i.i.d.，独立同分布)，这样我们才可以对每个partition产生的gradients进行聚合。第二种为模型并行，指的是每个worker对部分模型进行计算，例如在树模型中，spliting过程可以使用多个worker进行并行。然而模型并行方法并不能应用于所有ML算法，这是因为model parameters通常不能split up，一种解决办法是通过例如ensembling技术对output trained models进行聚合。<br>
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;一个distributed system可以分成三层（机器学习算法，并行化，拓扑结构），其中算法和并行方法对应上一段所讲，拓扑结构则是根据并行方法使用special architectural pattern去描述task，例如使用数据并行实现DNN我们可以用parameter server拓扑来描述。在拓扑层我们需要优化的是高效并行实现、计算/通信效率和容错的功能。当然，该三层也并不是相互独立的。在后文中我们将一次对每一层的内容和工作进行分类和归纳。
+
+  <h4>1.3.1 Machine Learning Algorithms</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;该章节非本博客的主要内容，故简述。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;ML algorithms一般分为三个步骤：<b>Feedback, Purpose, Method</b>。Overview的讲，ML algorithms在每次迭代将Feedback作为Method的输入来优化模型，逐渐逼近Purpose。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;Feedback指的是提高模型质量所需的输入。在监督学习中，feedback常是指predict的值和真实值之间的差异情况，可以使用偏移（bias error）和方差（variance）来表示，一个例子为loss function。无监督学习中feedback可以是在一个group中样本的相似程度，这种similarity metric可以用来优化group method。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;Purpose是ML algorithms的目标，其中可能是Classification、Clustering、Dimensionality reduction等。以Classification为例，其具体是希望使用一个模型将输入的数据样本打上标签（分类），这种预测标签越接近真实标签则代表分类器的准确性越高。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;Method即如何逐步的优化模型以达到Purpose。一个广泛应用的方法是Stochastic Gradient Descent（SGD）算法，其目的是，逐步的降低loss即代表越逼近Purpose。所以我们可以计算模型参数对loss的导数，即gradients，根据梯度的方向来优化parameters，使得loss越来越小。
+
+  <h4>1.3.2 并行化与拓扑结构</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;回顾上文，分布式ML系统的任务是为ML算法提供高效的并行化实现方式。对于并行方法，包含数据并行和模型并行。在此节，假若已经给定了ML算法和并行方式，我们该如何高效的实现呢？所以在这里，parallelism and topology的任务是如何设计工作节点的拓扑结构，来达到高效的并行化。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;首先我们不妨来思考，什么是低效的并行化。假设我们要对SGD过程做数据并行处理，我们在execution前有两个拓扑：数据分布拓扑和任务拓扑。输入数据要经过data partition过程分布式的存储在各个worker上，形成数据拓扑（节点称为datanode）；每个worker会被安排其需要执行的task以及输入输出数据依赖关系，形成任务拓扑（节点称为tasknode）。低效的并行化指的是，数据的拷贝损耗很大（例如一个tasknode的输入来自所有的datanode），则会带来high communication cost；或者是某个tasknode执行了大量的运算，形成high communication cost；或者是大量的tasknode在等待输入，形成high sychronization cost。可见distributed system所需要解决的两个关键问题：data distribution和parallelsim之间是相互依赖的。
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;于是，我们提出了几个通用的拓扑模型。举其中一个例子，Bulk Synchronous Parallel (BSP)模型是最简单的分布式模型。其data distribution方式为数据均匀的分布在每个worker上，而后对每个computation和communication阶段做同步。通俗来讲就是将程序的运行分为了computation和communication，所有worker通过communication交换中间结果（根据任务拓扑，每个任务得到input），而后所有worker再进行computation。其优势是强一致性，劣势是computation快的workers需要等待慢的workers。但是假若每个worker的运行时间相同，例如data parallel SGD，BSP模型依旧是十分高效的。<br>
+
+  <h4>1.3.3 小结</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;在此章节，我们叙述了distributed ML system的应用（ML algorithm），并行化方法和拓扑结构对并行化性能的影响。后文的工作将专注于，如何设计算法来更好的使用systems resources和如何设计更好的拓扑和执行方案来支持特定的ML algorithms。
 </div>
 
 <h2><a name="section2">2. GAIA</a></h2>
