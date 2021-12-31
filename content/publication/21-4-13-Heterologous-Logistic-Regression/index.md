@@ -1,6 +1,6 @@
 ---
 title: Heterologous Logistic Regression
-summary: '[逻辑回归][联邦学习][论文选读]联邦学习异构逻辑回归'
+summary: '[逻辑回归][联邦学习]联邦学习异构逻辑回归'
 authors:
 - Minel Huang
 date: “2021-04-13T00:00:00Z”
@@ -9,7 +9,7 @@ publishDate: "2021-04-13T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
-- Study Notes
+- Machine Learning
 - Federated Learning
 - Logistic Regression
 featured: false

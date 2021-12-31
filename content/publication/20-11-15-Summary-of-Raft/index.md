@@ -1,7 +1,7 @@
 ---
 title: Summary of Raft Algorithm
 
-summary: '[分布式一致性算法][标志性论文选读]Raft算法学习笔记与总结'
+summary: '[分布式系统][一致性]Raft算法学习笔记与总结'
 authors:
 - Minel Huang
 
@@ -11,10 +11,8 @@ publishDate: "2020-11-15T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
-- Study Notes
 - Distributed Systems
 - Distributed Consensus Algorithms
-- Raft Algorithm
 featured: false
 ---
 

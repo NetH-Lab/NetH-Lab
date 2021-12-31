@@ -9,9 +9,10 @@ publishDate: "2021-03-21T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
-- Study Notes
 - Tools
+- Open Source System
 - Distributed Systems
+- Resource Scheduling
 - Hadoop
 featured: false
 ---

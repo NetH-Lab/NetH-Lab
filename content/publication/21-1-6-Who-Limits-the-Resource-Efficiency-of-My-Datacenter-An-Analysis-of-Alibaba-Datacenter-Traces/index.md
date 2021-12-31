@@ -9,7 +9,6 @@ publishDate: "2021-01-06T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
-- Study Notes
 - Distributed Systems
 - Datacenters
 - Resource Efficiency

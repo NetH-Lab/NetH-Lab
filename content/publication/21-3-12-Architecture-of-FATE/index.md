@@ -12,7 +12,7 @@ publication_types: ["0"]
 
 tags: 
 - Tools
-- Study Notes
+- Open Source System
 - Federated Learning
 - FATE
 featured: false

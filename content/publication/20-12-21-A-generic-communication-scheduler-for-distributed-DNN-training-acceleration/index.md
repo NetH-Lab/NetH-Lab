@@ -1,7 +1,7 @@
 ---
 title: Summary of A generic communication scheduler for distributed DNN training acceleration
 
-summary: '[分布式机器学习][资源调度][论文选读]论文学习笔记与总结'
+summary: '[分布式机器学习][通信优化][拓扑优化]论文学习笔记与总结'
 authors:
 - Minel Huang
 
@@ -11,8 +11,10 @@ publishDate: "2020-12-21T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
+- Distributed System
 - Distributed Machine Learning
-- Resource Scheduling
+- Communication Efficiency
+- Topology Optimization
 featured: false
 ---
 

@@ -10,6 +10,7 @@ publication_types: ["0"]
 
 tags: 
 - Tools
+- Open Source System
 - Federated Learning
 - FATE
 featured: false

@@ -1,6 +1,6 @@
 ---
 title: Overview of Docker
-summary: '[学习笔记][Docker]Docker技术总结'
+summary: '[工具][Docker]Docker技术总结'
 authors:
 - Minel Huang
 date: “2021-04-09T00:00:00Z”

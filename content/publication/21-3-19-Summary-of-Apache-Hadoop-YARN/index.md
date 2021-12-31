@@ -1,6 +1,6 @@
 ---
 title: Summary of Apache Hadoop YARN
-summary: '[Hadoop][论文选读]Apache Hadoop YARN 论文精读'
+summary: '[分布式系统][多任务资源调度框架][Hadoop]Apache Hadoop YARN 论文精读'
 authors:
 - Minel Huang
 date: “2021-02-05T00:00:00Z”
@@ -9,8 +9,8 @@ publishDate: "2021-02-05T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
-- Study Notes
 - Distributed Systems
+- Resource Scheduling
 - Hadoop
 featured: false
 ---

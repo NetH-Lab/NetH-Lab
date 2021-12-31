@@ -1,7 +1,7 @@
 ---
 title: Ubuntu桌面版安装
 
-summary: '[Linux工具安装]Ubuntu桌面版安装步骤'
+summary: '[工具]Ubuntu桌面版安装步骤'
 authors:
 - Minel Huang
 - Zobin Huang

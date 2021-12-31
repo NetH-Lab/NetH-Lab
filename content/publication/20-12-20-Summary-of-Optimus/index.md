@@ -1,7 +1,7 @@
 ---
-title: Summary of Optimus an efficient dynamic resource scheduler for deep learning clusters
+title: Summary of Optimus
 
-summary: '[分布式机器学习][资源调度][论文选读]Optimus学习笔记与总结'
+summary: '[分布式机器学习][多任务资源调度]Optimus学习笔记与总结'
 authors:
 - Minel Huang
 
@@ -11,7 +11,7 @@ publishDate: "2020-12-20T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
-- Study Notes
+- Distributed System
 - Distributed Machine Learning
 - Resource Scheduling
 featured: false

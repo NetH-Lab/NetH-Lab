@@ -1,6 +1,6 @@
 ---
 title: Configuration of Hadoop YARN Environment
-summary: '[Hadoop安装]Hadoop YARN集群环境配置'
+summary: '[工具][Hadoop安装]Hadoop YARN集群环境配置'
 authors:
 - Minel Huang
 date: “2021-02-23T00:00:00Z”
@@ -10,6 +10,7 @@ publication_types: ["0"]
 
 tags: 
 - Tools
+- Open Source System
 - Distributed Systems
 - Hadoop
 featured: false

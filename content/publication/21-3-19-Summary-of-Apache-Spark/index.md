@@ -1,6 +1,6 @@
 ---
 title: Summary of Apache Spark
-summary: '[分布式系统][Spark][论文选读]Apache Spark学习笔记'
+summary: '[分布式系统][Spark]Apache Spark学习笔记'
 authors:
 - Minel Huang
 date: “2021-03-19T00:00:00Z”
@@ -9,8 +9,9 @@ publishDate: "2021-03-19T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
-- Study Notes
 - Distributed Systems
+- Distributed Computing Framework
+- Distributed Machine Learning Framework
 - Spark
 featured: false
 ---

@@ -1,7 +1,7 @@
 ---
 title: Building Hadoop Environment on Cluster of RaspberryPi
 
-summary: '[Hadoop安装][树莓派]在树莓派集群上运行Hadoop'
+summary: '[工具][Hadoop安装][树莓派]在树莓派集群上运行Hadoop'
 authors:
 - Minel Huang
 date: “2021-03-15T00:00:00Z”
@@ -11,9 +11,10 @@ publication_types: ["0"]
 
 tags: 
 - Tools
+- Open Source System
+- Distributed System
 - Hadoop
 - Raspberry Pi
-- Galaxy
 featured: false
 ---
 

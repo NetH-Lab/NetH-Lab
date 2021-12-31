@@ -1,6 +1,6 @@
 ---
 title: Summary of Hoplite
-summary: '[分布式系统][分布式机器学习][论文选读]Hoplite学习笔记'
+summary: '[分布式机器学习][通信优化]Hoplite学习笔记'
 authors:
 - Minel Huang
 date: “2021-12-15T00:00:00Z”
@@ -9,9 +9,9 @@ publishDate: "2021-12-15T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
-- Study Notes
 - Distributed Systems
 - Distributed Machine Learning
+- Communicatino Efficiency
 - AllReduce
 featured: false
 ---

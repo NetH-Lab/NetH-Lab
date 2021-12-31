@@ -1,6 +1,6 @@
 ---
 title: Survey of Distributed Framework in Federated Learning
-summary: '[机器学习][联邦学习][论文选读]联邦学习中的分布式框架调研与综述'
+summary: '[机器学习][联邦学习][Survey]针对联邦学习系统的设计调研'
 authors:
 - Minel Huang
 date: “2021-11-23T00:00:00Z”
@@ -9,10 +9,10 @@ publishDate: "2021-11-23T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
-- Study Notes
 - Machine Learning
-- Distributed Framework
+- Distributed Machine Learning Framework
 - Federated Learning
+- System Design
 featured: false
 ---
 <head>

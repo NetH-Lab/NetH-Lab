@@ -1,6 +1,6 @@
 ---
 title: Summary of Ray
-summary: '[分布式系统][分布式机器学习][论文选读]Ray学习笔记'
+summary: '[分布式系统][分布式机器学习框架][强化学习]Ray学习笔记'
 authors:
 - Minel Huang
 date: “2021-10-24T00:00:00Z”
@@ -9,9 +9,9 @@ publishDate: "2021-10-24T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
-- Study Notes
 - Distributed Systems
-- Distributed Machine Learning
+- Distributed Machine Learning Framework
+- Reinforce Learning
 - Ray
 featured: false
 ---
@@ -34,7 +34,7 @@ featured: false
 <body>
 
 <div align="center" class="div_indicate_source">
-  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: MinelHuang，更新日期：Aug.04 2021</i></font></h4>
+  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: MinelHuang，更新日期：Oct.24 2021</i></font></h4>
   <div align="left">
   <font size="2px">
   </font>

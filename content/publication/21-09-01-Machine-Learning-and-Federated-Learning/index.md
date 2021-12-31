@@ -6,6 +6,7 @@ authors:
 tags: 
 - Machine Learning
 - Federated Learning
+- Survey
 date: “2021-09-01T00:00:00Z”
 publishDate: "2021-09-01T00:00:00Z"
 featured: false

@@ -1,6 +1,6 @@
 ---
 title: Summary of MapReduce
-summary: '[分布式计算][标志性论文选读]MapReduce - Simplified Data Processing on Large Clusters精读'
+summary: '[分布式计算][计算框架]MapReduce - Simplified Data Processing on Large Clusters精读'
 authors:
 - Minel Huang
 date: “2021-01-04T00:00:00Z”
@@ -9,8 +9,8 @@ publishDate: "2021-01-04T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
-- Study Notes
 - Distributed Systems
+- Distributed Computing Framework
 featured: false
 ---
 

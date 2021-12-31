@@ -1,10 +1,10 @@
 ---
 title: Data in Real World, Instances Proximity and Feature Embedding
-summary: '[机器学习][论文选读]数据，样本相似度和Feature Embedding'
+summary: '[机器学习]数据，样本相似度和Feature Embedding'
 authors:
 - Minel Huang
 tags: 
-- 基础知识
+- Machine Learning
 date: “2021-09-06T00:00:00Z”
 publishDate: "2021-09-06T00:00:00Z"
 featured: false
@@ -30,7 +30,7 @@ mathjax: true
 <body>
 
 <div align="center" class="div_indicate_source">
-  <h4>⚠ 转载请注明出处：<font color="red"><i>协作者：MinelHuang，更新日期：June.15 2021</i></font></h4>
+  <h4>⚠ 转载请注明出处：<font color="red"><i>协作者：MinelHuang，更新日期：Sep.10 2021</i></font></h4>
   <div align="left">
   <font size="2px">
   </font>

@@ -1,6 +1,6 @@
 ---
-title: Survey of Algorithm-based Optimization for Federated Learning
-summary: '[机器学习][联邦学习][系统优化][Survey]联邦学习中针对系统性能需求进行的算法设计调研'
+title: Survey of System Design for Distributed ML & FL
+summary: '[机器学习][联邦学习][论文选读]联邦学习中的通信优化调研与综述'
 authors:
 - Minel Huang
 date: “2021-11-23T00:00:00Z”
@@ -9,10 +9,9 @@ publishDate: "2021-11-23T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
+- Study Notes
 - Machine Learning
 - Federated Learning
-- Survey
-- Algorithm Design
 featured: false
 ---
 <head>
