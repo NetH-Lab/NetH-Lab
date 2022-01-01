@@ -1,17 +1,17 @@
 ---
 title: Survey of System Design for Distributed ML & FL
-summary: '[机器学习][联邦学习][论文选读]联邦学习中的通信优化调研与综述'
+summary: '[机器学习][联邦学习][系统设计][Survey]对ML和FL中system design的调研松解'
 authors:
 - Minel Huang
-date: “2021-11-23T00:00:00Z”
-publishDate: "2021-11-23T00:00:00Z"
+date: “2021-12-31T00:00:00Z”
+publishDate: "2021-12-31T00:00:00Z"
 
 publication_types: ["0"]
 
 tags: 
-- Study Notes
 - Machine Learning
 - Federated Learning
+- System Design
 featured: false
 ---
 <head>
@@ -33,7 +33,7 @@ featured: false
 <body>
 
 <div align="center" class="div_indicate_source">
-  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: Dec.13 2021</i></font></h4>
+  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: MinelHuang, 更新日期: Jan.01 2022</i></font></h4>
   <div align="left">
   <font size="2px">
   </font>
@@ -60,69 +60,101 @@ featured: false
   </div>
   <div class="div_learning_post_boder">
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 1. <a href="#section1"><font color="blue"><b>前言</b></font></a>：介绍近年federtaed learning system的场景分类。
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 1. <a href="#section1"><font color="blue"><b>前言</b></font></a>：介绍本文的章节安排。
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section2"><font color="blue"><b>CMFL</b></font></a>：通过减少edge devices和center server通信次数，降低通信开销。
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section2"><font color="blue"><b>Survey</b></font></a>：介绍今年来分布式ML & FL领域关于system design的survey文章。
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 3. <a href="#section3"><font color="blue"><b>BatchCrypt</b></font></a>：一种高效的同态加密方法，场景为Cross-Silo Federated Learning。
-    <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 4. <a href="#section4"><font color="blue"><b>Octo</b></font></a>：一种INT8量化训练模型，应用于tiny on-device learning。
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 3. <a href="section3"><font color="blue"><b>Summary</b></font></a>：总结分布式ML & FL的通用分层以及设计目标、设计方法。
   </div>
 </div>
 
 <h2><a name="section1">1. 前言</a></h2>
 <div class="div_learning_post_boder">
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;本博客的目的在于，对现有文献进行分类归纳，明确在系统设计方面学者们是在哪一个层次进行思考的。该分类将指导笔者对近三年（2019-2021）在分布式ML以及FL方向上的系统设计文章阅读、总结以及idea思考。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;本文的章节安排如下：第二章将对state-of-art的文献survey进行阅读，在第三章将对其总结归纳。
 </div>
 
-<h2><a name="section2">2. CMFL</a></h2>
+<h2><a name="section2">2. Survey</a></h2>
 <div class="div_learning_post_boder">
+<h3>1 Survey on Distributed Machine Learning</h3>
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;参考文献：<a href="https://ieeexplore.ieee.org/abstract/document/8885054">CMFL: Mitigating Communication Overhead for Federated Learning</a>. 2019. ICDCS <br>
-  <h2>场景和Problem</h2>
+  &nbsp;&nbsp;&nbsp;&nbsp;参考资料：<a href="https://dl.acm.org/doi/abs/10.1145/3377454">A Survey on Distributed Machine Learning</a>
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;在横向联邦学习中，training通常是放在边缘设备上的，如个人手机或计算机。其过程通常是，中央服务器维护一个全局模型（global model），在一次迭代中，边缘设备上传其updates，而后中央服务器更新全局模型并下发至各边缘设备，一次迭代结束。在这里我们关注这一过程中的通信瓶颈，其分为两个方面：一是对于通信链路而言，部分边缘设备的network是很昂贵的，且不可靠的，比如使用4G的手机；而是对于数据量而言，在例如DNN训练中，updates的量非常庞大，通常由一个很大的gradient vector组成。这两方面原因使得在横向联邦学习中出现通信瓶颈。<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;该survey针对的是分布式ML中的系统设计，笔者将通过此survey总结ML System的分层、优化目标以及优化方法分类。<br>
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;下一个问题是，这种通信瓶颈会对系统造成哪方面的影响，即其系统metric是什么，如何量化？在一次迭代中，显然center server需要收集到足够多的updates后才能更新global model，所以当edge device和center server的通信开销无法被computation overlap，或与training time处于同一数量级时，通信开销便可能成为整个系统的瓶颈，其结果为可能大大增加了训练时间。于是其外在的metric可以是迭代时间，内在metric可以是data transfer的时间于迭代时间中的占比，或者是data transfer的次数。
+  &nbsp;&nbsp;&nbsp;&nbsp;首先第一个问题，<b>为什么要分布式？</b>Machine Learning的发展体现在training data的指数增长，和model所需的parameters量级的增长（通常指NN模型），二者共同导致了单台计算机无法承载如此庞大的ML训练任务，所以人们提出分布式机器学习。和集中式机器学习相比，Distributed ML要解决的首要问题是：<b>高性能的并行方式</b>。在本节中，我们会讨论state-of-art的分布式ML场景、问题、挑战以及解决方法。<br>
 
-  <h2>Solution</h2>
+  <h3>1.1 Introduction</h3>
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;通常有两类降低通信开销的方法，第一类为减少单次通信中的bit数，比如使用一些紧凑的数据结构来压缩updates；第二类为减少通信的次数，在本文中采用的是第二类方法。<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;分布式机器学习通常有两个原因，其一是model designer希望使用分布式来提高并行度或I/O带宽总量，例如对TB级的输入数据的训练；其二是数据本身是inherently distributed（大型企业的数据存放在不同的地理位置上）或在single computer上无法存放庞大的数据（分布式存储）。在分布式后，通常一个分布式系统要解决三类问题：<b>parallel computation, data distribution and resilience to failures</b>。<br>
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;简单来说，该问题可以转换为，edge device如何判断哪些updates需要上传，哪些不需要上传即可。此文章中定义了<b>irrelevant updates</b>，代表该update对于global model而言是divergent的（分歧的，分离的），那么便可以不传这些updates。具体而言，一次迭代中，client或称为edge device先收到一个feedback information（global update）；而后client进行本地的training过程并铲除local update；通过feedback information检测此次local update和global update的差异性，若差异性过大，则认为此次local update时irrelevant的，于是不上传。通过此方法，该算法（成为CMFL）成功的提高了FL速率，与state-of-art的工作相比，分别提高了13.97x（vanilla FL），1.97x（Gaia）。
+  &nbsp;&nbsp;&nbsp;&nbsp;本节的章节安排为，Section 2讨论ML中的系统challenges和High Performance Computing中的ideas是如何应用在ML System上的（用于加速和scaling）；Section 3讨论ML architecture，覆盖algorithms层面到network communication层面（entire stack）；Section 4讨论widely used systems and
+  libraries和其underlying designs；Section 5讨论分布式机器学习的main challenges。<br>
 
-  <h2>Related work</h2>
-  &nbsp;&nbsp;&nbsp;&nbsp;CMFL主要对比的工作为Gaia，Gaia是一种为geo-distributed machine learning设计的communication优化器。其工作原理主要是，在训练开始前设置一个predefined threshold，定义significance来表示一个local update的重要程度，若小于阈值，则不进行传输。在定义significance时，Gaia关注的是模型训练的speed，而忽略了optimization direction。这里笔者仅是总结CMFL文章中的观点，具体Gaia是如何优化的笔者将在后文中具体描述。可以看到，横向联邦学习对比的应用场景是geo-distributed learning。
+  <h3>1.2 Machine Learning - A High-performance Computing Challenge?</h3>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;ML的数据操作可以看作对vector, matrices or tensors的操作，属于线性代数问题。在过去几十年中，HPC community（如BLAS or MPI）对此进行了大量研究，同时HPC community也认为machine learning是一个emerging high-value workload并开始将HPC methodology应用于此，包括使用HPC系统/设备训练模型。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;和其他的large-scale computational challenges相同，加速workloads包含两大类基本方法：其一为向单个机器增加更多的资源（scaling-up），其二为向system中增加更多的节点（scaling-out），我们来分别对其进行challenges的讨论。<br>
+
+  <h4>1.2.1 Scaling up</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;最常见的方法是使用GPUs对单机进行性能提升，例如Nvidia Titan V和Nvidia Tesla V100。和CPU相比，GPU具有更多的cores（V100包含5120 cores），故可以支持并行度更高的运算，这一点非常适合需要数据并行和模型并行的ML算法。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;第二种为Application Specific Integrated Circuits（ASICs），通常是根据特定的function而设计的电路。例如在ML中，常用的算子为矩阵乘法，故可以将矩阵乘function做成硬件电路以进行加速。Google设计的Tensor Processing Unit（TPU）即是一种ASICs，其集成了对Tensor的各类运算例如矩阵乘法以完成加速。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;第三种硬件设计引入了Neuro-Functional Unit（NFU），实现复数的数据input，加法，激活函数等运算，代表性的加速器为DianNao，用于大规模神经网络with a small area footprint。
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;其余的硬件设备还address一些性能问题，例如针对accessing the weights of neurons from DRAM，Hinton et al. 使用deep compressiong技术put the weights into SRAM并加速了sparse matrix-vector乘法；使用MIMD架构的special CPU加速了浮点数运算等。
+
+  <h4>Scaling out</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;Scaling out的原因有三种，其一是设备较为便宜；其二是抗风险能力强；其三是增加了整体的I/O带宽。训练ML models是一个highly data-intensive task，所以对数据的消化会成为严重的性能瓶颈，所以通过分布式来将数据的读写、处理分散到一个集群中可以显著提高性能。但是并不是所有的模型都可以并行化、分布式化的，取决于具体的ML算法。
+
+  <h3>1.3 Reference Achitecture for Distributed Machine Learning</h3>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;上文我们介绍了ML system的主要目标：并行化、数据分发以及容错，但这样的分类显然是太过概述化了。故在此节我们将详细的剖析ML通用architecture，将从ML system的用户侧、框架侧以及底层通信侧介绍每一层的功能，典型应用以及他们是如何实现上述三个目标的。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;Machine Learning的主要任务如下图：<br>
+  <img src="pic/1.1.png" style="margin: 0 auto;"><br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;其主要包含training和predicting两部分。Training phase指的是使用庞大的training data更新machine learning model，最终的输出为Trained Model；Prediction phase是使用trained model来对新数据进行预测。我们进行分布式化其实是对这两个phase进行分布式。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;常用的分布式方法分为两种：data parallelizing和model parallelizing。数据并行指的是所有workers可以使用相同的算法，但数据输入不同来进行计算，例如在LR算法中我们可以将数据分成各个partition，对每个partition进行gradients的计算。所以我们发现，数据并行的前提一般是ML算法假定了independent and identical distribution (i.i.d.，独立同分布)，这样我们才可以对每个partition产生的gradients进行聚合。第二种为模型并行，指的是每个worker对部分模型进行计算，例如在树模型中，spliting过程可以使用多个worker进行并行。然而模型并行方法并不能应用于所有ML算法，这是因为model parameters通常不能split up，一种解决办法是通过例如ensembling技术对output trained models进行聚合。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;我们发现，对于ML system的用户来说，其需要设计一种高性能的并行机器学习算法，并行方式可以大致分为data parallelizing和model parallelizing两类；对于ML system的设计者来说，则要给出实现方式和编程接口，也即framework设计；最后即底层通信方式和接口设计。在后文，笔者尽可能的分别介绍这三层具体是做什么的，又是如何实现高性能并行化的。
+
+  <h4>1.3.1 Machine Learning Algorithms</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;该章节非本博客的主要内容，故简述。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;ML algorithms一般分为三个步骤：<b>Feedback, Purpose, Method</b>。Overview的讲，ML algorithms在每次迭代将Feedback作为Method的输入来优化模型，逐渐逼近Purpose。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;Feedback指的是提高模型质量所需的输入。在监督学习中，feedback常是指predict的值和真实值之间的差异情况，可以使用偏移（bias error）和方差（variance）来表示，一个例子为loss function。无监督学习中feedback可以是在一个group中样本的相似程度，这种similarity metric可以用来优化group method。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;Purpose是ML algorithms的目标，其中可能是Classification、Clustering、Dimensionality reduction等。以Classification为例，其具体是希望使用一个模型将输入的数据样本打上标签（分类），这种预测标签越接近真实标签则代表分类器的准确性越高。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;Method即如何逐步的优化模型以达到Purpose。一个广泛应用的方法是Stochastic Gradient Descent（SGD）算法，其目的是，逐步的降低loss即代表越逼近Purpose。所以我们可以计算模型参数对loss的导数，即gradients，根据梯度的方向来优化parameters，使得loss越来越小。
+
+  <h4>1.3.2 拓扑结构</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;Framework中的最小颗粒度是worker。在Machine learning algorithm中，算法设计者提供了分布式运行其算法的具体方式，例如data parallelizing训练DNN。那么Framework就像一个中间件，要给出具体到worker上的并行化方案。这里可以将framework设计分为并行化和拓扑结构两个方面，并不是分为两层，而是说需要在这两个方面进行思考。一种通用的思考方式为，给定了并行化方法，该如何设计worker的拓扑结构，使得某些metric得以优化。
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;回顾上文，分布式系统的三个主要任务是并行化、数据分布和容错。故在设计拓扑结构时同样需要考虑这三点。下面笔者给出对拓扑结构的理解和例子。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;首先我们不妨来思考，什么是低效的并行化。假设我们要对SGD过程做数据并行处理，我们在execution前有两个拓扑：数据分布拓扑和任务拓扑。输入数据要经过data partition过程分布式的存储在各个worker上，形成数据拓扑（节点称为datanode）；每个worker会被安排其需要执行的task以及输入输出数据依赖关系，形成任务拓扑（节点称为tasknode）。低效的并行化指的是，数据的拷贝损耗很大（例如一个tasknode的输入来自所有的datanode），则会带来high communication cost；或者是某个tasknode执行了大量的运算，形成high communication cost；或者是大量的tasknode在等待输入，形成high sychronization cost。可见distributed system所需要解决的两个关键问题：data distribution和parallelsim之间是相互依赖的。
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;于是，我们提出了几个通用的拓扑模型。举其中一个例子，Bulk Synchronous Parallel (BSP)模型是最简单的分布式模型。其data distribution方式为数据均匀的分布在每个worker上，而后对每个computation和communication阶段做同步。通俗来讲就是将程序的运行分为了computation和communication，所有worker通过communication交换中间结果（根据任务拓扑，每个任务得到input），而后所有worker再进行computation。其优势是强一致性，劣势是computation快的workers需要等待慢的workers。但是假若每个worker的运行时间相同，例如data parallel SGD，BSP模型依旧是十分高效的。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;其余的拓扑结构还包括：Trees、Rings、Parameter Server、Peer-to-Peer等。
+
+  <h4>1.3.4 Communication</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;最后我们要提到System的底层 - 通信优化。这里并不是指的实际的通信技术（如RPC等），而是指并行化、数据分布方式会直接影响到训练模型的通信总量。
 </div>
 
-<h2><a name="section3">3. BatchEncrypt</a></h2>
+<h2><a name="section3">3. Summary</a></h2>
 <div class="div_learning_post_boder">
-  <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;参考文献：<a href = "https://www.usenix.org/conference/atc20/presentation/zhang-chengliang">BatchCrypt: Efficient Homomorphic Encryption for Cross-Silo Federated Learning</a>. 2020. ATC
-  <h2>场景和Problem</h2>
-  <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;本文描述的场景为纵向联邦学习（Cross-Silo / Vertical / Heterogenous Federated Learning），即参与方持有相同id的数据，但每条数据的Feature不一定相同。通常，各参与方需要计算出local gradient updates，在加密后上传到一个center server，在该server中进行密态的aggregation，再返回给各参与方。最后参与方在本地解密，并更新本地模型，完成一次迭代。<br>
-  <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;显然，在纵向联邦学习中，非常重要的一步是加密。目前state-of-art的加密方式为同态加密（additively homomorphic encryption, HE）。在同态加密后（通常使用Paillier加密技术），每一条数据变成了HE key-pair，其外在表现为数据量膨胀（每个值都会被扩展到至少2048bits）。这样的加密方法显然增加data transfer的开销，与明文相比，数据传递的开销增加了至少150x。故BatchEncrypt希望解决的问题是，降低同态加密带来的计算和数据传递开销。<br>
-
-  <h2>Solution</h2>
-  <p>
-  &nbsp;&nbsp;&nbsp;&nbsp; 在传统的方法中，每条数据的每个值都需要进行一次同态加密，那么可不可以使用batch encryption技术来对一个batch的数据进行一次加密呢？那么，原先是一个value对应一个密态数，使用batch encryption后，是一个batch的values对应一个密态数，这显然降低了加密和数据传递的开销（数据量被大大降低了）。故在BatchEncrypt中，一个参与方首先quantizes its gradient values into low-bit integer representation，而后encodes a batch of quantized values to a long interger and encrypt it in one go。中文简单来说，是先组装成一组数据，而后编码，最后一同加密。<br>
-  <p>
-  &nbsp;&nbsp;&nbsp;&nbsp; 这一部分的难点分为两种，其一是，如何让两个batch密态数完成密态下的加法运算？这样的运算是aggregation步骤中必须要实现的。BatchEncrypt为此设计了一个quantization scheme，使梯度数据被quantized to signed integers uniformly distributed in a symmetric range。并且为了能支持简单的加法格式，BatchEncrypt还开发了一个新的batch编码技术，其采用了two's compliment representation with two sign bits。
-  <p>
-  &nbsp;&nbsp;&nbsp;&nbsp; 其二是在quantization前，需要先对gradients values进行clipped。文章提供了一个分析模型，成为dACIQ，用于分析最佳的clipping thresholds with the minimum cumulative error。<br>
-
-  <h2>Contribution</h2>
-  &nbsp;&nbsp;&nbsp;&nbsp; 与传统的同态加密相比，BatchEncrypt在3-layer全连接神经网络、AlexNet、LSTM model三个模型中分别达到了23x、71x和93x的加速，并分别降低了66x、71x和101x的通信负载。
-</div>
-
-<h2><a name="section4">4. Octo</a></h2>
-<div class="div_learning_post_boder">
-  <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;参考文献：<a href = "https://www.usenix.org/conference/atc21/presentation/zhou-qihua">Octo: INT8 Training with Loss-aware Compensation and Backward Quantization for Tiny On-device Learning</a>. 2021. ATC
-  <h2>场景和Problem</h2>
-  <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;在边缘计算中，终端设备资源是有限的（算力，内存等），故在一些文章中使用量化训练模型（quantization training methods）来压缩模型。传统的量化模型如Low-rank, Decomposition, Model Pruning and Network Sparsification等适用于large-scale training tasks，但在tiny on-device learning中并不是很有效。故本文体重一种基于INT8的量化训练模型。<br>
-  <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;在传统的量化训练模型中，存在以下几个问题：一是无法运用于训练过程，二是需要特定的网络支持，三是不能使用hardware-level INT8加速。在本文中提出一种轻量级的INT8 training method，并提出Loss-aware Compensation (LAC) and Parameterized Range Clipping (PRC) methods来分别处理forward pass和backward pass中的量化损耗问题。
 </div>
