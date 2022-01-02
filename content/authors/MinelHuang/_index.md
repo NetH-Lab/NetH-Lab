@@ -16,7 +16,7 @@ education:
   courses:
   - course: MPhil in Computer Science Engineering
     institution: Hong Kong University of Science and Technology
-    year: 2017 - 2021
+    year: 2021 - Now
   - course: BSc in Network Engineering
     institution: University of Electronic Science and Technology of China
     year: 2017 - 2021
