@@ -10,13 +10,16 @@ authors:
 superuser: true
 
 # Role/position
-role: Bachelor of UESTC
+role: MPhil in HKUST
 
 education:
   courses:
+  - course: MPhil in Computer Science Engineering
+    institution: Hong Kong University of Science and Technology
+    year: 2017 - 2021
   - course: BSc in Network Engineering
     institution: University of Electronic Science and Technology of China
-    year: 2021
+    year: 2017 - 2021
 
 # Organizations/Affiliations
 organizations:
@@ -27,9 +30,9 @@ organizations:
 bio: My research interests include distributed system, network science and datacenter networks.
 
 interests:
-- Distributed Systems
-- Network Science
-- Datacenter Networks
+- Distributed Computing Framework
+- Distributed Machine Learning Systems
+- Communication Optimization
 
 # Social/Academic Networking
 # For available icons, see: https://sourcethemes.com/academic/docs/page-builder/#icons
@@ -38,7 +41,7 @@ interests:
 social:
 - icon: envelope
   icon_pack: fas
-  link: 'huangxy.minel@gmail.com'
+  link: 'xhuangci@connect.ust.hk'
 #- icon: twitter
 #  icon_pack: fab
 #  link: https://twitter.com/GeorgeCushen
