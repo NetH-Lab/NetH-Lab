@@ -1,5 +1,5 @@
 ---
-title: Survey of Distributed Framework in Federated Learning
+title: Survey of Framework-based Optimization for Federated Learning
 summary: '[机器学习][联邦学习][Survey]针对联邦学习系统的设计调研'
 authors:
 - Minel Huang
@@ -11,6 +11,7 @@ publication_types: ["0"]
 tags: 
 - Machine Learning
 - Distributed Machine Learning Framework
+- Survey
 - Federated Learning
 - System Design
 featured: false
