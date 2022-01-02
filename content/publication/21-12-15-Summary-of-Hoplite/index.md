@@ -11,7 +11,7 @@ publication_types: ["0"]
 tags: 
 - Distributed Systems
 - Distributed Machine Learning
-- Communicatino Efficiency
+- Communication Efficiency
 - AllReduce
 featured: false
 ---
