@@ -64,7 +64,7 @@ featured: false
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section2"><font color="blue"><b>Survey</b></font></a>：介绍今年来分布式ML & FL领域关于system design的survey文章。
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 3. <a href="section3"><font color="blue"><b>Summary</b></font></a>：总结分布式ML & FL的通用分层以及设计目标、设计方法。
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 3. <a href="#section3"><font color="blue"><b>Summary</b></font></a>：总结分布式ML & FL的通用分层以及设计目标、设计方法。
   </div>
 </div>
 
