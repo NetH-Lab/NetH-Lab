@@ -194,6 +194,10 @@ featured: false
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;第一类方法是减小通信量，通过structured updates and sketched updateds和使用lossy compression的方式进行压缩。除去通信量，communication architecture同样可以提高training efficiency。由于此survey是根据优化目标对文献进行逐一叙述，故笔者将在github中进行总结。
 
+  <h3>2.3 System Optimization in FL</h3>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;参考资料
+
 </div>
 
 <h2><a name="section3">3. Summary</a></h2>
