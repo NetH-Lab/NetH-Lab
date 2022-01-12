@@ -1,6 +1,6 @@
 ---
 title: Survey of System Design for Distributed ML & FL
-summary: '[机器学习][联邦学习][系统设计][Survey]对ML和FL中system design的调研松解'
+summary: '[机器学习][联邦学习][系统设计][Survey]对ML和FL中system design的调研总结'
 authors:
 - Minel Huang
 date: “2021-12-31T00:00:00Z”
@@ -196,7 +196,39 @@ featured: false
 
   <h3>2.3 System Optimization in FL</h3>
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;参考资料
+  &nbsp;&nbsp;&nbsp;&nbsp;参考资料：<a href="https://arxiv.org/abs/2109.03999">System Optimization in Synchronous Federated Training: A Survey</a>. 2021. arXiv<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;上一节的survey文章给出了FL文献分类，但其对于Problems的描述还太过单薄，故笔者希望通过此节survey，锁定FL系统中的主要问题以及优化目标。此文章中，对于FL场景仅限于同步的training process<br>
+
+  <h4>2.3.1 名词解释</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;Time-to-accuracy performance: 指对FL系统的<b>测量标准</b>，具体为训练模型直至达到accuracy要求所耗时间。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;Sychronous mode: 在training process的一轮中，server需要等待到predefined dealine or 收到足够多的clients' updates后再进行aggregate。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;Three phases in FL: 指selection、configuration和reporting。<br>
+
+  <h4>2.3.2 主要问题</h4>
+  <p>
+  1. <b>Information deficiency</b>: <br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;指用于优化或配置系统所需的信息是不完整的（可能过时，或者是不可用）。举例说明：server常用response latency来估计clietn system capabilities，但是由于这种信息是动态变化的，甚至一些client是冷启动，故server在与client建立第一次连接钱无法获取到此部分信息，即information outdated or even unavailable。<br>
+  <p>
+  2. <b>Coupling of constrasting factors</b>: <br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;Statistical utility和system utility是time-to-accuracy的两个主要影响因素，通常二者是有内在联系的。statistics utility指的是达到准确度标准所需的<b>rounds</b>；system utility指的是training过程中一次<b>迭代</b>的时间，一般由计算时间和通信时间组成。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;我们的目标是，让time-to-accuracy尽可能的小，也即训练轮数越小越好，每一轮的时间越小越好。但是二者实际上是一对tradeoff，例如当我们希望减少每一轮的时间开销（improve system utility），最终减少的是resource consumption（可能是减少计算量，或者减少通信量）；但同时，这也不可避免的降低了quality of statistical utility，导致我们需要更多的轮次。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;举一个实际的例子，提高system utility的一个方法是，在selection阶段选择计算能力快的clients，但是这一次training也损失了那些计算能力差的clients身上的数据，故收敛的时间变长；或者当我们通过sparsification or quantization方法压缩了通信时间，但也降低了计算精度，导致收敛时间变长。<br>
+  <p>
+  3. <b>Client heterogeneity</b>: <br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;Clients不能被同等对待，clients在资源、数据和状态方面异构。<br>
+  <p>
+  4. <b>Huge configuration space</b>: <br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;需要在多维度上进行配置。这里是指，搜索全部的配置空间以求的全局最优解是不可靠的。例如在selection阶段，通过遍历所有clients的通信速度来决定参与方，单clients的数目可能在10 - 10^6的范围内变化，故需要消耗大量的时间（例如依次跟每个clients建立tcp链接而后测速）。这种schedule是online的，故make online decision的时间会对time-to-accuracy产生较大影响。<br>
 
 </div>
 
@@ -208,7 +240,9 @@ featured: false
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;首先，自上而下的叙述一遍系统。MLSys的用户的目标是train or predict one model using machine learning algorithms，在2.1.3.1中我们描述了当前state-of-art的机器学习算法。以training过程为例，为了能够分布式学习，首先要确定如何并行化。这里需要根据算法特性，采用数据并行/模型并行的方法进行并行化。在确定好并行化方法后，系统设计者需要设计一套拓扑结构，使集群内的worker可以承担起training任务。当然，在这里包含了许多问题，例如如何描述training任务和数据分布（taskflow & dataflow），如何分配子任务至各个worker（scheduling），如何描述workers之间的关系（typology），如何管理内存（memory），如何容错（fault-tolerance）等等。所有的一切共同构成了分布式机器学习Framework，例如TensorFlow做的便是这样一套系统。最后便是通信部分，在系统层次调用的是通信接口，例如RPC、DCTCP、HTTP等，系统层次并不是在设计高效通信协议，而是要确定如何通信。例如，将object A从worker 1传递至worker 2，且object A是中间结果，甚至可能是分布式存储的，那么什么时候传，传递的顺序，各个对象的传递优先级等等都会影响通信效率。<br>
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;在这里，笔者将记录文献中的优化方法，具体分类为：从算法设计的视角，从framework的视角和从通信的视角，每个视角下都包含多种问题，例如从算法设计的视角减少通信量，所以仅是以视角来总结优化方法。在github论文list中的分类是根据优化目标，故二者分类法并不冲突。<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;在这里，笔者将记录文献中的<b>优化方法</b>，具体分类为：从算法设计的视角，从framework的视角和从通信的视角，每个视角下都包含多种问题，例如从算法设计的视角减少通信量，所以仅是以视角来总结优化方法。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;换句话说，笔者实际上是对一个分布式System进行了拆解化，系统的用户是算法设计者，运行的也是某个机器学习算法，故在算法设计者的视角下如何更高效的完成模型训练或预测是一个问题；系统的底层是各类通信模块、存储模块等，那么在设计通信或内存模块时，如何提高algorithms的某种特性；Framework是一个承上启下的中间件，其既要对algorithms有很好的适配性，又要充当scheduer的角色以调用系统底层组件。笔者以视角来对现有工作进行归纳总结，同时将同步更新与github。<br>
 
   <h4>从算法设计的视角</h4>
   <p>
@@ -220,7 +254,9 @@ featured: false
 
   <h4>从通信的视角</h4>
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.usenix.org/conference/nsdi17/technical-sessions/presentation/hsieh">Gaia: Geo-distributed machine learning approaching lan speeds</a>.2017.NSDI<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;- 
 
   <h3>联邦学习系统总结</h3>
   <p>

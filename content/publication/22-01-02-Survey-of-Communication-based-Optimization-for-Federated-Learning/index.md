@@ -35,7 +35,7 @@ featured: false
 <body>
 
 <div align="center" class="div_indicate_source">
-  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: MinelHuang，更新日期：Dec.21 2021</i></font></h4>
+  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: MinelHuang，更新日期：Jan.11 2022</i></font></h4>
   <div align="left">
   <font size="2px">
   </font>
@@ -62,10 +62,12 @@ featured: false
   </div>
   <div class="div_learning_post_boder">
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 1. <a href="#section1"><font color="blue"><b>前言</b></font></a>：介绍近年federtaed learning system的场景、问题、挑战。
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 1. <a href="#section1"><font color="blue"><b>前言</b></font></a>
   </div>
 </div>
 
 <h2><a name="section1">1. 前言</a></h2>
 <div class="div_learning_post_boder">
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;
  </div>
