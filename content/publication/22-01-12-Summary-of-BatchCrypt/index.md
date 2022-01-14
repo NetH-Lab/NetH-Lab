@@ -61,6 +61,8 @@ featured: false
   <div class="div_learning_post_boder">
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;Section 1. <a href="#section1"><font color="blue"><b>前言</b></font></a>：介绍BatchCrypt的应用场景和Problems。
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 1. <a href="#section1"><font color="blue"><b>前言</b></font></a>：介绍同态加密、量化压缩等背景知识。
   </div>
 </div>
 
@@ -83,5 +85,33 @@ featured: false
   &nbsp;&nbsp;&nbsp;&nbsp; 其二是在quantization前，需要先对gradients values进行clipped。文章提供了一个分析模型，称为dACIQ，用于分析最佳的clipping thresholds with the minimum cumulative error。<br>
 
   <h2>Contribution</h2>
-  &nbsp;&nbsp;&nbsp;&nbsp; 与传统的同态加密相比，BatchCrypt在3-layer全连接神经网络、AlexNet、LSTM model三个模型中分别达到了23x、71x和93x的加速，并分别降低了66x、71x和101x的通信负载。
+  &nbsp;&nbsp;&nbsp;&nbsp;与传统的同态加密相比，BatchCrypt在3-layer全连接神经网络、AlexNet、LSTM model三个模型中分别达到了23x、71x和93x的加速，并分别降低了66x、71x和101x的通信负载。
+</div>
+
+<h2><a name="section2">2. Background Knowledge</a></h2>
+<div class="div_learning_post_boder">
+  <h3>Paillier半同态加密</h3>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;参考资料：<a href="https://zhuanlan.zhihu.com/p/420417626">Paillier半同态加密：原理、高效实现方法和应用</a>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;Paillier中的半同态加密指的是，支持密态下的加法，以及密文加明文两种计算，不支持密文乘密文。计算推导过程见上述链接。在本节中，将给出实际paillier实现中要注意的问题。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;现假设我们使用的p和q为512bit，则n为1024bit，所以对于任意一个明文<b>整数</b>m，其范围都不能超过<b>1024bit</b>。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;问题一，通常明文是64bit的浮点数，那么如何将其转换成整数以满足Paillier的输入条件呢？常规的做法是转移小数点的位置，将浮点数转换为：<b>base * exponent</b>的形式，例如：输入一个浮点数0.1，将其先转换为`1 * 10^{-1}`。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;现在我们把上述过程用更加标准的语言叙述一遍。设base的位宽必须小于1024bit，输入浮点数位宽无限，第一步是将浮点数编码成base * exponent的形式。其中，base < `2^{10}`。为达到此要求，首先用户要给出对浮点数的精度要求precision，例如`2^{-5}`(32 bit)，而后计算exponent = `log{precision}`。则输入x将转换为：fixpoint = int(round(x * 2^{exponent}))。于是，我们成功将一个浮点数转换成了定点数形式，注意fixpoint需小于1024bit。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;最后我们来说下密态加法，c1 + c2。当明文m1和m2都使用base * exponent表示法后，我们只对base进行加密，即：<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;c1 = [base1] * exp1<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;c2 = [base2] * exp2<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;设exp1 > exp2，则c1 + c2 = （[base1] * (exp1 / exp2) + [base2]） * exp2<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;至此，我们完成了密态下的加法。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;问题二，我们看到两个密态数相加，假设exp相差100倍，那么较大的数的base会扩大100倍，base是要小于1024bit的，则连续的加法，也即乘明文的操作有可能造成base溢出。所以在每一次密态运算后，需要进行解密，而后检查base是否溢出。当然，连续的多次密态运算依然是可能造成溢出的，只有在解密后才能检查是否溢出。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;
 </div>
