@@ -121,3 +121,8 @@ featured: false
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;参考资料：<a href="https://blog.csdn.net/jinzhuojun/article/details/106955059">闲话模型压缩之量化（Quantization）篇</a>
 </div>
+
+<h2><a name="section2">3. BatchCrypt</a></h2>
+<div class="div_learning_post_boder">
+  
+</div>
