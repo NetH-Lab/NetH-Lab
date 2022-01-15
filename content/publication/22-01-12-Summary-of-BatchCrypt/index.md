@@ -113,5 +113,11 @@ featured: false
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;问题二，我们看到两个密态数相加，假设exp相差100倍，那么较大的数的base会扩大100倍，base是要小于1024bit的，则连续的加法，也即乘明文的操作有可能造成base溢出。所以在每一次密态运算后，需要进行解密，而后检查base是否溢出。当然，连续的多次密态运算依然是可能造成溢出的，只有在解密后才能检查是否溢出。<br>
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;问题三，负数如何表示？我们可以把1024bit编码空间分成3份，高位用于表示负数，低位用于表示整数，中间位用于保留防止溢出。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;以上的实现方式均为FATE开源项目中的encode函数的实现方式，更加详细的代码请参考<a href="https://github.com/FederatedAI/FATE">Federated AI Technology Enabler</a>，具体位置为：python/federatedml/secureprotol/encode.py<br>
+
+  <h3>量化与压缩</h3>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;参考资料：<a href="https://blog.csdn.net/jinzhuojun/article/details/106955059">闲话模型压缩之量化（Quantization）篇</a>
 </div>
