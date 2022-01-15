@@ -4,7 +4,7 @@ summary: '[分布式机器学习][联邦学习][通信优化]BatchCrypt学习笔
 authors:
 - Minel Huang
 date: “2022-01-11T00:00:00Z”
-publishDate: "2021-01-12T00:00:00Z"
+publishDate: "2022-01-12T00:00:00Z"
 
 publication_types: ["0"]
 
@@ -34,7 +34,7 @@ featured: false
 <body>
 
 <div align="center" class="div_indicate_source">
-  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: MinelHuang，更新日期：Jan.12 2022</i></font></h4>
+  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: MinelHuang，更新日期：Jan.15 2022</i></font></h4>
   <div align="left">
   <font size="2px">
   </font>
@@ -62,7 +62,8 @@ featured: false
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;Section 1. <a href="#section1"><font color="blue"><b>前言</b></font></a>：介绍BatchCrypt的应用场景和Problems。
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 1. <a href="#section1"><font color="blue"><b>前言</b></font></a>：介绍同态加密、量化压缩等背景知识。
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section2"><font color="blue"><b>Background Knowledge</b></font></a>：介绍同态加密、量化压缩等背景知识。
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 3. <a href="#section3"><font color="blue"><b>BatchCrypt</b></font></a>：论文正文解读。
   </div>
 </div>
 
@@ -100,7 +101,7 @@ featured: false
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;问题一，通常明文是64bit的浮点数，那么如何将其转换成整数以满足Paillier的输入条件呢？常规的做法是转移小数点的位置，将浮点数转换为：<b>base * exponent</b>的形式，例如：输入一个浮点数0.1，将其先转换为`1 * 10^{-1}`。<br>
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;现在我们把上述过程用更加标准的语言叙述一遍。设base的位宽必须小于1024bit，输入浮点数位宽无限，第一步是将浮点数编码成base * exponent的形式。其中，base < `2^{10}`。为达到此要求，首先用户要给出对浮点数的精度要求precision，例如`2^{-5}`(32 bit)，而后计算exponent = `log{precision}`。则输入x将转换为：fixpoint = int(round(x * 2^{exponent}))。于是，我们成功将一个浮点数转换成了定点数形式，注意fixpoint需小于1024bit。<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;现在我们把上述过程用更加标准的语言叙述一遍。设base的位宽必须小于1024bit，输入浮点数位宽无限，第一步是将浮点数编码成base * exponent的形式。其中，base < `2^{10}`。为达到此要求，首先用户要给出对浮点数的精度要求precision，例如`2^{-5}`(32 bit)，而后计算exponent = `log 2^{-5}`。则输入x将转换为：fixpoint = int(round(x * 2^{exponent}))。于是，我们成功将一个浮点数转换成了定点数形式，注意fixpoint需小于1024bit。<br>
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;最后我们来说下密态加法，c1 + c2。当明文m1和m2都使用base * exponent表示法后，我们只对base进行加密，即：<br>
   <p>
@@ -122,7 +123,39 @@ featured: false
   &nbsp;&nbsp;&nbsp;&nbsp;参考资料：<a href="https://blog.csdn.net/jinzhuojun/article/details/106955059">闲话模型压缩之量化（Quantization）篇</a>
 </div>
 
-<h2><a name="section2">3. BatchCrypt</a></h2>
+<h2><a name="section3">3. BatchCrypt</a></h2>
 <div class="div_learning_post_boder">
-  
+  <h4>传统基于batch的量化</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;假设所有的gradients都属于[-1, 1]区间，而我们仅有8bit的编码空间，即[0, 255]。故，我们需要给出[-1, 1]至[0, 255]的映射关系。可以看到[0, 255]共255个小区间，假设gradient "-1"对应"0"，那么gradient落在[-1, -1 + 2/255]都应使用"1"表示，如此过程可以使用下列公式表示：<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;`Q(g) = [255 * (g - min) / (max - min)]`<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;其中，max, min分别表示1和-1。逆过程则为：<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;`Q^{-1}(q_n) = q_n * (max - min) / 255 + n * min`<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;其中，`q_n`代表n个量化后的gradients求和后的结果。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;上述过程可以使用下图表示，蓝色数字代表原始数字，红色数字为量化后的gradietn：<br>
+  <img src="pic/3.1.png" style="margin: 0 auto;"><br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;这样一来，多个蓝色方框可以组成一个batch，两个batch相加即对应的bit位相加，再依次去量化便可得到最终结果。当然，我们现在讨论的是均匀量化，对于非均匀量化，则可以理解为每个小格子，小区间所对应的实际数字是不同的。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;传统方法在运用至同态加密下的FL中会遇到许多问题。其一，该方法局限于，在运算前需要知道有多少values需要被aggregate，这样对于同步有了新的要求。但是在FL中，updates的数量是变化的，甚至是unavailable。其二，在aggregation过程中，很容易溢出，但是在加密状态下是无法检测出溢出的，故需要频繁的加密解密过程来防止因溢出导致的错误结果。其三，无法区分是正数溢出还是负数溢出。<br>
+
+  <h4>BatchCrypt</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;首先，BatchCrypt需要满足的三个需求是：1. 带符号整数：如此在aggregate时正数和负数相加后可以被抵消，从而降低overflow的概率。2. 对称量化区间：这事为了保证在量化前的-1 + 1 = 0，在量化后相加依旧为0，对称量化可以使"0"的值保持不变。3. 均匀量化：无法证明FL算法中的gradients是非均匀分布的，故本文章仅考虑均匀量化的场景。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;在BatchCrypt中，将属于`[-\alpha, \alpha]`的值映射到`r`-bit整数域上，具体为将`[-\alpha, 0]`映射到`[-(2^r - 1), 0]`；将`[0, \alpha]`映射到`[0, 2^r - 1]`上。此时，"0"在量化后可能有两个值，文章中提到使用16-bit量化足够达到近乎无损的梯度量化。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;确定量化映射区间后，下一个问题是如何表示有符号数。当一个batch被加密后，我们无法在密态下区分其符号位。受现代CPU处理有符号数的计算过程的启发，BatchCrypt使用two's complement representation。如此，sign bits可以参与到加法运算中，如value的运算无区别。而后，BatchCrypt进一步使用two sign bits来区分postive and negative overflows。具体的例子如下图：<br>
+  <p>
+  <img src="pic/3.2.png" style="margin: 0 auto;"><br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;BatchCrypt还提供了dACIQ来确定clipping range，以减少quanization noise和clipping noise，在这里笔者并未仔细阅读。<br>
+
+  <h4>小结</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;BatchCrypt通过将多个plaintext合并成一个batch再进行加密，实现了对密态信息的压缩，该工作的主要贡献在于如何修改传统batch编码方法，以实现密态batch下的加法，从而完成gradient aggregation。我们发现BatchCrypt很适用于横向FL场景，即Center Server对所有的密态gradients batches进行相加即可；但同时其还不适用于纵向FL算法，这是由于纵向FL算法中常常存在矩阵乘（明文矩阵乘密文gradients矩阵）的操作，而并非简单的gradients相加，也即一个batch中的gradients也会相互运算，但显然BatchCrypt是不支持的。故在此文中，场景确切的来说是，cross-silo + horizontal fl algorithm + 加性半同态加密。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;END
 </div>
