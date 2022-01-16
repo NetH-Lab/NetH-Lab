@@ -1,6 +1,6 @@
 ---
-title: Survey of Framework-based Optimization for Federated Learning
-summary: '[机器学习][联邦学习][Survey]针对联邦学习系统的设计调研'
+title: Survey of Communication-based Optimization for Federated Learning
+summary: '[联邦学习][通信优化][Survey]针对联邦学习系统中通信模块设计调研'
 authors:
 - Minel Huang
 date: “2021-11-23T00:00:00Z”
@@ -9,11 +9,10 @@ publishDate: "2021-11-23T00:00:00Z"
 publication_types: ["0"]
 
 tags: 
-- Machine Learning
-- Distributed Machine Learning Framework
 - Survey
+- Distributed Systems
 - Federated Learning
-- System Design
+- Communication Efficiency
 featured: false
 ---
 <head>
