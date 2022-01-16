@@ -33,7 +33,7 @@ featured: false
 <body>
 
 <div align="center" class="div_indicate_source">
-  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: MinelHuang, 更新日期: Jan.02 2022</i></font></h4>
+  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: MinelHuang, 更新日期: Jan.16 2022</i></font></h4>
   <div align="left">
   <font size="2px">
   </font>
@@ -240,7 +240,7 @@ featured: false
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;首先，自上而下的叙述一遍系统。MLSys的用户的目标是train or predict one model using machine learning algorithms，在2.1.3.1中我们描述了当前state-of-art的机器学习算法。以training过程为例，为了能够分布式学习，首先要确定如何并行化。这里需要根据算法特性，采用数据并行/模型并行的方法进行并行化。在确定好并行化方法后，系统设计者需要设计一套拓扑结构，使集群内的worker可以承担起training任务。当然，在这里包含了许多问题，例如如何描述training任务和数据分布（taskflow & dataflow），如何分配子任务至各个worker（scheduling），如何描述workers之间的关系（typology），如何管理内存（memory），如何容错（fault-tolerance）等等。所有的一切共同构成了分布式机器学习Framework，例如TensorFlow做的便是这样一套系统。最后便是通信部分，在系统层次调用的是通信接口，例如RPC、DCTCP、HTTP等，系统层次并不是在设计高效通信协议，而是要确定如何通信。例如，将object A从worker 1传递至worker 2，且object A是中间结果，甚至可能是分布式存储的，那么什么时候传，传递的顺序，各个对象的传递优先级等等都会影响通信效率。<br>
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;在这里，笔者将记录文献中的<b>优化方法</b>，具体分类为：从算法设计的视角，从framework的视角和从通信的视角，每个视角下都包含多种问题，例如从算法设计的视角减少通信量，所以仅是以视角来总结优化方法。<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;在这里，笔者将记录文献中的<b>优化方法</b>，具体分类为：从算法设计的视角，从framework的视角和从通信的视角，每个视角下都包含多种问题，例如从算法设计的视角减少通信量，所以仅是以视角来总结优化方法。在github paper list中，笔者将尽可能的对文献的<b>优化目标</b>进行分类。<br>
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;换句话说，笔者实际上是对一个分布式System进行了拆解化，系统的用户是算法设计者，运行的也是某个机器学习算法，故在算法设计者的视角下如何更高效的完成模型训练或预测是一个问题；系统的底层是各类通信模块、存储模块等，那么在设计通信或内存模块时，如何提高algorithms的某种特性；Framework是一个承上启下的中间件，其既要对algorithms有很好的适配性，又要充当scheduer的角色以调用系统底层组件。笔者以视角来对现有工作进行归纳总结，同时将同步更新与github。<br>
 
