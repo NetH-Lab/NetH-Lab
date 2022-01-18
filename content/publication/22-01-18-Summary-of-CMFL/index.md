@@ -106,7 +106,7 @@ featured: false
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;为达到上述目标，需要解决两个问题：1. 减少传输后还能否满足模型收敛？2. 如何measure the relevance of an update？<br>
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;在Gaia中，使用`||{Update}/{Model}||<{Threshold}`的方式来表示insignificant，但是这样的significant function在FL中性能较差，原因如下：<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;在Gaia中，使用`||{Update}/{MODEL}|| < Threshold`的方式来表示insignificant，但是这样的significant function在FL中性能较差，原因如下：<br>
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;1. FL中的训练数据是non-iid的，一些clients会有更重的training workload且优化更多的parameters，这些clients可能会因为significant function而终止上传updates，造成FL model性能下降。此外，update's magnitude同样依赖于learning rate。所以，很难选择一个全局的threshold来定义helpless updates。<br>
   <p>
@@ -117,5 +117,12 @@ featured: false
 
   <h4>Solution</h4>
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;CMFL通过使用global update（即aggregate后的gradients）来判断local update是否是相关的。虽然此次迭代的global update不能预知，但可以使用上一次迭代的global update（论文中证明了两次迭代的global update差距很小）来估计。
+  &nbsp;&nbsp;&nbsp;&nbsp;CMFL通过使用global update（即aggregate后的gradients）来判断local update是否是相关的。虽然此次迭代的global update不能预知，但可以使用上一次迭代的global update（论文中证明了两次迭代的global update差距很小）来估计。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;使用下式来表示local update relevance：<br>
+  <img src="pic/2.4.png" style="margin: 0 auto;"><br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;通过该式，CMFL实现了动态判断updates的相关性，以决定是否传输。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;本文还有一个关键部分为，对模型收敛性的证明，由于笔者自身工作不涉及此处，故不总结。证明部分位于论文Section 4-C处。
 </div>
