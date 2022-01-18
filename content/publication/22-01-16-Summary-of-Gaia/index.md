@@ -101,4 +101,17 @@ featured: false
   <h4>The significance filter</h4>
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;该组件用来评估每个update的重要性，故需要一个significance function和initial significance threshold，只有大于阈值的updates才会在DC间share。
+
+  <h4>ASP selective barrier</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;该组件用于保证significant updates可以被及时处理。当PS发现收到significant updates（来自本地workers的）的速率大于WAN带宽时（发送方），它将通过ASP selective barrier把这些updates的indexes发送给其他的data centers。接受端会阻塞其local workers直至收到significant updates。这一组件保证了所有的workers可以在受限的network latency后感知到significant updates。<br>
+
+  <h4>Mirror clock</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;WAN的带宽和延时是动态变化的，对于worker而言，其需要及时的感知到significant updates。ASP selective barrier假设了WAN带宽和延时是固定的，所以可以计算出受限的WAN时延；且假设了该时延足够短，故其他DC可以及时的感知到。Mirror clock用于记录各个DC的本地clock，每次交互updates时，DC都会附上自己的clock时间。当一个server发现本地clock比最慢的server要快时，它将阻塞本地workers，直到最慢的mirror server catches up。<br>
+
+  <img src="pic/2.2.png" style="margin: 0 auto;"><br>
+
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;Gaia没有给出具体的significance function和tuning of significance thresholds的方法，但其给出了ASP的正确性证明。
 </div>
