@@ -113,5 +113,5 @@ featured: false
   <img src="pic/2.2.png" style="margin: 0 auto;"><br>
 
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;Gaia没有给出具体的significance function和tuning of significance thresholds的方法，但其给出了ASP的正确性证明。
+  &nbsp;&nbsp;&nbsp;&nbsp;Gaia没有给出advanced significance function和tuning of significance thresholds的方法，但其给出了ASP的正确性证明。在Gaia evaluation中使用的significance function是update对模型的影响，例如一个update会对model parameters造成1%的改变，当小于1%则认为此update是不重要的。
 </div>
