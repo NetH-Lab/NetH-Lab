@@ -61,7 +61,7 @@ featured: false
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;Section 1. <a href="#section1"><font color="blue"><b>前言</b></font></a>：介绍Gaia的应用场景和Problems。
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section1"><font color="blue"><b>Architecture</b></font></a>：介绍Gaia中的组件。
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section2"><font color="blue"><b>Architecture</b></font></a>：介绍Gaia中的组件。
   </div>
 </div>
 

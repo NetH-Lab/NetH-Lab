@@ -62,7 +62,7 @@ featured: false
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;Section 1. <a href="#section1"><font color="blue"><b>前言</b></font></a>：Sketching overview。
     <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section1"><font color="blue"><b>Sketched SGD</b></font></a>
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section2"><font color="blue"><b>Sketched SGD</b></font></a>
   </div>
 </div>
 
