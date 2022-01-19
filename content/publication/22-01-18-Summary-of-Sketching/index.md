@@ -109,6 +109,4 @@ featured: false
 
   <img src="pic/2.1.png" style="margin: 0 auto;"><br>
 
-  <p>
-  
 </div>
