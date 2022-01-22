@@ -63,6 +63,8 @@ featured: false
     &nbsp;&nbsp;&nbsp;&nbsp;Section 1. <a href="#section1"><font color="blue"><b>前言</b></font></a>：Sketching overview。
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section2"><font color="blue"><b>Sketched SGD</b></font></a>
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 3. <a href="#section3"><font color="blue"><b>FetchSGD</b></font></a>
   </div>
 </div>
 
@@ -109,4 +111,8 @@ featured: false
 
   <img src="pic/2.1.png" style="margin: 0 auto;"><br>
 
+</div>
+
+<h2><a name="section3">3. FetchSGD</a></h2>
+<div class="div_learning_post_boder">
 </div>
