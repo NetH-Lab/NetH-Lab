@@ -115,4 +115,33 @@ featured: false
 
 <h2><a name="section3">3. FetchSGD</a></h2>
 <div class="div_learning_post_boder">
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;参考资料：<a href="https://arxiv.org/abs/2007.07682">FetchSGD: Communication-Efficient Federated Learning with Sketching</a>. 2020. ICML
+
+  <h4>场景和Problems</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;与Geo-distributed ML和FL的问题一致，跨Internet的网络带宽太小，使得传递中间变量（如gradients）所耗时间较多，成为瓶颈。在本文中提到了3个constrains，包括1. communication-efficiency，2. clients must be stateless，3. non-iid data distributed。
+
+  <h4>Solution</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;本文提出FetchSGD算法，其基本过程为：首先clients计算gradient；而后使用Count Sketch数据结构压缩gradients，并传递给central aggregator；Aggregator对Count Sketches进行aggregation；提取sketch中的top-k gradients，广播至clients。<br>
+  <img src="pic/2.2.png" style="margin: 0 auto;"><br>
+
+  <h4>Related Work</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;<b>FedAvg</b><br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;FedAvg通过使用local/parallel SGD方法使得降低clients和server之间的通信开销，因为clients仅需要上传initial and final model之间不同的部分即可。FedAvg的优势在于算法不需要client states，但缺陷在于，假设clients仅参与一次训练过程，FedAvg并不能节省通信开销，并且FedAvg的精确度依赖于模型大小，即需要很大的模型，但在FL中很难在一次传输完如此庞大的模型。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;<b>Gradient Compression</b>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;梯度压缩一半分为unbiased压缩和biased压缩两种。Unbiased方法包括量化和稀疏化，其主要需要解决的问题是对于压缩率和随机梯度方差之间的权衡。Biased梯度压缩方法包括top-k sparsification和signSGD。在这类方法中，通常也需要accumulate error，一般会在下一次迭代进行。但在FL中，accumulate error需要local client state，并不可行。<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;<b>Optimization with Sketching</b>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;最后一类方法称为sketching，即从所有的gradients中仅提取一个sketch进行传输。<br>
+
+  <h4>FetchSGD</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;
 </div>
+
