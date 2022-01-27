@@ -34,7 +34,7 @@ featured: false
 <body>
 
 <div align="center" class="div_indicate_source">
-  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: MinelHuang，更新日期：Jan.19 2022</i></font></h4>
+  <h4>⚠ 转载请注明出处：<font color="red"><i>Maintainer: MinelHuang，更新日期：Jan.25 2022</i></font></h4>
   <div align="left">
   <font size="2px">
   </font>
@@ -111,6 +111,12 @@ featured: false
 
   <img src="pic/2.1.png" style="margin: 0 auto;"><br>
 
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;现在笔者来解释上述algorithm。首先每个worker根据本地data计算出梯度`g_t^i`，假设这个梯度是F维的，也即一个包含F个元素的list。当F非常大时，显然通信开销会变得无法忽略。我们可以用Count Sketch算法来计算这个list中元素的出现权重（即count sketch中每一个bin加上的是gradient vector元素的值，而非计数），并将sketch发送给server。我们的目的是算出，在gradinet list中前k个元素（按大小排序）是什么，但是由于在分布式的场景下，各个worker计算出的sketch是不同的。可能worker a的元素i大，但元素j小；而worker b中i小，j大。所以必须在server处对sketches做聚合，而count sketch的线性性质很完美的解决了此问题。所以server简单的对所有sketches做平均，再去取其中k个最重要的元素即可。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;从sketch中取k个元素的操作对应algorithm 1，首先我们对Sketch做query，提取出sketch中的元素。大于阈值的组成H矩阵，小于的组成NH矩阵，我们认为H矩阵中的元素是重要的，也即top-k。于是我们选出了k个元素，为了提高准确性，故进行second communication来获取gradient元素的实际值。<br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;Sketch压缩是有偏的，假设所有的gradients满足正态分布，那么我们所选的top-k元素的均值可能会偏离正态分布的均值，所以是有偏的。
 </div>
 
 <h2><a name="section3">3. FetchSGD</a></h2>
@@ -138,10 +144,14 @@ featured: false
   &nbsp;&nbsp;&nbsp;&nbsp;梯度压缩一半分为unbiased压缩和biased压缩两种。Unbiased方法包括量化和稀疏化，其主要需要解决的问题是对于压缩率和随机梯度方差之间的权衡。Biased梯度压缩方法包括top-k sparsification和signSGD。在这类方法中，通常也需要accumulate error，一般会在下一次迭代进行。但在FL中，accumulate error需要local client state，并不可行。<br>
   &nbsp;&nbsp;&nbsp;&nbsp;<b>Optimization with Sketching</b>
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;最后一类方法称为sketching，即从所有的gradients中仅提取一个sketch进行传输。<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;最后一类方法称为sketching，即从所有的gradients中仅提取一个sketch进行传输。Sketch SGD算法需要second communication，这在FL实践中比较困难，因为clients随时可能离线。所以Fetch SGD依旧是通过skech寻找top-k个元素进行传输，那么有没有可能只需要一次通信呢？<br>
 
   <h4>FetchSGD</h4>
   <p>
-  &nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;算法如下图：<br>
+  <img src="pic/3.1.png" style="margin: 0 auto;"><br>
+  <img src="pic/3.2.png" style="margin: 0 auto;"><br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;Algorithm 1是Fetch SGD算法，Algorithm 2是其中Count Sketch部分算法。首先每个Client使用本地数据计算gradient vector，并使用count sketch对其进行压缩。与Sketch SGD相同，server对sketches做聚合，得到完整的sketch。Sketch SGD提出，使用count sketch中对mini-batch gradient的近似值并没有收敛性证明，并且可能和真实的mini-batch gradient差距很大。故在此文中引入momentum对sketch进行调整，使得还原后的今昔mini-batch gradient的无偏的。由于我们依旧使用了top-k方法，且top-k方法是有偏的，故引入error accumulation来保持收敛。于是，我们不需要引入second communication来消除近似mini-batch gradient带来的影响，也即仅需要一次通信。
 </div>
 
