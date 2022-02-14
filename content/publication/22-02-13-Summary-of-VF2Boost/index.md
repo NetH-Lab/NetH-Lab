@@ -61,6 +61,8 @@ featured: false
   <div class="div_learning_post_boder">
     <p>
     &nbsp;&nbsp;&nbsp;&nbsp;Section 1. <a href="#section1"><font color="blue"><b>前言</b></font></a>：介绍场景和Problems。
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;Section 2. <a href="#section2"><font color="blue"><b>Architecture and details</b></font></a>：介绍VF2Boost的具体优化方案。
   </div>
 </div>
 
