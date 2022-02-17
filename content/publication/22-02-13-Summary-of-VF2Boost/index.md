@@ -83,6 +83,10 @@ featured: false
   &nbsp;&nbsp;&nbsp;&nbsp;1. Party A等待Party B进行加密/解密操作；由于同态下的计算（于Party A）时间远大于明文计算（于Party B），在构造histogram时Party B往往陷入长时间的等待。<br>
   &nbsp;&nbsp;&nbsp;&nbsp;2. Party A构造histogram时为同态密文加法，在encode时我们使用base+exponent的表示方法，所以两个exponent不同的数相加，实际上表现为scaling operations，有很大的时间开销。此外，树节点数量随树的深度而指数增长，故histogram的规模也在指数增长，增加了通信和解密的时间。<br>
 
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;根据以上分析，作者进行了motivation实验，结果如下图：<br>
+  <img src="pic/1.2.png" style="margin: 0 auto;"><br>
+
   <h2>Solution Overview</h2>
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;文章的核心idea是，能否使用computation & communication overlap以节省一部分时间，故最开始我们会根据加密和histogram的计算时序图来分析，于哪一步可以overlap；针对bottleneck 2，需要重新思考对histogram accumulation顺序，来减少scaling带来的额外开销。<br>
