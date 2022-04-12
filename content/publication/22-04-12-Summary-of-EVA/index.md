@@ -93,3 +93,17 @@ featured: false
   <p>
   &nbsp;&nbsp;&nbsp;&nbsp;由此，我们可以发现，一个FHE计算系统需要tradeoff何时进行重线性化和重缩放，一个不好的执行方案会导致overflow，error过大或多次scaling和rescaling，导致correctness被破坏或者performance下降。EVA希望能够封装该问题，使得developer不再需要关注这些问题，高效的完成FHE evaluation。
 </div>
+
+<h2><a name="section2">2. EVA language</a></h2>
+<div class="div_learning_post_boder">
+  <p>
+  <img src="pic/2.1.png" style="margin: 0 auto;"><br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;上表为EVA中的数据类型。在EVA中，计算拓扑为DAGs图，其中node的类型为上表中的一种，DAGs图如下图所示。<br>
+  <img src="pic/2.2.png" style="margin: 0 auto;"><br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;在该计算拓扑中，当一个顶点包含两条以上的入边，则称为instructions。一个instruction中包含function以及function需要的parameter，代表在执行过程中，会使用该function和输入node数据计算新的result。详细点说，parameters写作n.parm，function写作n.op。Table 2中给出了所有的operation，如下：<br>
+  <img src="pic/2.3.png" style="margin: 0 auto;"><br>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;其中，group one中的instructions根据program中生成，group two中的instructions由complier插入。对于没有incoming edges的节点称为constant，代表在compile time is available；将node称为input，代表其在run time is available。
+</div>
